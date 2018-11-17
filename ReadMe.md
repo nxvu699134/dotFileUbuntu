@@ -1,10 +1,10 @@
 ```
-sudo apt-get install zsh
-sudo apt-get install tmux
-sudo apt-get install neovim
-sudo apt-get install silversearcher-ag
-sudo apt-get install ctags
-sudo apt-get install fonts-powerline
+sudo apt install zsh
+sudo apt install tmux
+sudo apt install neovim
+sudo apt install silversearcher-ag
+sudo apt install ctags
+sudo apt install fonts-powerline
 ```
 
 - Install oh-my-zsh
