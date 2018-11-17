@@ -1,14 +1,17 @@
+```
 sudo apt-get install zsh
-- Install oh-my-zsh
-- Install git
-- Install powerlevel9k
-sudo apt-get install fonts-powerline
-- Install zsh-syntax-highlighting
-- Install zsh-autosuggestions
 sudo apt-get install tmux
 sudo apt-get install neovim
 sudo apt-get install silversearcher-ag
 sudo apt-get install ctags
+sudo apt-get install fonts-powerline
+```
+
+- Install oh-my-zsh
+- Install git
+- Install powerlevel9k
+- Install zsh-syntax-highlighting
+- Install zsh-autosuggestions
 - Install Vundle
 
 
