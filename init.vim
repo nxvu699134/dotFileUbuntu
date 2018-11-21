@@ -1,7 +1,7 @@
 set t_Co=256
 set laststatus=2
 set nu
-set clipboard=unnamed
+set clipboard=unnamedplus
 let mapleader = ","
 set nocompatible
 
@@ -103,7 +103,7 @@ let g:srcery_dim_lisp_paren = 1
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#ale#enabled = 1
 " let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='powerlineish'
+" let g:airline_theme='powerlineish'
 
 " ===========ALE config===============
 let g:ale_sign_error = '✘'
@@ -179,3 +179,4 @@ set timeoutlen=1000 ttimeoutlen=0
 set number relativenumber
 map <Space><Space> :w<CR>
 nnoremap yp :let @+ = expand("%")<cr>
+hi Normal ctermbg=none
