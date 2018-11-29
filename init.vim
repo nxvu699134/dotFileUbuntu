@@ -51,6 +51,9 @@ call vundle#begin('~/.config/nvim/bundle')
   " Plugin 'tpope/vim-rails'
   " Plugin 'Keithbsmiley/rspec.vim'
 
+  " Go
+  Plugin 'fatih/vim-go'
+
 " After all plugins...
 call vundle#end()
 
@@ -114,7 +117,7 @@ let g:ale_echo_msg_error_str = '✘ Error'
 let g:ale_echo_msg_warning_str = '⚠ Warning'
 let g:ale_echo_msg_format = '[%linter%] [%severity%] %s'
 let g:ale_list_window_size = 5
-let g:ale_linters = {'jsx': ['stylelint', 'eslint']}
+let g:ale_linters = {'jsx': ['stylelint', 'eslint'], 'go': ['gometalinter', 'gofmt']}
 let g:ale_fixers = {
 \   'javascript': [
 \       'prettier',
@@ -164,6 +167,9 @@ let g:definitive_root_markers = {
       \ 'all': [ '.git', '.gitignore', '.hg', '.hgignore', 'Makefile' ],
       \ 'javascript': [ 'node_modules' ]
       \}
+
+"================Vim GO==================
+let g:go_version_warning = 0
 
 "===============Config MISC ===============
 " auto pair

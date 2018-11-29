@@ -1,5 +1,9 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$PATH:/usr/local/go/bin
+export GOPATH=$HOME/Workspace/Golang
+#
+#
 export TERM="xterm-256color"
 # Path to your oh-my-zsh installation.
 export ZSH="/home/zig/.oh-my-zsh"
@@ -15,7 +19,7 @@ POWERLEVEL9K_ALWAYS_SHOW_USER=false
 POWERLEVEL9K_CONTEXT_TEMPLATE="\uF109 %m "
 
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-POWERLEVEL9K_RPROMPT_ON_NEWLINE=false
+POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
 POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%F{cyan}\u256D\u2500%f"
 POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{cyan}\u2570❱%F{073}❱%F{109}❱%f "
