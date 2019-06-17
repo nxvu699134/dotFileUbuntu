@@ -7,8 +7,8 @@ sudo apt install ctags
 sudo apt install fonts-powerline
 ```
 
-- Install oh-my-zsh
 - Install git
+- Install oh-my-zsh
 - Install powerlevel9k
 - Install zsh-syntax-highlighting
 
@@ -24,7 +24,8 @@ sudo apt install fonts-powerline
 
 - Install Vundle
 
-
+- Use Alacritty as default terminal (Ctrl + Alt + T)
+```gsettings set org.gnome.desktop.default-applications.terminal exec 'alacritty'```
 
 # Terminal config
 - Text: #CDE0E3
