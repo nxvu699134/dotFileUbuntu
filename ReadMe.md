@@ -4,7 +4,6 @@ sudo apt install tmux
 sudo apt install neovim
 sudo apt install silversearcher-ag
 sudo apt install ctags
-sudo apt install fonts-powerline
 ```
 
 - Install git
