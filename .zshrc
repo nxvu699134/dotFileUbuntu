@@ -1,12 +1,12 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
-export PATH=$PATH:/usr/local/go/bin
-export GOPATH=$HOME/Workspace/Golang
+# export PATH=$PATH:/usr/local/go/bin
+# export GOPATH=$HOME/Workspace/Golang
 #
 #
 export TERM="xterm-256color"
 # Path to your oh-my-zsh installation.
-export ZSH="/home/zig/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # =========================== POWERLEVEL 9K CONFIG====================================
 ZSH_THEME="powerlevel9k/powerlevel9k"
@@ -66,6 +66,10 @@ plugins=(
 )
 
 autoload -U compinit && compinit
+
+# Use this flag for surroot alias
+ZSH_DISABLE_COMPFIX=true
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -77,9 +81,8 @@ source $ZSH/oh-my-zsh.sh
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
+#   export EDITOR='nvim'
+#   ZSH_THEME="robbyrussell"
 # fi
 
 # ssh
@@ -88,3 +91,11 @@ source $ZSH/oh-my-zsh.sh
 alias vim="nvim"
 export EDITOR='nvim'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+alias svpn='sudo openvpn --config ~/Workspace/vunx.ovpn'
+
+alias suroot='sudo -E -s'
