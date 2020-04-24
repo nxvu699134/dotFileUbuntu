@@ -97,5 +97,6 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 alias svpn='sudo openvpn --config ~/Workspace/vunx.ovpn'
+alias svpndev='sudo openvpn --config ~/Workspace/vunx_dev.ovpn'
 
 alias suroot='sudo -E -s'
