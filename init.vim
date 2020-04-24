@@ -29,11 +29,13 @@ call vundle#begin('~/.config/nvim/bundle')
   Plugin 'tpope/vim-endwise'
   Plugin 'MattesGroeger/vim-bookmarks'
   Plugin 'neoclide/coc.nvim', {'branch': 'release'}
+  Plugin 'Xuyuanp/nerdtree-git-plugin'
 
   " GUI theme
   " Plugin 'srcery-colors/srcery-vim'
   Plugin 'mhartington/oceanic-next'
   Plugin 'rakr/vim-one'
+  Plugin 'tyrannicaltoucan/vim-quantum'
 
   " GIT vim
   Plugin 'airblade/vim-gitgutter'
@@ -122,9 +124,12 @@ let g:NERDTreeMapMenu='M'
 let NERDTreeMapOpenSplit = 's'
 let NERDTreeMapOpenVSplit = 'v'
 let g:NERDTreeIgnore=['\~$', 'node_modules']
+
 " Automaticaly close nvim if NERDTree is only thing left open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
+" Auto refresh tree when save file
+" autocmd BufWritePost * NERDTreeFocus | execute 'normal R' | wincmd p
 "==================================================
 "                NERD COMMENTER
 "==================================================
@@ -205,23 +210,20 @@ map <Leader>gb :Gblame<CR>
 
 " =============== Color scheme =================
 "highlight red all trailing space
-function! TrailingSpaceHighlights() abort
-  " Hightlight trailing whitespace
-  highlight Trail ctermbg=red guibg=red
-  call matchadd('Trail', '\s\+$', 100)
-endfunction
-autocmd! ColorScheme * call TrailingSpaceHighlights()
+" function! TrailingSpaceHighlights() abort
+"   " Hightlight trailing whitespace
+"   highlight Trail ctermbg=red guibg=red
+"   call matchadd('Trail', '\s\+$', 100)
+" endfunction
+" autocmd! ColorScheme * call TrailingSpaceHighlights()
 
-function! s:custom_oceanic_colors() abort
+function! s:custom_quantum_colors() abort
   " coc.nvim color changes
   hi link CocErrorSign WarningMsg
   hi link CocWarningSign Number
   hi link CocInfoSign Type
-
-  " Fix html tag
-  hi htmlTagName guifg=#ec5f67 ctermfg=203
-  hi htmlTag guifg=#ab7967 ctermfg=137
-  hi htmlEndTag guifg=#ab7967 ctermfg=137
+  hi CocErrorHighlight guifg=#ff0000 ctermfg=15
+  hi CocHighlightText guibg=#2c3a41 ctermbg=242 gui=bold,undercurl cterm=bold,undercurl
 
   "priority current line nerdtree
   if has('guirunning') || has('termguicolors')
@@ -232,9 +234,8 @@ function! s:custom_oceanic_colors() abort
     let cursorline_cterm=''
   endif
   exec 'hi CursorLine ' . cursorline_gui . ' ' . cursorline_cterm
-
 endfunction
-autocmd! ColorScheme OceanicNext call s:custom_oceanic_colors()
+autocmd! ColorScheme quantum call s:custom_quantum_colors()
 
 function! s:custom_one_colors() abort
   call one#highlight('CocErrorHighlight', 'ff0000', '', 'bold,underline')
@@ -250,8 +251,12 @@ endif
 syntax enable
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set background=dark
-let g:one_allow_italics=1
-colorscheme one
+
+" let g:one_allow_italics=1
+" colorscheme one
+
+let g:quantum_italics=1
+colorscheme quantum
 
 " ============Navigate buffer vim ============
 map <silent> <space>h <C-W><C-H>
@@ -300,6 +305,16 @@ syntax on
 " Don't dispay mode in command line (airilne already shows it)
 set noshowmode
 set nonumber
+
+" Zoom in zoom out vim pane
+noremap zi <c-w>_ \| <c-w>\|
+noremap zo <c-w>=
+
+"disable recording
+map q <Nop>
+
+" Auto remove trailing spaces
+autocmd BufWritePre * %s/\s\+$//e
 
 " ==================== STARTIFY ==================================
 let g:startify_change_to_dir = 0
