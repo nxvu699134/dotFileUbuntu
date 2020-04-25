@@ -23,6 +23,8 @@ sudo apt install ctags
 
 - Install Vundle
 
+```git clone https://github.com/VundleVim/Vundle.vim.git ~/.config/nvim/bundle/Vundle.vim```
+
 - Use Alacritty as default terminal (Ctrl + Alt + T)
 ```gsettings set org.gnome.desktop.default-applications.terminal exec 'alacritty'```
 
