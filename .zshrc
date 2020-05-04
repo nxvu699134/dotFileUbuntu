@@ -9,7 +9,7 @@ export TERM="xterm-256color"
 export ZSH="$HOME/.oh-my-zsh"
 
 # =========================== POWERLEVEL 9K CONFIG====================================
-ZSH_THEME="powerlevel9k/powerlevel9k"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 POWERLEVEL9K_MODE='nerdfont-complete'
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context root_indicator dir_writable dir rbenv vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vi_mode status background_jobs history)
