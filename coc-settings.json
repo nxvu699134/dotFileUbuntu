@@ -1,14 +1,14 @@
 {
   "coc.preferences.extensionUpdateCheck": "never",
   "tsserver.npm": "~/.nvm/versions/node/v12.16.1/bin/npm",
-  "diagnostic.errorSign": "✘",
-  "diagnostic.warningSign": "⚠",
-  "diagnostic.infoSign": "•",
+  "diagnostic.errorSign": "",
+  "diagnostic.warningSign": " ",
+  "diagnostic.infoSign": "",
   "diagnostic.checkCurrentLine": true,
   "diagnostic.refreshOnInsertMode": true,
   "coc.preferences.jumpCommand": "vsplit",
   "suggest.echodocSupport": true,
-  "suggest.maxCompleteItemCount": 20,
+  "suggest.maxCompleteItemCount": 10,
   "suggest.completionItemKindLabels": {
     "keyword": "\uf1de",
     "variable": "\ue79b",

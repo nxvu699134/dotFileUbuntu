@@ -21,20 +21,21 @@ call vundle#begin('~/.config/nvim/bundle')
   Plugin 'vim-airline/vim-airline'
   Plugin 'vim-airline/vim-airline-themes'
   Plugin 'easymotion/vim-easymotion'
-  Plugin 'mbbill/undotree'
   Plugin 'Yggdroot/indentLine'
   Plugin 'jiangmiao/auto-pairs'
   Plugin 'matze/vim-move'
   Plugin 'mhinz/vim-startify'
-  Plugin 'tpope/vim-endwise'
+  " Plugin 'tpope/vim-endwise'
   Plugin 'MattesGroeger/vim-bookmarks'
   Plugin 'neoclide/coc.nvim', {'branch': 'release'}
   Plugin 'Xuyuanp/nerdtree-git-plugin'
+  Plugin 'wellle/targets.vim'
+  Plugin 'iamcco/markdown-preview.nvim'
 
   " GUI theme
   " Plugin 'srcery-colors/srcery-vim'
-  Plugin 'mhartington/oceanic-next'
-  Plugin 'rakr/vim-one'
+  " Plugin 'mhartington/oceanic-next'
+  " Plugin 'rakr/vim-one'
   Plugin 'tyrannicaltoucan/vim-quantum'
 
   " GIT vim
@@ -53,6 +54,10 @@ call vundle#begin('~/.config/nvim/bundle')
   Plugin 'HerringtonDarkholme/yats.vim'
   Plugin 'Shougo/echodoc.vim'
   Plugin 'heavenshell/vim-jsdoc'
+  Plugin 'mxw/vim-jsx'
+  " Plugin 'peitalin/vim-jsx-typescript'
+  Plugin 'cakebaker/scss-syntax.vim'
+  Plugin 'MaxMEllon/vim-jsx-pretty'
 
 " After all plugins...
 call vundle#end()
@@ -100,7 +105,7 @@ nmap <silent> <leader>ji <Plug>(coc-implementation)
 nmap <silent> <leader>en <Plug>(coc-diagnostic-next)
 nmap <silent> <leader>ep <Plug>(coc-diagnostic-prev)
 nmap <silent> <leader>f  <Plug>(coc-fix-current)
-nmap <silent> <leader>sd :call <SID>show_documentation()<CR>
+nmap <silent> <leader>h :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -110,8 +115,11 @@ function! s:show_documentation()
   endif
 endfunction
 
-let g:coc_status_error_sign = '✘ Error'
-let g:coc_status_warning_sign = '⚠ Warning'
+" let g:coc_status_error_sign = '✘ Error'
+" let g:coc_status_warning_sign = '⚠ Warning'
+let g:coc_status_error_sign = ''
+let g:coc_status_warning_sign = ' '
+" let g:coc_status_hint_sign = ''
 " Highlight symbol under cursor on CursorHold
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
@@ -151,6 +159,7 @@ let g:NERDTrimTrailingWhitespace = 1
 " Enable NERDCommenterToggle to check all selected lines is commented or not
 let g:NERDToggleCheckAllLines = 1
 
+
 "==================================================
 "                     FZF
 "==================================================
@@ -158,7 +167,7 @@ let g:fzf_tags_command = 'ctags -R --exclude=.git --exclude=node_modules'
 let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git --ignore node_modules -l -g ""'
 map <c-p> <ESC>:Files<CR>
 nmap <leader>ag <ESC>:Ag<CR>
-
+"
 " hide status line of fzf window
 if has('nvim') && !exists('g:fzf_layout')
   autocmd! FileType fzf
@@ -177,7 +186,7 @@ let g:prettier#config#single_quote = 'true'
 "==================================================
 let g:airline_powerline_fonts = 1
 " let g:airline#extensions#coc#enabled = 1
-let g:airline_section_c = '%t'
+let g:airline_section_c = '%f'
 let g:airline_theme='luna'
 " Update section z to just have line number
 let g:airline_section_z = airline#section#create(['linenr'])
@@ -209,14 +218,6 @@ map <Leader>gb :Gblame<CR>
 "==================================================
 
 " =============== Color scheme =================
-"highlight red all trailing space
-" function! TrailingSpaceHighlights() abort
-"   " Hightlight trailing whitespace
-"   highlight Trail ctermbg=red guibg=red
-"   call matchadd('Trail', '\s\+$', 100)
-" endfunction
-" autocmd! ColorScheme * call TrailingSpaceHighlights()
-
 function! s:custom_quantum_colors() abort
   " coc.nvim color changes
   hi link CocErrorSign WarningMsg
@@ -297,10 +298,14 @@ let g:echodoc#type='virtual'
 let g:javascript_plugin_jsdoc = 1
 
 " === javascript-libraries-syntax === "
-let g:used_javascript_libs = 'underscore,jquery,angularjs,angularui,angularuirouter'
+let g:used_javascript_libs = 'underscore,jquery,angularjs,angularui,angularuirouter,react'
 let g:yats_host_keyword = 1
 set noswapfile
 syntax on
+
+"=== vim-close-tag=== "
+" let g:closetag_filetypes = 'html,xhtml,phtml,tsx,jsx'
+" let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.tsx,*.jsx'
 
 " Don't dispay mode in command line (airilne already shows it)
 set noshowmode
@@ -326,20 +331,19 @@ let g:startify_lists = [
       \ ]
 
 let g:startify_custom_header = [
-\' ▄████▄   ▒█████  ▓█████▄ ▓█████     █     █░ ██░ ██  ▄▄▄     ▄▄▄█████▓   ▓██   ██▓ ▒█████   █    ██     ██▓     ▒█████   ██▒   █▓▓█████',
-\'▒██▀ ▀█  ▒██▒  ██▒▒██▀ ██▌▓█   ▀    ▓█░ █ ░█░▓██░ ██▒▒████▄   ▓  ██▒ ▓▒    ▒██  ██▒▒██▒  ██▒ ██  ▓██▒   ▓██▒    ▒██▒  ██▒▓██░   █▒▓█   ▀',
-\'▒▓█    ▄ ▒██░  ██▒░██   █▌▒███      ▒█░ █ ░█ ▒██▀▀██░▒██  ▀█▄ ▒ ▓██░ ▒░     ▒██ ██░▒██░  ██▒▓██  ▒██░   ▒██░    ▒██░  ██▒ ▓██  █▒░▒███',
-\'▒▓▓▄ ▄██▒▒██   ██░░▓█▄   ▌▒▓█  ▄    ░█░ █ ░█ ░▓█ ░██ ░██▄▄▄▄██░ ▓██▓ ░      ░ ▐██▓░▒██   ██░▓▓█  ░██░   ▒██░    ▒██   ██░  ▒██ █░░▒▓█  ▄',
-\'▒ ▓███▀ ░░ ████▓▒░░▒████▓ ░▒████▒   ░░██▒██▓ ░▓█▒░██▓ ▓█   ▓██▒ ▒██▒ ░      ░ ██▒▓░░ ████▓▒░▒▒█████▓    ░██████▒░ ████▓▒░   ▒▀█░  ░▒████▒ ██▓',
-\'░ ░▒ ▒  ░░ ▒░▒░▒░  ▒▒▓  ▒ ░░ ▒░ ░   ░ ▓░▒ ▒   ▒ ░░▒░▒ ▒▒   ▓▒█░ ▒ ░░         ██▒▒▒ ░ ▒░▒░▒░ ░▒▓▒ ▒ ▒    ░ ▒░▓  ░░ ▒░▒░▒░    ░ ▐░  ░░ ▒░ ░ ▒▓▒',
-\'░  ▒     ░ ▒ ▒░  ░ ▒  ▒  ░ ░  ░     ▒ ░ ░   ▒ ░▒░ ░  ▒   ▒▒ ░   ░          ▓██ ░▒░   ░ ▒ ▒░ ░░▒░ ░ ░    ░ ░ ▒  ░  ░ ▒ ▒░    ░ ░░   ░ ░  ░ ░▒',
-\'░                  ░                                                       ░ ░                                                ░            ░',
-\' ██▓     ▒█████   ██▒   █▓▓█████     █     █░ ██░ ██  ▄▄▄     ▄▄▄█████▓   ▓██   ██▓ ▒█████   █    ██     ▄████▄   ▒█████  ▓█████▄ ▓█████',
-\'▓██▒    ▒██▒  ██▒▓██░   █▒▓█   ▀    ▓█░ █ ░█░▓██░ ██▒▒████▄   ▓  ██▒ ▓▒    ▒██  ██▒▒██▒  ██▒ ██  ▓██▒   ▒██▀ ▀█  ▒██▒  ██▒▒██▀ ██▌▓█   ▀',
-\'▒██░    ▒██░  ██▒ ▓██  █▒░▒███      ▒█░ █ ░█ ▒██▀▀██░▒██  ▀█▄ ▒ ▓██░ ▒░     ▒██ ██░▒██░  ██▒▓██  ▒██░   ▒▓█    ▄ ▒██░  ██▒░██   █▌▒███',
-\'▒██░    ▒██   ██░  ▒██ █░░▒▓█  ▄    ░█░ █ ░█ ░▓█ ░██ ░██▄▄▄▄██░ ▓██▓ ░      ░ ▐██▓░▒██   ██░▓▓█  ░██░   ▒▓▓▄ ▄██▒▒██   ██░░▓█▄   ▌▒▓█  ▄',
-\'░██████▒░ ████▓▒░   ▒▀█░  ░▒████▒   ░░██▒██▓ ░▓█▒░██▓ ▓█   ▓██▒ ▒██▒ ░      ░ ██▒▓░░ ████▓▒░▒▒█████▓    ▒ ▓███▀ ░░ ████▓▒░░▒████▓ ░▒████▒ ██▓',
-\'░ ▒░▓  ░░ ▒░▒░▒░    ░ ▐░  ░░ ▒░ ░   ░ ▓░▒ ▒   ▒ ░░▒░▒ ▒▒   ▓▒█░ ▒ ░░         ██▒▒▒ ░ ▒░▒░▒░ ░▒▓▒ ▒ ▒    ░ ░▒ ▒  ░░ ▒░▒░▒░  ▒▒▓  ▒ ░░ ▒░ ░ ▒▓▒',
-\'░ ░ ▒  ░  ░ ▒ ▒░    ░ ░░   ░ ░  ░     ▒ ░ ░   ▒ ░▒░ ░  ▒   ▒▒ ░   ░        ▓██ ░▒░   ░ ▒ ▒░ ░░▒░ ░ ░      ░  ▒     ░ ▒ ▒░  ░ ▒  ▒  ░ ░  ░ ░▒',
-\'░ ░   ░ ░ ░ ▒       ░░     ░        ░   ░   ░  ░░ ░  ░   ▒    ░          ▒ ▒ ░░  ░ ░ ░ ▒   ░░░ ░ ░    ░        ░ ░ ░ ▒   ░ ░  ░    ░    ░',
+      \'      ______             ___                _                 ______             _    _______ _                    ______ _                             ',
+      \'     (_____ \           / __)          _   (_)               / _____)           | |  (_______) |          _       / _____) |                            ',
+      \'      _____) )___  ____| |__ ____ ____| |_  _  ___  ____    | /  ___  ___   ____| |   _      | | _   ____| |_    | /     | | _   ____ ____   ____  ____ ',
+      \'     |  ____/ _  )/ ___)  __) _  ) ___)  _)| |/ _ \|  _ \   | | (___)/ _ \ / _  | |  | |     | || \ / _  |  _)   | |     | || \ / _  |  _ \ / _  |/ _  )',
+      \'     | |   ( (/ /| |   | | ( (/ ( (___| |__| | |_| | | | |  | \____/| |_| ( ( | | |  | |_____| | | ( ( | | |__   | \_____| | | ( ( | | | | ( ( | ( (/ / ',
+      \'     |_|    \____)_|   |_|  \____)____)\___)_|\___/|_| |_|   \_____/ \___/ \_||_|_|   \______)_| |_|\_||_|\___)   \______)_| |_|\_||_|_| |_|\_|| |\____)',
+      \'                                                                                                                                           (_____|      ',
+      \'       ______                ______ _                            ______                                 ______                _                         ',
+      \'      / _____)              / _____) |                          / _____)                       _       / _____)     _        | |                        ',
+      \'     | /      ____ ____    | /     | | _   ____  ___  ____     | /      ____ ____  ____   ___ | |_    | /      ____| |_  ____| | _                      ',
+      \'     | |     / _  |  _ \   | |     | || \ / _  |/___)/ _  )    | |     / _  |  _ \|  _ \ / _ \|  _)   | |     / _  |  _)/ ___) || \                     ',
+      \'     | \____( ( | | | | |  | \_____| | | ( ( | |___ ( (/ / _   | \____( ( | | | | | | | | |_| | |__   | \____( ( | | |_( (___| | | |                    ',
+      \'      \______)_||_|_| |_|   \______)_| |_|\_||_(___/ \____| )   \______)_||_|_| |_|_| |_|\___/ \___)   \______)_||_|\___)____)_| |_|                    ',
+      \'                                                          |/                                                                                            ',
 \]
+
