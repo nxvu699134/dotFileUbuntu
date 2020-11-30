@@ -5,6 +5,7 @@
 #
 #
 export TERM="xterm-256color"
+# export TERM="screen-256color"
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -25,7 +26,8 @@ POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%F{cyan}\u256D\u2500%f"
 POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{cyan}\u2570❱%F{073}❱%F{109}❱%f "
 
 POWERLEVEL9K_HOME_SUB_ICON="$(print $'\uF015')"
-POWERLEVEL9K_DIR_PATH_SEPARATOR=" $(print $'⟫') "
+# POWERLEVEL9K_DIR_PATH_SEPARATOR=" $(print $'⟫') "
+POWERLEVEL9K_DIR_PATH_SEPARATOR=" $(print $'') "
 POWERLEVEL9K_DIR_OMIT_FIRST_CHARACTER=true
 
 # Uncomment the following line to enable command auto-correction.
@@ -96,7 +98,12 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-alias svpn='sudo openvpn --config ~/Workspace/vunx.ovpn'
 alias svpndev='sudo openvpn --config ~/Workspace/vunx_dev.ovpn'
+alias svpn='sudo openvpn --config ~/Workspace/vnx.ovpn'
+
 
 alias suroot='sudo -E -s'
+alias lgit='lazygit'
+alias pps='cd ~/Workspace/gdt/pps-frontend'
+alias m='cd ~/Workspace/miniprojs/stocks/frontend-core'
+alias s='bash ~/.config/nvim/bundle/fzf/bin/fzf-tmux'
