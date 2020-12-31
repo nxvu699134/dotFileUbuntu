@@ -1,6 +1,5 @@
 {
   "coc.preferences.extensionUpdateCheck": "never",
-  "tsserver.npm": "~/.nvm/versions/node/v12.16.1/bin/npm",
   "diagnostic.errorSign": "",
   "diagnostic.warningSign": " ",
   "diagnostic.infoSign": "",

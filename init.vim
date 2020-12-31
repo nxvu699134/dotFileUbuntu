@@ -1,6 +1,4 @@
 " set t_Co=256
-set laststatus=2
-set nu
 set clipboard=unnamedplus
 let mapleader = ","
 set nocompatible
@@ -18,25 +16,21 @@ call vundle#begin('~/.config/nvim/bundle')
   Plugin 'scrooloose/nerdcommenter'
   Plugin 'tpope/vim-surround'
   Plugin 'ryanoasis/vim-devicons'
-  Plugin 'vim-airline/vim-airline'
-  Plugin 'vim-airline/vim-airline-themes'
+  Plugin 'itchyny/lightline.vim'
   Plugin 'easymotion/vim-easymotion'
   Plugin 'Yggdroot/indentLine'
   Plugin 'jiangmiao/auto-pairs'
   Plugin 'matze/vim-move'
   Plugin 'mhinz/vim-startify'
-  " Plugin 'tpope/vim-endwise'
   Plugin 'MattesGroeger/vim-bookmarks'
   Plugin 'neoclide/coc.nvim', {'branch': 'release'}
   Plugin 'Xuyuanp/nerdtree-git-plugin'
   Plugin 'wellle/targets.vim'
-  Plugin 'iamcco/markdown-preview.nvim'
+  " Plugin 'iamcco/markdown-preview.nvim'
 
   " GUI theme
-  " Plugin 'srcery-colors/srcery-vim'
-  " Plugin 'mhartington/oceanic-next'
-  " Plugin 'rakr/vim-one'
-  Plugin 'tyrannicaltoucan/vim-quantum'
+  " Plugin 'tyrannicaltoucan/vim-quantum'
+  Plugin 'tyrannicaltoucan/vim-deep-space'
 
   " GIT vim
   Plugin 'airblade/vim-gitgutter'
@@ -96,6 +90,7 @@ inoremap <silent><expr> <TAB>
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
 
+
 " "Close preview window when completion is done.
 " autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
@@ -127,7 +122,7 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 "                   NERD TREE
 "==================================================
 map <silent> <leader>ls <ESC>:NERDTreeToggle<CR>
-map <silent> <leader>rev :NERDTreeFind<CR>
+map <silent> <leader>lf :NERDTreeFind<CR>
 let g:NERDTreeMapMenu='M'
 let NERDTreeMapOpenSplit = 's'
 let NERDTreeMapOpenVSplit = 'v'
@@ -138,6 +133,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 " Auto refresh tree when save file
 " autocmd BufWritePost * NERDTreeFocus | execute 'normal R' | wincmd p
+
 "==================================================
 "                NERD COMMENTER
 "==================================================
@@ -184,20 +180,84 @@ let g:prettier#config#single_quote = 'true'
 "==================================================
 "                 VIM AIRLINE
 "==================================================
-let g:airline_powerline_fonts = 1
-" let g:airline#extensions#coc#enabled = 1
-let g:airline_section_c = '%f'
-let g:airline_theme='luna'
-" Update section z to just have line number
-let g:airline_section_z = airline#section#create(['linenr'])
-" Do not draw separators for empty sections (only for the active window) >
-let g:airline_skip_empty_sections = 1
-" Custom setup that removes filetype/whitespace from default vim airline bar
-let g:airline#extensions#default#layout = [['a', 'b', 'c'], ['x', 'z', 'warning', 'error']]
-" Enable caching of syntax highlighting groups
-let g:airline_highlighting_cache = 1
-" Don't show git changes to current file in airline
-let g:airline#extensions#hunks#enabled=0
+" let g:airline_powerline_fonts = 1
+" " let g:airline#extensions#coc#enabled = 1
+" let g:airline_section_c = '%f'
+" " let g:airline_theme='luna'
+" let g:airline_theme='deep_space'
+" " Update section z to just have line number
+" let g:airline_section_z = airline#section#create(['linenr'])
+" " Do not draw separators for empty sections (only for the active window) >
+" let g:airline_skip_empty_sections = 1
+" " Custom setup that removes filetype/whitespace from default vim airline bar
+" let g:airline#extensions#default#layout = [['a', 'b', 'c'], ['x', 'z', 'warning', 'error']]
+" " Enable caching of syntax highlighting groups
+" let g:airline_highlighting_cache = 1
+" " Don't show git changes to current file in airline
+" let g:airline#extensions#hunks#enabled=0
+
+"========================================================
+" CONFIG LIGHTLINE
+"========================================================
+let g:lightline = {
+      \ 'colorscheme': 'deepspace',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'readonly', 'filename', 'modified' ] ],
+      \   'right':[ ['lineinfo'],
+      \             [ 'cocstatus', 'filetype'] ]
+      \ },
+      \ 'component_function': {
+      \   'filename': 'LightlineFilename',
+      \   'readonly': 'LightlineReadonly',
+      \ },
+      \ 'component_expand': {
+      \   'cocstatus': 'LightlineCocStatus',
+      \ },
+      \ 'component_type': {
+      \   'cocstatus': 'error',
+      \ },
+      \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2"},
+      \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3"}
+  \ }
+
+let g:lightline.inactive = {
+		  \ 'left': [ [ 'filename' ] ],
+		  \ 'right': [ [ 'filetype' ] ]
+      \}
+
+function! LightlineFilename()
+  let filename = expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
+  let icon = (strlen(&filetype) ? ' ' . WebDevIconsGetFileTypeSymbol() : '')
+  " return join([icon, filename],'  ')
+  return join([filename, icon], '')
+endfunction
+
+function! LightlineReadonly()
+    if &filetype == "help"
+        return ""
+    elseif &readonly
+        return "🔐"
+    else
+        return ""
+    endif
+endfunction
+
+function! LightlineCocStatus() abort
+  let info = get(b:, 'coc_diagnostic_info', {})
+  if empty(info) | return '' | endif
+  let msgs = []
+  if get(info, 'error', 0)
+    call add(msgs, '⛔️ '. info['error'])
+  endif
+  if get(info, 'warning', 0)
+    call add(msgs, '🚸 '. info['warning'])
+  endif
+  return join(msgs, ' ')
+endfunction
+
+autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
+" autocmd BufWritePost * call lightline#update()
 "==================================================
 "                 EASY MOTION
 "==================================================
@@ -236,13 +296,15 @@ function! s:custom_quantum_colors() abort
   endif
   exec 'hi CursorLine ' . cursorline_gui . ' ' . cursorline_cterm
 endfunction
-autocmd! ColorScheme quantum call s:custom_quantum_colors()
 
-function! s:custom_one_colors() abort
-  call one#highlight('CocErrorHighlight', 'ff0000', '', 'bold,underline')
-  call one#highlight('CocHighlightText', '', '', 'underline')
+function! s:custom_deep_colors() abort
+  " coc.nvim color changes
+  hi CocErrorHighlight guifg=#ff0000 ctermfg=15
+  hi CocHighlightText guibg=#2c3a41 ctermbg=242 gui=bold,undercurl cterm=bold,undercurl
 endfunction
-autocmd! ColorScheme one call s:custom_one_colors()
+
+autocmd! ColorScheme quantum call s:custom_quantum_colors()
+autocmd! ColorScheme deep-space call s:custom_deep_colors()
 
 if (has("termguicolors"))
  set termguicolors
@@ -253,11 +315,11 @@ syntax enable
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set background=dark
 
-" let g:one_allow_italics=1
-" colorscheme one
+" let g:quantum_italics=1
+" colorscheme quantum
 
-let g:quantum_italics=1
-colorscheme quantum
+let g:deepspace_italics=1
+colorscheme deep-space
 
 " ============Navigate buffer vim ============
 map <silent> <space>h <C-W><C-H>
@@ -269,6 +331,21 @@ map <Space><Space> :w<CR>
 
 filetype plugin indent on
 set shiftwidth=2 tabstop=2 softtabstop=2 expandtab autoindent
+set lazyredraw
+set noswapfile
+set noshowmode " Don't dispay mode in command line (airilne already shows it)
+set updatetime=200 "Diagnostic messages default 4000.
+" set nonumber
+set relativenumber
+set laststatus=2
+set ttyfast
+syntax on
+"
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+"
+" TextEdit might fail if hidden is not set.
+set hidden
 
 " Automatically re-read file if a change was detected outside of vim
 set autoread
@@ -284,33 +361,6 @@ set timeoutlen=1000 ttimeoutlen=0
 "Get path of current file
 nnoremap yp :let @+ = expand("%")<cr>
 
-" set background terminal trans, use this when srcery scheme
-" hi Normal ctermbg=none
-set lazyredraw
-
-" === echodoc === "
-" Enable echodoc on startup
-let g:echodoc#enable_at_startup = 1
-let g:echodoc#type='virtual'
-
-" === vim-javascript === "
-" Enable syntax highlighting for JSDoc
-let g:javascript_plugin_jsdoc = 1
-
-" === javascript-libraries-syntax === "
-let g:used_javascript_libs = 'underscore,jquery,angularjs,angularui,angularuirouter,react'
-let g:yats_host_keyword = 1
-set noswapfile
-syntax on
-
-"=== vim-close-tag=== "
-" let g:closetag_filetypes = 'html,xhtml,phtml,tsx,jsx'
-" let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.tsx,*.jsx'
-
-" Don't dispay mode in command line (airilne already shows it)
-set noshowmode
-set nonumber
-
 " Zoom in zoom out vim pane
 noremap zi <c-w>_ \| <c-w>\|
 noremap zo <c-w>=
@@ -320,6 +370,29 @@ map q <Nop>
 
 " Auto remove trailing spaces
 autocmd BufWritePre * %s/\s\+$//e
+" hi Normal ctermbg=none
+
+" === echodoc === "
+" Enable echodoc on startup
+let g:echodoc#enable_at_startup = 1
+let g:echodoc#type='virtual'
+" let g:echodoc#type='floating'
+
+" === vim-javascript === "
+" Enable syntax highlighting for JSDoc
+let g:javascript_plugin_jsdoc = 1
+
+" === javascript-libraries-syntax === "
+let g:used_javascript_libs = 'underscore,jquery,angularjs,angularui,angularuirouter,react'
+let g:yats_host_keyword = 1
+
+
+"=== vim-close-tag=== "
+" let g:closetag_filetypes = 'html,xhtml,phtml,tsx,jsx'
+" let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.tsx,*.jsx'
+
+"
+
 
 " ==================== STARTIFY ==================================
 let g:startify_change_to_dir = 0
