@@ -12,8 +12,8 @@ export ZSH="$HOME/.oh-my-zsh"
 # =========================== POWERLEVEL 9K CONFIG====================================
 ZSH_THEME="powerlevel10k/powerlevel10k"
 POWERLEVEL9K_MODE='nerdfont-complete'
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context root_indicator dir_writable dir rbenv vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vi_mode status background_jobs history)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context root_indicator dir_writable dir vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vi_mode status)
 
 POWERLEVEL9K_ALWAYS_SHOW_CONTEXT=true
 POWERLEVEL9K_ALWAYS_SHOW_USER=false
