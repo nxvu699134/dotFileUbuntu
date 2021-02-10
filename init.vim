@@ -39,7 +39,6 @@ call vundle#begin('~/.config/nvim/bundle')
   " javascript, typescript
   Plugin 'prettier/vim-prettier', { 'do': 'npm install' }
   Plugin 'pangloss/vim-javascript'
-  Plugin 'burnettk/vim-angular'
   Plugin 'leafgarland/typescript-vim'
   Plugin 'alvan/vim-closetag'
   Plugin 'othree/javascript-libraries-syntax.vim'
@@ -48,10 +47,18 @@ call vundle#begin('~/.config/nvim/bundle')
   Plugin 'HerringtonDarkholme/yats.vim'
   Plugin 'Shougo/echodoc.vim'
   Plugin 'heavenshell/vim-jsdoc'
-  Plugin 'mxw/vim-jsx'
-  " Plugin 'peitalin/vim-jsx-typescript'
   Plugin 'cakebaker/scss-syntax.vim'
+
+  "Angular
+  Plugin 'burnettk/vim-angular'
+
+  " React
+  " Plugin 'peitalin/vim-jsx-typescript'
+  Plugin 'mxw/vim-jsx'
   Plugin 'MaxMEllon/vim-jsx-pretty'
+
+  "Vuejs
+  Plugin 'posva/vim-vue'
 
 " After all plugins...
 call vundle#end()
@@ -80,16 +87,19 @@ set shortmess+=c
 set signcolumn=yes
 
 " Use tab for trigger completion with characters ahead and navigate.
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
+" function! s:check_back_space() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~ '\s'
+" endfunction
+"
+" inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? "\<C-n>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ coc#refresh()
+" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " "Close preview window when completion is done.
 " autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
@@ -165,11 +175,11 @@ map <c-p> <ESC>:Files<CR>
 nmap <leader>ag <ESC>:Ag<CR>
 "
 " hide status line of fzf window
-if has('nvim') && !exists('g:fzf_layout')
-  autocmd! FileType fzf
-  autocmd  FileType fzf set laststatus=0 noshowmode noruler
-    \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
-endif
+" if has('nvim') && !exists('g:fzf_layout')
+"   autocmd! FileType fzf
+"   autocmd  FileType fzf set laststatus=0 noshowmode noruler
+"     \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+" endif
 "==================================================
 "                 PRETTIER
 "==================================================
@@ -222,7 +232,7 @@ let g:lightline = {
   \ }
 
 let g:lightline.inactive = {
-		  \ 'left': [ [ 'filename' ] ],
+		  \ 'left': [ [ 'filename', 'modified' ] ],
 		  \ 'right': [ [ 'filetype' ] ]
       \}
 
@@ -326,6 +336,10 @@ map <silent> <space>h <C-W><C-H>
 map <silent> <space>j <C-W><C-J>
 map <silent> <space>k <C-W><C-K>
 map <silent> <space>l <C-W><C-L>
+" map <silent> <space>H <C-W>H
+" map <silent> <space>J <C-W>J
+" map <silent> <space>K <C-W>K
+" map <silent> <space>L <C-W>L
 nnoremap <esc> :noh<return><esc>
 map <Space><Space> :w<CR>
 
@@ -339,8 +353,7 @@ set updatetime=200 "Diagnostic messages default 4000.
 set relativenumber
 set laststatus=2
 set ttyfast
-syntax on
-"
+
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 "
@@ -349,6 +362,7 @@ set hidden
 
 " Automatically re-read file if a change was detected outside of vim
 set autoread
+
 " auto pair
 let g:AutoPairsMultilineClose = 0
 
@@ -390,9 +404,6 @@ let g:yats_host_keyword = 1
 "=== vim-close-tag=== "
 " let g:closetag_filetypes = 'html,xhtml,phtml,tsx,jsx'
 " let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.tsx,*.jsx'
-
-"
-
 
 " ==================== STARTIFY ==================================
 let g:startify_change_to_dir = 0

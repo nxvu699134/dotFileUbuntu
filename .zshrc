@@ -98,6 +98,10 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+export GOPATH=/home/joey/.go-bin/go
+export GOBIN=$GOPATH/bin
+export PATH=$PATH:$GOBIN
+
 alias svpndev='sudo openvpn --config ~/Workspace/vunx_dev.ovpn'
 alias svpn='sudo openvpn --config ~/Workspace/vnx.ovpn'
 
