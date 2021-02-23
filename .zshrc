@@ -1,35 +1,43 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${xdg_cache_home:-$home/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${xdg_cache_home:-$home/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export PATH=$PATH:/usr/local/go/bin
 # export GOPATH=$HOME/Workspace/Golang
 #
 #
-export TERM="xterm-256color"
-# export TERM="screen-256color"
+# export TERM="xterm-256color"
+export TERM="screen-256color"
+# export TERM="tmux-256color"
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
 # =========================== POWERLEVEL 9K CONFIG====================================
 ZSH_THEME="powerlevel10k/powerlevel10k"
-POWERLEVEL9K_MODE='nerdfont-complete'
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context root_indicator dir_writable dir vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vi_mode status)
-
-POWERLEVEL9K_ALWAYS_SHOW_CONTEXT=true
-POWERLEVEL9K_ALWAYS_SHOW_USER=false
-POWERLEVEL9K_CONTEXT_TEMPLATE="\uF109 %m "
-
-POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
-POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
-POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%F{cyan}\u256D\u2500%f"
-POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{cyan}\u2570❱%F{073}❱%F{109}❱%f "
-
-POWERLEVEL9K_HOME_SUB_ICON="$(print $'\uF015')"
-# POWERLEVEL9K_DIR_PATH_SEPARATOR=" $(print $'⟫') "
-POWERLEVEL9K_DIR_PATH_SEPARATOR=" $(print $'') "
-POWERLEVEL9K_DIR_OMIT_FIRST_CHARACTER=true
-
+# POWERLEVEL9K_MODE='nerdfont-complete'
+# POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon prompt_char root_indicator dir_writable dir vcs)
+# POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status)
+#
+# POWERLEVEL9K_ALWAYS_SHOW_CONTEXT=true
+# POWERLEVEL9K_ALWAYS_SHOW_USER=false
+# POWERLEVEL9K_CONTEXT_TEMPLATE="\uF109 %m "
+#
+# POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+# POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
+# POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
+# POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%F{cyan}\u256D\u2500%f"
+# POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{cyan}\u2570❱%F{073}❱%F{109}❱%f "
+#
+# POWERLEVEL9K_HOME_SUB_ICON="$(print $'\uF015')"
+# # POWERLEVEL9K_DIR_PATH_SEPARATOR=" $(print $'⟫') "
+# POWERLEVEL9K_DIR_PATH_SEPARATOR=" $(print $'') "
+# POWERLEVEL9K_DIR_OMIT_FIRST_CHARACTER=true
+#
 # Uncomment the following line to enable command auto-correction.
 ENABLE_CORRECTION="true"
 
@@ -102,6 +110,8 @@ export GOPATH=/home/joey/.go-bin/go
 export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOBIN
 
+ export BAT_THEME="OneHalfDark"
+
 alias svpndev='sudo openvpn --config ~/Workspace/vunx_dev.ovpn'
 alias svpn='sudo openvpn --config ~/Workspace/vnx.ovpn'
 
@@ -111,3 +121,6 @@ alias lgit='lazygit'
 alias pps='cd ~/Workspace/gdt/pps-frontend'
 alias m='cd ~/Workspace/miniprojs/stocks/frontend-core'
 alias s='bash ~/.config/nvim/bundle/fzf/bin/fzf-tmux'
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
