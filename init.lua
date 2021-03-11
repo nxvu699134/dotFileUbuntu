@@ -24,8 +24,7 @@ cmd('packadd packer.nvim')         -- Load package
   -- Packer can manage itself as an optional plugin
   use {'wbthomason/packer.nvim', opt = true}
 
-  -- use {'tyrannicaltoucan/vim-deep-space'}
-  use 'glepnir/zephyr-nvim'
+  use 'nxvu699134/zephyr-nvim'
 
   use {'itchyny/lightline.vim'}
 
@@ -83,7 +82,7 @@ g['$NVIM_TUI_ENABLE_TRUE_COLOR'] = 1
 opt('o', 'termguicolors', true)
 opt('o', 'background', 'dark')
 -- g.deepspace_italics = 1
--- cmd 'colorscheme deep-space'
+-- cmd 'colorscheme hybrid'
 
 cmd 'colorscheme zephyr'
 
@@ -91,12 +90,10 @@ cmd('hi Normal guibg=NONE ctermbg=NONE')
 cmd('hi LineNr guibg=NONE ctermbg=NONE')
 cmd('hi SignColumn guibg=NONE ctermbg=NONE')
 cmd('hi EndOfBuffer guibg=NONE ctermbg=NONE')
--- Set invert matching bracket
-cmd('hi! link MatchParen Search')
 
 -----------------------LIGHTLINE-----------------------
 g.lightline = {
-  colorscheme = 'ayu_mirage',
+  colorscheme = 'ayu_dark',
     active = {
       left = {
         { 'mode', 'paste' },
@@ -250,12 +247,15 @@ end
 opt('o', 'shortmess', vim.o.shortmess .. 'c')
 opt('o', 'signcolumn', 'yes')
 
-g.coc_status_error_sign = ''
-g.coc_status_warning_sign = ' '
+-- g.coc_status_error_sign = ''
+-- g.coc_status_warning_sign = ' '
 cmd([[autocmd CursorHold * silent call CocActionAsync('highlight')]])
 -- cmd([[hi CocErrorLine guibg=#2e323c]])
 cmd([[hi CocErrorHighlight guifg=#ff0000 ctermfg=15 gui=bold,undercurl cterm=bold,undercurl]])
 -- cmd([[hi CocWarningLine guibg=#2e323c]])
+
+-- use this for coc-css
+cmd([[autocmd FileType scss setl iskeyword+=@-@]])
 
 --------------------NVIM LSP --------------------------------
 -- map('n', '<leader>en', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
