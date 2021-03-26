@@ -51,8 +51,10 @@ cmd('packadd packer.nvim')         -- Load package
 
   use {'jiangmiao/auto-pairs'}
 
-  use {'nvim-treesitter/nvim-treesitter'}
+  use {'nvim-treesitter/nvim-treesitter', commit = 'a74da044a8c208177c0af56eeab709859e2fda38'}
+  -- use {'nvim-treesitter/nvim-treesitter'}
   use {'nvim-treesitter/nvim-treesitter-angular'}
+  --
   -- use{'tree-sitter-typescript/typescript'};
   -- use{'tree-sitter-typescript/tsx'};
 
@@ -64,57 +66,46 @@ cmd('packadd packer.nvim')         -- Load package
 
   use {"neoclide/coc.nvim", branch = "release"}
 
-  use {'prettier/vim-prettier', run = 'npm install' }
-
 -- HTML, CSS
   use {'alvan/vim-closetag'}
 
 -- javascript, typescript
   use {'Shougo/echodoc.vim'}
-  use {'heavenshell/vim-jsdoc'}
 end)
-
-
 
 -----------------------COLOR SCHEME-----------------------
 cmd 'syntax enable'
 g['$NVIM_TUI_ENABLE_TRUE_COLOR'] = 1
 opt('o', 'termguicolors', true)
 opt('o', 'background', 'dark')
--- g.deepspace_italics = 1
--- cmd 'colorscheme hybrid'
-
 cmd 'colorscheme zephyr'
-
-cmd('hi Normal guibg=NONE ctermbg=NONE')
-cmd('hi LineNr guibg=NONE ctermbg=NONE')
-cmd('hi SignColumn guibg=NONE ctermbg=NONE')
-cmd('hi EndOfBuffer guibg=NONE ctermbg=NONE')
 
 -----------------------LIGHTLINE-----------------------
 g.lightline = {
-  colorscheme = 'ayu_dark',
-    active = {
-      left = {
-        { 'mode', 'paste' },
-        { 'readonly', 'filename', 'modified' }
-      },
-      right = {
-	 	    {'lineinfo'},
-		    { 'cocstatus', 'filetype'}
-      }
+  colorscheme = 'OldHope',
+  active = {
+    left = {
+      { 'mode', 'paste' },
+      { 'readonly', 'filename', 'modified' }
     },
-    inactive = {
-      left = {
-        {'filename', 'modified'}
-      },
-      right = {
-        {'filename'}
-      }
+    right = {
+      { 'lineinfo' },
+      { 'filetype' }
+    }
+  },
+  inactive = {
+    left = {
+      {'filename', 'modified'}
     },
-    separator = { left = '', right = ''},
-    subseparator = { left = '', right = ''}
+    right = {
+      {'filetype'}
+    }
+  },
+  separator = { left = '', right = ''},
+  subseparator = { left = '', right = ''},
 }
+-- Use autocmd to force lightline update.
+-- cmd([[autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()]])
 
 ------------------------NVIM TREE-----------------------
 g.nvim_tree_hide_dotfiles = 1
@@ -124,27 +115,33 @@ g.nvim_tree_auto_close = 1
 g.nvim_tree_follow = 1
 g.nvim_tree_ignore = { '.git', 'node_modules', '.cache' }
 g.nvim_tree_width_allow_resize  = 1
-g.nvim_tree_bindings = {
-     edit=            {'<CR>', 'o'},
-     edit_vsplit=     'v',
-     edit_split=      's',
-     edit_tab=        '<C-t>',
-     close_node=      {'<S-CR>', '<BS>'},
-     toggle_ignored=  'I',
-     toggle_dotfiles= 'H',
-     refresh=         'R',
-     preview=         '<Tab>',
-     cd=              '<Nop>',
-     create=          'a',
-     remove=          'd',
-     rename=          'r',
-     cut=             'x',
-     copy=            'c',
-     paste=           'p',
-     prev_git_item=   'gp',
-     next_git_item=   'gn',
-     dir_up=          'u',
-     close=           '<Nop>',
+g.nvim_tree_add_trailing = 1
+
+local tree_cb = require'nvim-tree.config'.nvim_tree_callback
+vim.g.nvim_tree_bindings = {
+  ["<CR>"]           = tree_cb("edit"),
+  ["o"]              = tree_cb("edit"),
+  ["v"]              = tree_cb("vsplit"),
+  ["s"]              = tree_cb("split"),
+  ["<BS>"]           = tree_cb("close_node"),
+  ["<S-CR>"]         = tree_cb("close_node"),
+  ["I"]              = tree_cb("toggle_ignored"),
+  ["H"]              = tree_cb("toggle_dotfiles"),
+  ["R"]              = tree_cb("refresh"),
+  ["a"]              = tree_cb("create"),
+  ["d"]              = tree_cb("remove"),
+  ["r"]              = tree_cb("rename"),
+  ["x"]              = tree_cb("cut"),
+  ["c"]              = tree_cb("copy"),
+  ["p"]              = tree_cb("paste"),
+  ["q"]              = tree_cb("close"),
+  ["<Nop>"]          = tree_cb("preview"),
+  ["<Nop>"]          = tree_cb("prev_git_item"),
+  ["<Nop>"]          = tree_cb("next_git_item"),
+  ["<Nop>"]          = tree_cb("dir_up"),
+  ["<Nop>"]          = tree_cb("full_rename"),
+  ["<Nop>"]          = tree_cb("cd"),
+  ["<Nop>"]          = tree_cb("tabnew"),
 }
 map('', '<leader>ls', ':NvimTreeToggle<CR>', {silent = true})
 map('', '<leader>lf', ':NvimTreeFindFile<CR>', {silent = true})
@@ -204,16 +201,15 @@ g.AutoPairsMultilineClose = 0
 -----------------------VIM MOVE-----------------------------
 g.move_key_modifier = 'C'
 
------------------------VIM PRETTIER-------------------------
-g['prettier#autoformat'] = 0
-g['prettier#exec_cmd_async'] = 1
-g['prettier#config#single_quote'] = 'true'
-
 ------------------- TREE-SITTER ---------------------------
 local ts = require 'nvim-treesitter.configs'
 ts.setup {
-  ensure_installed = 'maintained',
-  highlight = { enable = true }
+  ensure_installed = {'html', 'css', 'json', 'jsdoc', 'javascript', 'typescript', 'python', 'lua'},
+  indent = { enable = true },
+  highlight = {
+    enable = true,
+    use_languagetree = true
+  }
 }
 
 ------------------- COC NVIM ---------------------------
@@ -231,6 +227,7 @@ map('i', '<S-Tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], {noremap = true, e
 -- nmap <silent> <leader>h :call <SID>show_documentation()<CR>
 
 map('n', '<leader>h', ':lua show_documentation()<CR>', { noremap = false, silent = false });
+map('n', '<leader>p', ':CocCommand prettier.formatFile<CR>', { noremap = false, silent = false });
 
 function show_documentation()
    local filetype = vim.bo.filetype
@@ -247,12 +244,8 @@ end
 opt('o', 'shortmess', vim.o.shortmess .. 'c')
 opt('o', 'signcolumn', 'yes')
 
--- g.coc_status_error_sign = ''
--- g.coc_status_warning_sign = ' '
 cmd([[autocmd CursorHold * silent call CocActionAsync('highlight')]])
--- cmd([[hi CocErrorLine guibg=#2e323c]])
 cmd([[hi CocErrorHighlight guifg=#ff0000 ctermfg=15 gui=bold,undercurl cterm=bold,undercurl]])
--- cmd([[hi CocWarningLine guibg=#2e323c]])
 
 -- use this for coc-css
 cmd([[autocmd FileType scss setl iskeyword+=@-@]])
@@ -293,8 +286,6 @@ cmd([[autocmd FileType scss setl iskeyword+=@-@]])
 -- -- Set completeopt to have a better completion experience
 -- cmd([[set completeopt=menuone,noinsert,noselect]])
 --
--- --Avoid showing message extra message when using completion
--- cmd([[set shortmess+=c]])
 
 ------------------- ECHO DOC-----------------------------------
 g['echodoc#enable_at_startup'] = 1
@@ -318,7 +309,7 @@ opt('o', 'showmode', false)
 opt('o', 'clipboard', 'unnamedplus')
 
 --You will have bad experience for diagnostic messages when it's default 4000.
-opt('o', 'updatetime', 200)
+opt('o', 'updatetime', 300)
 
 opt('o', 'laststatus', 2)
 
@@ -346,10 +337,6 @@ opt('b', 'tabstop', indent)
 opt('b', 'softtabstop', indent)
 opt('b', 'expandtab', true)
 opt('b', 'autoindent', true)
-
-
---Auto remove trailing spaces
-cmd([[autocmd BufWritePre * %s/\s\+$//e]])
 
 -- -- highlight yanked text
 -- cmd([[au TextYankPost * lua vim.highlight.on_yank {on_visual = false}]]) -- diasbled in visual mode
