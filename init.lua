@@ -24,8 +24,6 @@ cmd('packadd packer.nvim')         -- Load package
   -- Packer can manage itself as an optional plugin
   use {'wbthomason/packer.nvim', opt = true}
 
-  use 'nxvu699134/zephyr-nvim'
-
   use {'itchyny/lightline.vim'}
 
   use {'kyazdani42/nvim-web-devicons'}
@@ -51,8 +49,8 @@ cmd('packadd packer.nvim')         -- Load package
 
   use {'jiangmiao/auto-pairs'}
 
-  use {'nvim-treesitter/nvim-treesitter', commit = 'a74da044a8c208177c0af56eeab709859e2fda38'}
   -- use {'nvim-treesitter/nvim-treesitter'}
+  use {'nvim-treesitter/nvim-treesitter', commit = 'a74da044a8c208177c0af56eeab709859e2fda38'}
   use {'nvim-treesitter/nvim-treesitter-angular'}
   --
   -- use{'tree-sitter-typescript/typescript'};
@@ -75,10 +73,8 @@ end)
 
 -----------------------COLOR SCHEME-----------------------
 cmd 'syntax enable'
-g['$NVIM_TUI_ENABLE_TRUE_COLOR'] = 1
-opt('o', 'termguicolors', true)
-opt('o', 'background', 'dark')
-cmd 'colorscheme zephyr'
+cmd([[let $NVIM_TUI_ENABLE_TRUE_COLOR = 1]])
+require('colors').apply_colorscheme()
 
 -----------------------LIGHTLINE-----------------------
 g.lightline = {
@@ -157,12 +153,13 @@ g.fzf_colors = {
   fg = {'fg', 'Comment'},
   bg = {'bg', 'Normal'},
   hl = {'fg', 'Normal'},
-  ['fg+'] = {'fg', 'CursorLine', 'CursorColumn', 'Normal'},
-  ['bg+'] = {'bg', 'CursorLine', 'CursorColumn'},
+  ['fg+'] = {'fg', 'Normal'},
+  ['bg+'] = {'bg', 'CursorColumn'},
   ['hl+'] = {'fg', 'Statement'},
   info = {'fg', 'PreProc'},
-  border =  {'fg', 'Ignore'},
-  prompt =  {'fg', 'Conditional'},
+  -- border =  {'fg', 'Ignore'},
+  border =  {'fg', 'Type'},
+  prompt =  {'fg', 'WarningMsg'},
   pointer = {'fg', 'Exception'},
   marker =  {'fg', 'Keyword'},
   spinner = {'fg', 'Label'},
@@ -349,10 +346,10 @@ map('n', 'q', '<Nop>')
 ----------------------VIM STARTIFY--------------------------------
 g.startify_change_to_dir = 0
 g.startify_lists = {
-       { type = 'sessions',  header = {'   Sessions'}       },
-       { type = 'dir',       header = {string.format('    MRU %s', vim.fn.getcwd())} },
-       { type = 'bookmarks', header = {'   Bookmarks'}      },
-       { type = 'commands',  header = {'   Commands'}       },
+  { type = 'sessions',  header = {'   Sessions'}                  },
+  { type = 'dir',       header = {'    MRU ' .. vim.fn.getcwd()} },
+  { type = 'bookmarks', header = {'   Bookmarks'}                 },
+  { type = 'commands',  header = {'   Commands'}                  },
 }
 
 g.startify_custom_header = {
@@ -380,10 +377,3 @@ g.startify_custom_header = {
 '',
 '',
 }
---g.dashboard_custom_shortcut_icon['last_session'] = ' '
---g.dashboard_custom_shortcut_icon['find_history'] = 'ﭯ '
---g.dashboard_custom_shortcut_icon['find_file'] = ' '
---g.dashboard_custom_shortcut_icon['new_file'] = ' '
---g.dashboard_custom_shortcut_icon['change_colorscheme'] = ' '
---g.dashboard_custom_shortcut_icon['find_word'] = ' '
---g.dashboard_custom_shortcut_icon['book_marks'] = ' '
