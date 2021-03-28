@@ -11,8 +11,8 @@ fi
 # export GOPATH=$HOME/Workspace/Golang
 #
 #
-# export TERM="xterm-256color"
-export TERM="screen-256color"
+export TERM="xterm-256color"
+# export TERM="screen-256color"
 # export TERM="tmux-256color"
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -71,6 +71,7 @@ plugins=(
   zsh-autosuggestions
   zsh-syntax-highlighting
   vi-mode
+  # zsh-vi-mode
   tmux
   git
 )
@@ -79,6 +80,9 @@ autoload -U compinit && compinit
 
 # Use this flag for surroot alias
 ZSH_DISABLE_COMPFIX=true
+
+# 10ms for key sequences
+KEYTIMEOUT=1
 
 source $ZSH/oh-my-zsh.sh
 
