@@ -1,6 +1,7 @@
 # Personal dotfiles
 
-![image](https://user-images.githubusercontent.com/27850048/114176359-3c755080-9965-11eb-82e6-fb7ec8043b38.png)
+![image](https://user-images.githubusercontent.com/27850048/114176534-78101a80-9965-11eb-9612-e2ce7196b2e4.png)
+
 
 ```
 sudo apt install zsh
