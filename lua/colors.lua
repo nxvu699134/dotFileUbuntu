@@ -197,4 +197,4 @@ function apply()
   end
 end
 
-return { apply_colorscheme = apply }
+return { apply_colorscheme = apply, schema = schema }

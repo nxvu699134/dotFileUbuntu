@@ -5,7 +5,6 @@ local g = vim.g      -- a table to access global variables
 local scopes = {o = vim.o, b = vim.bo, w = vim.wo}
 
 g.mapleader = ","
--- cmd('filetype plugin indent on')
 
 local function opt(scope, key, value)
   scopes[scope][key] = value
@@ -24,7 +23,8 @@ cmd('packadd packer.nvim')         -- Load package
   -- Packer can manage itself as an optional plugin
   use {'wbthomason/packer.nvim', opt = true}
 
-  use {'itchyny/lightline.vim'}
+  -- use {'itchyny/lightline.vim'}
+  use {'glepnir/galaxyline.nvim'}
 
   use {'kyazdani42/nvim-web-devicons'}
   use {'kyazdani42/nvim-tree.lua'}
@@ -38,7 +38,8 @@ cmd('packadd packer.nvim')         -- Load package
 
   use {'tpope/vim-surround'}
 
-  use {'Yggdroot/indentLine'}
+  -- use {'Yggdroot/indentLine'}
+  use {"lukas-reineke/indent-blankline.nvim", branch = "lua"}
 
   use {'airblade/vim-gitgutter'}
   use {'tpope/vim-fugitive'}
@@ -49,9 +50,9 @@ cmd('packadd packer.nvim')         -- Load package
 
   use {'jiangmiao/auto-pairs'}
 
-  -- use {'nvim-treesitter/nvim-treesitter'}
-  use {'nvim-treesitter/nvim-treesitter', commit = 'a74da044a8c208177c0af56eeab709859e2fda38'}
-  use {'nvim-treesitter/nvim-treesitter-angular'}
+  use {'nvim-treesitter/nvim-treesitter'}
+  -- use {'nvim-treesitter/nvim-treesitter', commit = 'a74da044a8c208177c0af56eeab709859e2fda38'}
+  -- use {'nvim-treesitter/nvim-treesitter-angular'}
   --
   -- use{'tree-sitter-typescript/typescript'};
   -- use{'tree-sitter-typescript/tsx'};
@@ -77,29 +78,30 @@ cmd([[let $NVIM_TUI_ENABLE_TRUE_COLOR = 1]])
 require('colors').apply_colorscheme()
 
 -----------------------LIGHTLINE-----------------------
-g.lightline = {
-  colorscheme = 'OldHope',
-  active = {
-    left = {
-      { 'mode', 'paste' },
-      { 'readonly', 'filename', 'modified' }
-    },
-    right = {
-      { 'lineinfo' },
-      { 'filetype' }
-    }
-  },
-  inactive = {
-    left = {
-      {'filename', 'modified'}
-    },
-    right = {
-      {'filetype'}
-    }
-  },
-  separator = { left = '', right = ''},
-  subseparator = { left = '', right = ''},
-}
+require('statusline')
+-- g.lightline = {
+--   colorscheme = 'OldHope',
+--   active = {
+--     left = {
+--       { 'mode', 'paste' },
+--       { 'readonly', 'filename', 'modified' }
+--     },
+--     right = {
+--       { 'lineinfo' },
+--       { 'filetype' }
+--     }
+--   },
+--   inactive = {
+--     left = {
+--       {'filename', 'modified'}
+--     },
+--     right = {
+--       {'filetype'}
+--     }
+--   },
+--   separator = { left = '', right = ''},
+--   subseparator = { left = '', right = ''},
+-- }
 -- Use autocmd to force lightline update.
 -- cmd([[autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()]])
 
@@ -201,8 +203,8 @@ g.move_key_modifier = 'C'
 ------------------- TREE-SITTER ---------------------------
 local ts = require 'nvim-treesitter.configs'
 ts.setup {
-  ensure_installed = {'html', 'css', 'json', 'jsdoc', 'javascript', 'typescript', 'python', 'lua'},
-  indent = { enable = true },
+  ensure_installed = {'html', 'css', 'json', 'jsdoc', 'javascript', 'typescript', 'python', 'lua', 'tsx'},
+  -- indent = { enable = true },
   highlight = {
     enable = true,
     use_languagetree = true
@@ -230,10 +232,10 @@ function show_documentation()
    local filetype = vim.bo.filetype
 
    if filetype == 'vim'  or filetype == 'help' then
-        vim.api.nvim_command('h ' .. filetype)
+    vim.api.nvim_command('h ' .. filetype)
 
    elseif (fn['coc#rpc#ready']()) then
-      fn.CocActionAsync('doHover')
+    fn.CocActionAsync('doHover')
    end
 end
 
@@ -287,6 +289,13 @@ cmd([[autocmd FileType scss setl iskeyword+=@-@]])
 ------------------- ECHO DOC-----------------------------------
 g['echodoc#enable_at_startup'] = 1
 g['echodoc#type']= 'virtual'
+
+------------------- INDENT LINE-----------------------------------
+-- g['indent_blankline_char_highlight_list'] = {'Error', 'Function'}
+-- cmd("let g:indent_blankline_space_char_highlight_list = ['Error', 'Function']")
+g['indent_blankline_show_current_context'] = true
+g['indent_blankline_context_patterns'] = {'class', 'function', 'method', '^if', '^while', '^for', '^object', '^table', 'block', 'arguments', 'element'}
+-- cmd([[let g:indent_blankline_use_treesitter = v:true]])
 
 ---------------------MICS--------------------------------
 --Navigate buffer vim
