@@ -1,3 +1,7 @@
+# Personal dotfiles
+
+![image](https://user-images.githubusercontent.com/27850048/114176359-3c755080-9965-11eb-82e6-fb7ec8043b38.png)
+
 ```
 sudo apt install zsh
 sudo apt install tmux
@@ -43,20 +47,6 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-m
 git clone https://github.com/zsh-users/zsh-completions ~/.oh-my-zsh/custom/plugins/zsh-completions
 ```
 
-- Install Vundle
-
-```
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.config/nvim/bundle/Vundle.vim
-```
-
-- Docker
-
-```
-sudo apt install docker.io
-sudo systemctl enable --now docker
-sudo usermod -aG docker $USER
-```
-
 - Lazygit
 
 ```
@@ -68,24 +58,4 @@ sudo apt-get install lazygit
 - Use Alacritty as default terminal (Ctrl + Alt + T)
 ```
 gsettings set org.gnome.desktop.default-applications.terminal exec 'alacritty'
-```
-
-# Terminal config
-- Text: #CDE0E3
-- Background: #333333
-- Cursor color: #030000 #C7C7C7
-
-# Setup for web dev
-
-- Config Vim
-
-```
-CocInstall coc-tsserver coc-json coc-css coc-highlight coc-html coc-angular
-```
-
-- Angular
-
-```
-npm install -g @angular/cli
-npm install -g prettier
 ```
