@@ -102,7 +102,7 @@ source $ZSH/oh-my-zsh.sh
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
 
-alias vim="nvim"
+alias v="nvim"
 export EDITOR='nvim'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 

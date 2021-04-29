@@ -32,7 +32,8 @@
   # The list of segments shown on the left. Fill it with the most important segments.
   typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
     # =========================[ Line #1 ]=========================
-    os_icon                 # os identifier
+    # os_icon                 # os identifier
+    vi_mode
     root_indicator
     dir                     # current directory
     vcs                     # git status
@@ -52,12 +53,12 @@
     # background_jobs         # presence of background jobs
     # direnv                  # direnv status (https://direnv.net/)
     # asdf                    # asdf version manager (https://github.com/asdf-vm/asdf)
-    # virtualenv              # python virtual environment (https://docs.python.org/3/library/venv.html)
+    virtualenv              # python virtual environment (https://docs.python.org/3/library/venv.html)
     # anaconda                # conda environment (https://conda.io/)
     # pyenv                   # python environment (https://github.com/pyenv/pyenv)
     # goenv                   # go environment (https://github.com/syndbg/goenv)
     # nodenv                  # node.js version from nodenv (https://github.com/nodenv/nodenv)
-    # nvm                     # node.js version from nvm (https://github.com/nvm-sh/nvm)
+    nvm                     # node.js version from nvm (https://github.com/nvm-sh/nvm)
     # nodeenv                 # node.js environment (https://github.com/ekalinin/nodeenv)
     # node_version          # node.js version
     # go_version            # go version (https://golang.org)
@@ -211,17 +212,18 @@
   # Current directory background color.
   typeset -g POWERLEVEL9K_DIR_BACKGROUND=4
   # Default current directory foreground color.
-  typeset -g POWERLEVEL9K_DIR_FOREGROUND=254
+  # typeset -g POWERLEVEL9K_DIR_FOREGROUND=254
+  typeset -g POWERLEVEL9K_DIR_FOREGROUND=16
   # If directory is too long, shorten some of its segments to the shortest possible unique
   # prefix. The shortened directory can be tab-completed to the original.
   typeset -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_unique
   # Replace removed segment suffixes with this symbol.
   typeset -g POWERLEVEL9K_SHORTEN_DELIMITER=
   # Color of the shortened directory segments.
-  typeset -g POWERLEVEL9K_DIR_SHORTENED_FOREGROUND=250
+  # typeset -g POWERLEVEL9K_DIR_SHORTENED_FOREGROUND=250
   # Color of the anchor directory segments. Anchor segments are never shortened. The first
   # segment is always an anchor.
-  typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND=255
+  # typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND=255
   # Display anchor directory segments in bold.
   typeset -g POWERLEVEL9K_DIR_ANCHOR_BOLD=true
   # Don't shorten directories that contain any of these files. They are anchors.
@@ -756,17 +758,17 @@
   # Foreground color.
   typeset -g POWERLEVEL9K_VI_MODE_FOREGROUND=0
   # Text and color for normal (a.k.a. command) vi mode.
-  typeset -g POWERLEVEL9K_VI_COMMAND_MODE_STRING=NORMAL
-  typeset -g POWERLEVEL9K_VI_MODE_NORMAL_BACKGROUND=2
+  typeset -g POWERLEVEL9K_VI_COMMAND_MODE_STRING=' '
+  typeset -g POWERLEVEL9K_VI_MODE_NORMAL_FOREGROUND=87
   # Text and color for visual vi mode.
-  typeset -g POWERLEVEL9K_VI_VISUAL_MODE_STRING=VISUAL
-  typeset -g POWERLEVEL9K_VI_MODE_VISUAL_BACKGROUND=4
+  typeset -g POWERLEVEL9K_VI_VISUAL_MODE_STRING=' '
+  typeset -g POWERLEVEL9K_VI_MODE_VISUAL_FOREGROUND=190
   # Text and color for overtype (a.k.a. overwrite and replace) vi mode.
   typeset -g POWERLEVEL9K_VI_OVERWRITE_MODE_STRING=OVERTYPE
   typeset -g POWERLEVEL9K_VI_MODE_OVERWRITE_BACKGROUND=3
   # Text and color for insert vi mode.
-  typeset -g POWERLEVEL9K_VI_INSERT_MODE_STRING=
-  typeset -g POWERLEVEL9K_VI_MODE_INSERT_FOREGROUND=8
+  typeset -g POWERLEVEL9K_VI_INSERT_MODE_STRING=' '
+  typeset -g POWERLEVEL9K_VI_MODE_INSERT_FOREGROUND=46
 
   ######################################[ ram: free RAM ]#######################################
   # RAM color.
