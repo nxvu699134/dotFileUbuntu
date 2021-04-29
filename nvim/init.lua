@@ -38,6 +38,8 @@ cmd('packadd packer.nvim')         -- Load package
 
   use {'tpope/vim-surround'}
 
+  use { 'rafcamlet/coc-nvim-lua' }
+
   -- use {'Yggdroot/indentLine'}
   use {"lukas-reineke/indent-blankline.nvim", branch = "lua"}
 
@@ -51,7 +53,6 @@ cmd('packadd packer.nvim')         -- Load package
   use {'jiangmiao/auto-pairs'}
 
   use {'nvim-treesitter/nvim-treesitter'}
-  -- use {'nvim-treesitter/nvim-treesitter', commit = 'a74da044a8c208177c0af56eeab709859e2fda38'}
   -- use {'nvim-treesitter/nvim-treesitter-angular'}
   --
   -- use{'tree-sitter-typescript/typescript'};
@@ -69,14 +70,13 @@ cmd('packadd packer.nvim')         -- Load package
   use {'alvan/vim-closetag'}
 
 -- javascript, typescript
-  use {'Shougo/echodoc.vim'}
+  -- use {'Shougo/echodoc.vim'}
 end)
 
 -----------------------COLOR SCHEME-----------------------
 cmd 'syntax enable'
 cmd([[let $NVIM_TUI_ENABLE_TRUE_COLOR = 1]])
 require('colors').apply_colorscheme()
-
 -----------------------LIGHTLINE-----------------------
 require('statusline')
 -- g.lightline = {
@@ -143,7 +143,7 @@ vim.g.nvim_tree_bindings = {
 }
 map('', '<leader>ls', ':NvimTreeToggle<CR>', {silent = true})
 map('', '<leader>lf', ':NvimTreeFindFile<CR>', {silent = true})
-cmd('autocmd FileType NvimTree setlocal cursorline')
+cmd('autocmd BufWinEnter NvimTree setlocal cursorline')
 
 ----------------------FZF--------------------------------
 -- g['$FZF_DEFAULT_COMMAND'] = [[ag --hidden --ignore .git --ignore node_modules -l -g ""]]
@@ -198,7 +198,7 @@ map('', '<Leader>gb', ':Gblame<CR>')
 g.AutoPairsMultilineClose = 0
 
 -----------------------VIM MOVE-----------------------------
-g.move_key_modifier = 'C'
+g.move_key_modifier = 'A'
 
 ------------------- TREE-SITTER ---------------------------
 local ts = require 'nvim-treesitter.configs'
@@ -212,6 +212,8 @@ ts.setup {
 }
 
 ------------------- COC NVIM ---------------------------
+g['coc_global_extensions'] = { 'coc-html', 'coc-css', 'coc-prettier', 'coc-angular', 'coc-highlight',  'coc-tsserver', 'coc-json'}
+
 cmd([[nmap <silent> <leader>jd <Plug>(coc-definition)]])
 cmd([[nmap <silent> <leader>jr <Plug>(coc-references)]])
 cmd([[nmap <silent> <leader>ji <Plug>(coc-implementation)]])
@@ -222,8 +224,6 @@ cmd([[nmap <silent> <leader>f  <Plug>(coc-fix-current)]])
 -- Use <Tab> and <S-Tab> to navigate through popup menu
 map('i', '<Tab>', [[pumvisible() ? "\<C-n>" : "\<Tab>"]], {noremap = true, expr = true})
 map('i', '<S-Tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], {noremap = true, expr = true})
-
--- nmap <silent> <leader>h :call <SID>show_documentation()<CR>
 
 map('n', '<leader>h', ':lua show_documentation()<CR>', { noremap = false, silent = false });
 map('n', '<leader>p', ':CocCommand prettier.formatFile<CR>', { noremap = false, silent = false });
@@ -287,15 +287,15 @@ cmd([[autocmd FileType scss setl iskeyword+=@-@]])
 --
 
 ------------------- ECHO DOC-----------------------------------
-g['echodoc#enable_at_startup'] = 1
-g['echodoc#type']= 'virtual'
+-- g['echodoc#enable_at_startup'] = 1
+-- g['echodoc#type']= 'virtual'
 
 ------------------- INDENT LINE-----------------------------------
 -- g['indent_blankline_char_highlight_list'] = {'Error', 'Function'}
 -- cmd("let g:indent_blankline_space_char_highlight_list = ['Error', 'Function']")
+cmd('set colorcolumn=99999')
 g['indent_blankline_show_current_context'] = true
 g['indent_blankline_context_patterns'] = {'class', 'function', 'method', '^if', '^while', '^for', '^object', '^table', 'block', 'arguments', 'element'}
--- cmd([[let g:indent_blankline_use_treesitter = v:true]])
 
 ---------------------MICS--------------------------------
 --Navigate buffer vim

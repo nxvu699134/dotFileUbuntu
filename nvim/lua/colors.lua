@@ -20,6 +20,8 @@ local schema = {
 
   magenta       = '#d16d9e';
   orange        = '#da8548';
+  -- orange        = '#ff7538';
+  -- yellow        = '#ffce5c';
   yellow        = '#ffc24b';
   green         = '#98c379';
   cyan          = '#36d0e0';
@@ -68,6 +70,7 @@ function load_syntax()
     DiffDelete            = { fg=schema.black,    bg=schema.red };
     DiffText              = { fg=schema.black,    bg=schema.fg };
     Directory             = { fg=schema.bg1,      bg=schema.none};
+    -- Directory             = { fg=schema.blue,      bg=schema.none};
     ErrorMsg              = { fg=schema.red,      bg=schema.none,         style='bold'};
     WarningMsg            = { fg=schema.yellow,   bg=schema.none,         style='bold'};
     ModeMsg               = { fg=schema.fg,       bg=schema.none,         style='bold'};
@@ -140,7 +143,8 @@ function load_syntax()
     GitGutterChangeDelete = { fg=schema.violet,   bg=schema.none};
 
     NvimTreeFolderName    = { fg=schema.blue,     bg=schema.none};
-    NvimTreeRootFolder    = { fg=schema.red,      bg=schema.none,         style='bold'};
+    NvimTreeRootFolder    = { fg=schema.red,      bg=schema.none,         style='bold' };
+    NvimTreeOpenedFolderName = { fg=schema.blue,     bg=schema.none,      style='bold' };
 
     TSParameter           = { fg=schema.fg,       bg=schema.none };
 

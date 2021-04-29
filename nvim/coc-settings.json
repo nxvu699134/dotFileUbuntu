@@ -6,7 +6,7 @@
   "diagnostic.infoSign": "",
   "diagnostic.checkCurrentLine": true,
   "diagnostic.refreshOnInsertMode": true,
-  "suggest.echodocSupport": true,
+  "suggest.echodocSupport": false,
   "suggest.maxCompleteItemCount": 10,
   "suggest.completionItemKindLabels": {
     "keyword": "\uf1de Keyword",
@@ -27,7 +27,7 @@
     "color": "\ue22b Color",
     "property": "\ue624 Property",
     "field": "\uf6a6 Field",
-    "unit": "\uf475 Uni",
+    "unit": "\uf475 Unit",
     "event": "\ufacd Event",
     "file": "\uf723 File",
     "folder": "\uf114 Folder",
