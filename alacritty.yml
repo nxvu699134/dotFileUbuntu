@@ -83,7 +83,7 @@ scrolling:
 
   # Number of lines the viewport will move for every line scrolled when
   # scrollback is enabled (history > 0).
-  multiplier: 3
+  multiplier: 4
 
 # Font configuration
 font:
@@ -164,7 +164,7 @@ font:
   #use_thin_strokes: true
 
 # If `true`, bold text is drawn using the bright color variants.
-draw_bold_text_with_bright_colors: true
+draw_bold_text_with_bright_colors: false
 
 # Colors (Tomorrow Night Bright)
 # colors:
@@ -189,32 +189,22 @@ draw_bold_text_with_bright_colors: true
 colors:
   # Default colors
   primary:
-    background: '#23272F'
-    foreground: '0xcbe1e7'
+    background: '#171831'
+    foreground: '#F3FFFF'
 # Cursor colors
   cursor:
-    text:   '0x2c2c2c'
-    cursor: '0xd9d9d9'
+    text:   '#0e1a2a'
+    cursor: '#F3FFFF'
   # Normal colors
   normal:
-    black:   '0x141228'
-    red:     '0xff5458'
-    green:   '0x62d196'
-    yellow:  '0xffb378'
-    blue:    '0x65b2ff'
-    magenta: '0x906cff'
-    cyan:    '0x63f2f1'
-    white:   '0xa6b3cc'
-  # Bright colors
-  bright:
-    black:   '0x565575'
-    red:     '0xff8080'
-    green:   '0x95ffa4'
-    yellow:  '0xffe9aa'
-    blue:    '0x91ddff'
-    magenta: '0xc991e1'
-    cyan:    '0xaaffe4'
-    white:   '0xcbe3e7'
+    black:   '#000111'
+    red:     '#ff3c41'
+    green:   '#23D4AC'
+    yellow:  '#f79617'
+    blue:    '#32b4ff'
+    magenta: '#906cff'
+    cyan:    '#50EAFA'
+    white:   '#F3FFFF'
 
 # Visual Bell
 #
@@ -317,28 +307,6 @@ mouse:
 
   # If this is `true`, the cursor is temporarily hidden when typing.
   hide_when_typing: false
-
-  url:
-    # URL launcher
-    #
-    # This program is executed when clicking on a text which is recognized as a URL.
-    # The URL is always added to the command as the last parameter.
-    #
-    # When set to `None`, URL launching will be disabled completely.
-    #
-    # Default:
-    #   - (macOS) open
-    #   - (Linux/BSD) xdg-open
-    #   - (Windows) explorer
-    #launcher:
-    #  program: xdg-open
-    #  args: []
-
-    # URL modifiers
-    #
-    # These are the modifiers that need to be held down for opening URLs when clicking
-    # on them. The available modifiers are documented in the key binding section.
-    modifiers: None
 
 # Mouse bindings
 #

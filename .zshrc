@@ -82,7 +82,7 @@ autoload -U compinit && compinit
 ZSH_DISABLE_COMPFIX=true
 
 # 10ms for key sequences
-KEYTIMEOUT=1
+KEYTIMEOUT=10
 
 source $ZSH/oh-my-zsh.sh
 
