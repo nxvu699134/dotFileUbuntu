@@ -1,6 +1,7 @@
 {
   "coc.preferences.extensionUpdateCheck": "never",
   "coc.preferences.jumpCommand": "vsplit",
+  "coc.preferences.formatOnSaveFiletypes": ["scss", "typescript", "javascript", "svelte", "html"],
   "diagnostic.errorSign": "",
   "diagnostic.warningSign": " ",
   "diagnostic.infoSign": "",
