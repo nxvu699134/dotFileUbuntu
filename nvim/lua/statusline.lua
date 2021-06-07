@@ -1,38 +1,39 @@
 local gl = require('galaxyline')
 local gls = gl.section
--- local condition = require('galaxyline.condition')
--- local diagnostic = require('galaxyline.provider_diagnostic')
 local fileinfo = require('galaxyline.provider_fileinfo')
 
 gl.short_line_list = {'NvimTree','vista','dbui','packer', 'startify'}
 
+local schema = require('colors').schema
 
 local colors = {
-  bg = '#22272e',
-  section_bg = '#3D434F',
-  fg = '#f8f8f2',
-  grey = "#545454",
+  bg = schema.gray2,
+  section_bg = schema.gray3,
+  fg = schema.gray10,
+  grey = schema.gray4,
 
-  blue = '#8be9fd',
-  yellow = '#ffc44c',
-  orange = '#ffae57',
-  red = '#ff5555',
-  magenta = '#ff79c6',
-  cyan = '#59c2ff',
-  green = '#39d353',
+  orange = schema.orange;
+  yellow = schema.yellow;
+  green  = schema.green;
+  cyan   = schema.cyan;
+  blue   = schema.blue;
+  red    = schema.red;
+  teal   = schema.teal;
+  purple = schema.purple;
+}
+
+local mode_color_schema = {
+  n = colors.purple,
+  i = colors.teal,
+  c = colors.orange,
+  V = colors.blue,
+  [''] = colors.blue,
+  v = colors.blue,
+  R = colors.red,
 }
 
 local mode_color = function()
-  local mode_colors = {
-    n = colors.cyan,
-    i = colors.green,
-    c = colors.orange,
-    V = colors.magenta,
-    [''] = colors.magenta,
-    v = colors.magenta,
-    R = colors.red,
-  }
-  return mode_colors[vim.fn.mode()]
+  return mode_color_schema[vim.fn.mode()]
 end
 
 local icons = {
@@ -76,16 +77,20 @@ end
 local i = 1
 gls.left[i] = {
   FirstElement = {
-    provider = function() return icons.sep.right end,
-    highlight = { colors.cyan, colors.bg }
+    provider = function() 
+      vim.api.nvim_command('hi GalaxyFirstElement guifg='..mode_color())
+      return icons.sep.right
+    end,
   },
 }
 
 i = i + 1
 gls.left[i] = {
   Logo = {
-    provider = function() return '   ' end,
-    highlight = { colors.bg, colors.cyan }
+    provider = function()
+      vim.api.nvim_command('hi GalaxyLogo guibg='..mode_color())
+      return '   ' 
+    end,
   },
 }
 
@@ -102,12 +107,22 @@ gls.left[i] = {
         v       = 'VISUAL ',
         R       = 'REPLACE',
       }
-      vim.api.nvim_command('hi GalaxyViMode guifg='..mode_color()..' gui=bold')
-      return '  ' .. alias[vim.fn.mode()]
+      vim.api.nvim_command('hi GalaxyViMode guibg='..mode_color()..' gui=bold')
+      return '' .. alias[vim.fn.mode()]
     end,
     highlight = { colors.bg, colors.bg },
-    separator = icons.sep.left,
-    separator_highlight = {colors.bg, colors.section_bg},
+    -- separator = icons.sep.left,
+    -- separator_highlight = {colors.bg, colors.section_bg},
+  },
+}
+
+i= i + 1
+gls.left[i] = {
+  ViModeSep = {
+    provider = function()
+      vim.api.nvim_command('hi GalaxyViModeSep guifg='..mode_color()..' guibg='..colors.section_bg)
+      return icons.sep.left .. ' '
+    end,
   },
 }
 
@@ -134,7 +149,7 @@ gls.left[i] = {
   DiagnosticError = {
     provider = 'DiagnosticError',
     icon = icons.diagnostic.error,
-    highlight = {colors.red, colors.bg}
+    highlight = {schema.diag.danger.fg, colors.bg}
   }
 }
 
@@ -151,7 +166,7 @@ gls.left[i] = {
   DiagnosticWarn = {
     provider = 'DiagnosticWarn',
     icon = icons.diagnostic.warn,
-    highlight = {colors.orange, colors.bg},
+    highlight = {schema.diag.warning.fg, colors.bg},
   }
 }
 
@@ -168,7 +183,7 @@ gls.left[i] = {
   DiagnosticInfo = {
     provider = 'DiagnosticInfo',
     icon = icons.diagnostic.info,
-    highlight = {colors.blue, colors.bg},
+    highlight = {schema.diag.info.fg, colors.bg},
   }
 }
 
@@ -194,8 +209,10 @@ gls.right[j] = {
 j = j + 1
 gls.right[j] = {
   LastElement = {
-    provider = function() return icons.sep.left end,
-    highlight = { colors.cyan, colors.bg }
+    provider = function()
+      vim.api.nvim_command('hi GalaxyLastElement guifg='..mode_color())
+      return icons.sep.left
+    end,
   },
 }
 
@@ -204,7 +221,7 @@ local k = 1
 gls.short_line_left[k] = {
   SFirstElement = {
     provider = function() return icons.sep.right end,
-    highlight = { colors.grey, colors.bg },
+    highlight = { colors.grey, 'NONE' },
     separator = icons.sep.left,
     separator_highlight = {colors.bg, colors.bg},
   },
@@ -232,6 +249,6 @@ k = k + 1
 gls.short_line_right[k] = {
   SLastElement = {
     provider = function() return icons.sep.left end,
-    highlight = { colors.grey, colors.bg }
+    highlight = { colors.grey, 'NONE' }
   },
 }
