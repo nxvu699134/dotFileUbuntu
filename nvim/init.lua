@@ -14,6 +14,7 @@ vim.cmd('packadd packer.nvim')         -- Load package
   use {'kyazdani42/nvim-tree.lua'}
    --use {'kyazdani42/nvim-web-devicons'}
   use {'nxvu699134/nvim-web-devicons'}
+  use {'nxvu699134/vn-night.nvim'}
 
   use {'junegunn/fzf', run = function() vim.fn['fzf#install']() end}
   use {'junegunn/fzf.vim'}
@@ -55,11 +56,14 @@ end)
 -----------------------COLOR SCHEME-----------------------
 -- vim.cmd 'syntax enable'
 -- vim.cmd([[let $NVIM_TUI_ENABLE_TRUE_COLOR = 1]])
--- vim.cmd('colorscheme tokyonight')
+-- vim.cmd('colorscheme vn-night')
 
-require('colors').setup()
+require('vn-night').setup()
+require('vn-night.galaxyline')
 
-require('statusline')
+-- require('colors').setup()
+--
+-- require('statusline')
 
 require('file_explorer')
 
