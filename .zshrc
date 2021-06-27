@@ -70,7 +70,7 @@ plugins=(
   zsh-completions
   zsh-autosuggestions
   zsh-syntax-highlighting
-  vi-mode
+  # vi-mode
   # zsh-vi-mode
   tmux
   git
