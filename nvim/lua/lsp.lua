@@ -49,13 +49,16 @@ u.map('n', '<leader>ep', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', map_opts
 local lsp_signature_attach = function()
   require "lsp_signature".on_attach({
     bind = true, -- This is mandatory, otherwise border config won't get registered.
+    doc_lines = 2,
+    max_height = 4,
+    floating_window = true,
     hint_enable = false,
-    hint_prefix = " ",
-    hint_scheme = "LspDiagnosticsVirtualTextWarning",
+    hi_parameter = "LspDiagnosticsVirtualTextWarning",
+    -- hint_prefix = " ",
+    -- hint_scheme = "LspDiagnosticsVirtualTextWarning",
     handler_opts = {
       border = "none",
     },
-    decorator = {"**", "**"}
   })
 end
 
@@ -85,9 +88,6 @@ require'lspconfig'.cssls.setup{ on_attach = on_attach }
 
 -- npm install -g typescript typescript-language-server
 require'lspconfig'.tsserver.setup{ on_attach = on_attach }
-
--- npm install -g @angular/language-server
-require'lspconfig'.angularls.setup{ on_attach = on_attach }
 
 -- local servers = {"html", "cssls", "tsserver" }
 --

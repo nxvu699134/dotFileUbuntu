@@ -6,6 +6,9 @@ vim.g.AutoPairsMultilineClose = 0
 --VIM MOVE
 vim.g.move_key_modifier = 'A'
 
+-- COLORIZER
+-- require'colorizer'.setup()
+
 ------------------- INDENT LINE-----------------------------------
 vim.cmd('set colorcolumn=99999')
 vim.g['indent_blankline_show_current_context'] = true
@@ -55,6 +58,8 @@ u.opt('o', 'autoread', true)
 u.opt('w', 'relativenumber', true)
 
 u.opt('b', 'swapfile', false)
+
+u.opt('o', 'wrap', true)
 
 local indent = 2
 u.opt('b', 'shiftwidth', indent)

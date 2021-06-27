@@ -6,7 +6,4 @@ ts.setup {
     enable = true,
     use_languagetree = true
   },
-  autotag = {
-    enable = true,
-  }
 }
