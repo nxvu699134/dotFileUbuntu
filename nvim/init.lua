@@ -1,57 +1,102 @@
 vim.g.mapleader = ","
-
--------------------- HELPERS -------------------------------
-local u = require('utils')
+vim.g.loaded_gzip         = 1
+vim.g.loaded_tar          = 1
+vim.g.loaded_tarPlugin    = 1
+vim.g.loaded_zipPlugin    = 1
+vim.g.loaded_2html_plugin = 1
+vim.g.loaded_netrw        = 1
+vim.g.loaded_netrwPlugin  = 1
+vim.g.loaded_matchit      = 1
+vim.g.loaded_matchparen   = 1
+vim.g.loaded_spec         = 1
 
 -------------------- PLUGINS -------------------------------
 vim.cmd('packadd packer.nvim')         -- Load package
- require('packer').startup(function()
+require('packer').startup(function()
   -- Packer can manage itself as an u.optional plugin
   use {'wbthomason/packer.nvim', opt = true}
 
-  use {'glepnir/galaxyline.nvim'}
+  use {
+    'kyazdani42/nvim-tree.lua',
+    config = function() require('plugins.nvim_tree') end
+  }
 
-  use {'kyazdani42/nvim-tree.lua'}
   use {'kyazdani42/nvim-web-devicons'}
-  -- use {'nxvu699134/nvim-web-devicons'}
-  -- use {'nxvu699134/vn-night.nvim'}
 
   use {'junegunn/fzf', run = function() vim.fn['fzf#install']() end}
-  use {'junegunn/fzf.vim'}
+  use {'junegunn/fzf.vim', config = function() require('plugins.fzf') end}
 
-  use {'mhinz/vim-startify'}
+  use {'mhinz/vim-startify', config = function() require('plugins.startify') end}
 
-  use {'scrooloose/nerdcommenter'}
+  use {
+    'scrooloose/nerdcommenter',
+    keys = {'<leader>cc', '<leader>cu'},
+    config = function() require('plugins.nerdcommenter') end
+  }
 
   use {'tpope/vim-surround'}
 
-  use {"lukas-reineke/indent-blankline.nvim", branch = "lua"}
+  use {
+    'lukas-reineke/indent-blankline.nvim',
+    event = "BufRead",
+    config = function() require('plugins.indent_blankline') end
+  }
 
-  use {'airblade/vim-gitgutter'}
-  use {'tpope/vim-fugitive'}
+  use {
+    'tpope/vim-fugitive',
+    config = function() require('plugins.fugitive') end,
+  }
 
-  use {'matze/vim-move'}
+  use {
+    'matze/vim-move',
+    config = function() vim.g.move_key_modifier = 'A' end
+  }
 
   use {'wellle/targets.vim'}
 
-  use {'jiangmiao/auto-pairs'}
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    event = "BufRead",
+    config = function() require('plugins.treesitter') end
+  }
 
-  use {'nvim-treesitter/nvim-treesitter'}
+  use {
+    'windwp/nvim-ts-autotag',
+    event = 'InsertEnter',
+    config = function() require('nvim-ts-autotag').setup() end
+  }
 
+  use {
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    config = function() require('nvim-autopairs').setup() end,
+  }
 
-  -- use {'sbdchd/neoformat'}
+  use {
+    'lewis6991/gitsigns.nvim',
+    requires = { 'nvim-lua/plenary.nvim' },
+    config = function() require('plugins.gitsigns') end
+  }
+
   -- use {'norcalli/nvim-colorizer.lua'}
-  -- use {'neovim/nvim-lspconfig'}
-  -- use {'hrsh7th/nvim-compe'}
-  -- use {'ray-x/lsp_signature.nvim'}
-  -- use {'prettier/vim-prettier'}
-  -- use 'glepnir/lspsaga.nvim'
+  use {'neovim/nvim-lspconfig'}
 
-  use {"neoclide/coc.nvim", branch = "release"}
+  use {
+    'hrsh7th/nvim-compe', 
+    config = function() require('plugins.compe') end,
+    event = 'InsertEnter'
+  }
 
--- HTML, CSS
-  use {'alvan/vim-closetag'}
+  use {'ray-x/lsp_signature.nvim'}
 
+  use {
+    'mhartington/formatter.nvim',
+    config = function() require('plugins.formatter') end
+  }
+
+  use { "tweekmonster/startuptime.vim", cmd = "StartupTime" }
+
+  -- use {"neoclide/coc.nvim", branch = "release"}
 end)
 
 -----------------------COLOR SCHEME-----------------------
@@ -62,25 +107,10 @@ end)
 -- require('vn-night').setup()
 -- require('vn-night.galaxyline')
 
-require('colors').setup()
+require('mycolor').setup()
+require('mics')
+require('lsp')
+-- require('coc')
+
 require('statusline')
 
-require('file_explorer')
-
-require('fzf')
-
-require('git')
-
-require('commenter')
-
-require('TSitter')
-
--- require('completion')
--- require('lsp')
--- require('formatter')
-
-require('coc')
-
-require('startify')
-
-require('mics')

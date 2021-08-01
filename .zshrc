@@ -110,6 +110,9 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+export DENO_INSTALL="/home/joey/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+
 export GOPATH=/home/joey/.go-bin/go
 export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOBIN

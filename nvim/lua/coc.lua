@@ -14,7 +14,7 @@ u.map('i', '<Tab>', [[pumvisible() ? "\<C-n>" : "\<Tab>"]], {noremap = true, exp
 u.map('i', '<S-Tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], {noremap = true, expr = true})
 
 u.map('n', '<leader>h', ':lua show_documentation()<CR>', { noremap = false, silent = false });
--- u.map('n', '<leader>p', ':CocCommand prettier.formatFile<CR>', { noremap = false, silent = false });
+u.map('n', '<leader>p', ':CocCommand prettier.formatFile<CR>', { noremap = false, silent = false });
 
 function show_documentation()
    local filetype = vim.bo.filetype
@@ -29,7 +29,6 @@ end
 
 
 vim.cmd([[autocmd CursorHold * silent call CocActionAsync('highlight')]])
--- vim.cmd([[hi CocErrorHighlight guifg=#ff0000 ctermfg=15 gui=bold,undercurl cterm=bold,undercurl]])
 
 -- use this for coc-css
 vim.cmd([[autocmd FileType scss setl iskeyword+=@-@]])

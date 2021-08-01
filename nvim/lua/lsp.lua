@@ -1,5 +1,3 @@
-local u = require('utils')
-
 vim.fn.sign_define(
     "LspDiagnosticsSignError",
     {
@@ -30,32 +28,32 @@ vim.fn.sign_define(
 vim.fn.sign_define(
     "LspDiagnosticsSignHint",
     { texthl = "LspDiagnosticsSignHint",
-    text = "",
+    text = "💡",
     numhl = "LspDiagnosticsVirtualTextHint"
   }
 )
 
 local map_opts = { noremap = true, silent = true }
-u.map('n', '<leader>jd', '<cmd>vsp<CR> <cmd>lua vim.lsp.buf.definition()<CR>', map_opts)
-u.map('n', '<leader>jr', '<cmd>lua vim.lsp.buf.references()<CR>', map_opts)
-u.map('n', '<leader>h', '<cmd>lua vim.lsp.buf.hover()<CR>', map_opts)
-u.map('n', '<leader>f', '<cmd>lua vim.lsp.buf.code_action()<CR>', map_opts)
-u.map('n', '<leader>ei', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', map_opts)
-u.map('n', '<leader>en', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', map_opts)
-u.map('n', '<leader>ep', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', map_opts)
--- u.map("n", "<leader>p", "<cmd>lua vim.lsp.buf.formatting()<CR>", map_opts)
--- u.map("v", "<leader>p", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", map_opts)
+vim.api.nvim_set_keymap('n', '<leader>jd', '<cmd>vsp<CR> <cmd>lua vim.lsp.buf.definition()<CR>', map_opts)
+vim.api.nvim_set_keymap('n', '<leader>jr', '<cmd>lua vim.lsp.buf.references()<CR>', map_opts)
+vim.api.nvim_set_keymap('n', '<leader>h', '<cmd>lua vim.lsp.buf.hover()<CR>', map_opts)
+vim.api.nvim_set_keymap('n', '<leader>f', '<cmd>lua vim.lsp.buf.code_action()<CR>', map_opts)
+vim.api.nvim_set_keymap('n', '<leader>ei', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', map_opts)
+vim.api.nvim_set_keymap('n', '<leader>en', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', map_opts)
+vim.api.nvim_set_keymap('n', '<leader>ep', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', map_opts)
+vim.api.nvim_set_keymap("n", "<leader>p", "<cmd>lua vim.lsp.buf.formatting()<CR>", map_opts)
+-- vim.api.nvim_set_keymap("v", "<leader>p", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", map_opts)
 
 local lsp_signature_attach = function()
   require "lsp_signature".on_attach({
     bind = true, -- This is mandatory, otherwise border config won't get registered.
     doc_lines = 2,
     max_height = 4,
-    floating_window = true,
-    hint_enable = false,
+    floating_window = false,
+    hint_enable = true,
     hi_parameter = "LspDiagnosticsVirtualTextWarning",
-    -- hint_prefix = " ",
-    -- hint_scheme = "LspDiagnosticsVirtualTextWarning",
+    hint_prefix = "  ",
+    hint_scheme = "Ignore",
     handler_opts = {
       border = "none",
     },
@@ -78,24 +76,27 @@ local on_attach = function(client, bufnr)
       augroup END
     ]], false)
   end
+
+  -- Disable to prevent conflict with other formatter(e.g: prettier, )
+  client.resolved_capabilities.document_formatting = false
+
+  -- if client.resolved_capabilities.document_formatting then
+  --   vim.cmd("")
+  --   vim.api.nvim_exec([[
+  --     augroup lsp_formatting
+  --       autocmd! * <buffer>
+  --       autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 1000)
+  --     augroup END
+  --   ]], false)
+  -- end
 end
 
--- npm install -g vscode-html-languageserver-bin
+-- npm i -g vscode-langservers-extracted
 require'lspconfig'.html.setup{ on_attach = on_attach }
-
--- npm install -g vscode-css-languageserver-bin
 require'lspconfig'.cssls.setup{ on_attach = on_attach }
 
 -- npm install -g typescript typescript-language-server
 require'lspconfig'.tsserver.setup{ on_attach = on_attach }
 
--- local servers = {"html", "cssls", "tsserver" }
---
--- local function setup_servers()
---   local lsp_config = require("lspconfig")
---   for _, server in pairs(servers) do
---     lsp_config[server].setup{ on_attach = on_attach }
---   end
--- end
---
--- setup_servers()
+-- npm install -g svelte-language-server
+require'lspconfig'.svelte.setup{ on_attach = on_attach }
