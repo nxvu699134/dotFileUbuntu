@@ -2,9 +2,9 @@ local function hex_to_rgb(hex)
   local hex_in_decimal = tonumber(string.sub(hex, 2), 16);
   local mask = 255;
   return {
-    r = bit.band(bit.rshift(hex_in_decimal, 16), 255);
-    g = bit.band(bit.rshift(hex_in_decimal, 8), 255);
-    b = bit.band(hex_in_decimal, 255);
+    r = bit.band(bit.rshift(hex_in_decimal, 16), mask);
+    g = bit.band(bit.rshift(hex_in_decimal, 8), mask);
+    b = bit.band(hex_in_decimal, mask);
   }
 end
 
@@ -27,8 +27,19 @@ local function highlight(group, color)
   vim.api.nvim_command('highlight ' .. group .. ' ' .. style .. ' ' .. fg .. ' ' .. bg .. ' '.. sp)
 end
 
+local function swap_win(arg)
+  -- :h winnr for more info
+  local next_win = vim.fn.win_getid(vim.fn.winnr(arg))
+  local next_buf = vim.api.nvim_win_get_buf(next_win)
+  local cur_buf = vim.api.nvim_win_get_buf(vim.fn.win_getid())
+  vim.cmd("buffer " .. next_buf)
+  vim.fn.win_gotoid(next_win)
+  vim.cmd("buffer " .. cur_buf)
+end
+
 return {
-	hex_to_rgb = hex_to_rgb;
-	rgba_to_rgb = rgba_to_rgb;
-	highlight = highlight;
+	hex_to_rgb = hex_to_rgb,
+	rgba_to_rgb = rgba_to_rgb,
+	highlight = highlight,
+  swap_win = swap_win
 }

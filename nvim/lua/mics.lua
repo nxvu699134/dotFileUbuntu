@@ -49,4 +49,9 @@ vim.api.nvim_set_keymap('', '<space>h', '<C-W><C-H>', {silent = true})
 vim.api.nvim_set_keymap('', '<space>j', '<C-W><C-J>', {silent = true})
 vim.api.nvim_set_keymap('', '<space>k', '<C-W><C-K>', {silent = true})
 vim.api.nvim_set_keymap('', '<space>l', '<C-W><C-L>', {silent = true})
-vim.api.nvim_set_keymap('', '<space>ml', '<C-W><C-X>', {silent = true})
+
+--Move window vim
+vim.api.nvim_set_keymap('', '<space>wh', [[:lua require('utils').swap_win('h')<CR>]], {silent = true})
+vim.api.nvim_set_keymap('', '<space>wj', [[:lua require('utils').swap_win('j')<CR>]], {silent = true})
+vim.api.nvim_set_keymap('', '<space>wk', [[:lua require('utils').swap_win('k')<CR>]], {silent = true})
+vim.api.nvim_set_keymap('', '<space>wl', [[:lua require('utils').swap_win('l')<CR>]], {silent = true})

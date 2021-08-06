@@ -18,6 +18,7 @@ require('packer').startup(function()
 
   use {
     'kyazdani42/nvim-tree.lua',
+    keys = {'<leader>ls', '<leader>lf'},
     config = function() require('plugins.nvim_tree') end
   }
 
@@ -38,7 +39,7 @@ require('packer').startup(function()
 
   use {
     'lukas-reineke/indent-blankline.nvim',
-    event = "BufRead",
+    -- event = "BufRead",
     config = function() require('plugins.indent_blankline') end
   }
 
@@ -56,13 +57,11 @@ require('packer').startup(function()
 
   use {
     'nvim-treesitter/nvim-treesitter',
-    event = "BufRead",
     config = function() require('plugins.treesitter') end
   }
 
   use {
     'windwp/nvim-ts-autotag',
-    event = 'InsertEnter',
     config = function() require('nvim-ts-autotag').setup() end
   }
 
@@ -79,12 +78,14 @@ require('packer').startup(function()
   }
 
   -- use {'norcalli/nvim-colorizer.lua'}
-  use {'neovim/nvim-lspconfig'}
+  use {
+    'neovim/nvim-lspconfig',
+  }
 
   use {
     'hrsh7th/nvim-compe', 
+    event = 'InsertEnter',
     config = function() require('plugins.compe') end,
-    event = 'InsertEnter'
   }
 
   use {'ray-x/lsp_signature.nvim'}
@@ -94,23 +95,12 @@ require('packer').startup(function()
     config = function() require('plugins.formatter') end
   }
 
-  use { "tweekmonster/startuptime.vim", cmd = "StartupTime" }
-
   -- use {"neoclide/coc.nvim", branch = "release"}
 end)
 
------------------------COLOR SCHEME-----------------------
--- vim.cmd 'syntax enable'
--- vim.cmd([[let $NVIM_TUI_ENABLE_TRUE_COLOR = 1]])
--- vim.cmd('colorscheme vn-night')
-
 -- require('vn-night').setup()
 -- require('vn-night.galaxyline')
-
 require('mycolor').setup()
+require('statusline')
 require('mics')
 require('lsp')
--- require('coc')
-
-require('statusline')
-
