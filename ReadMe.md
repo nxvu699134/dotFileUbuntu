@@ -1,6 +1,6 @@
 # Personal dotfiles
 
-![image](https://user-images.githubusercontent.com/27850048/114176534-78101a80-9965-11eb-9612-e2ce7196b2e4.png)
+![image](https://github.com/nxvu699134/dotFileUbuntu/blob/master/screenshot.png)
 
 
 ```
