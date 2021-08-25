@@ -1,5 +1,7 @@
 # Personal dotfiles
 
+## Colorscheme: [vn-night](https://github.com/nxvu699134/vn-night.nvim)
+
 ![image](https://github.com/nxvu699134/dotFileUbuntu/blob/master/screenshot.png)
 
 
