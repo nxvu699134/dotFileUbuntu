@@ -20,12 +20,14 @@ local function rgba_to_rgb(color_hex, background, alpha)
 end
 
 local function highlight(group, color)
-  local style = color.style and 'gui=' .. color.style or 'gui=NONE'
-  local fg = color.fg and 'guifg=' .. color.fg or 'guifg=NONE'
-  local bg = color.bg and 'guibg=' .. color.bg or 'guibg=NONE'
-  local sp = color.sp and 'guisp=' .. color.sp or ''
-  vim.api.nvim_command('highlight ' .. group .. ' ' .. style .. ' ' .. fg .. ' ' .. bg .. ' '.. sp)
+  local DEFAULT = 'NONE'
+  local fg = color.fg and color.fg or DEFAULT
+  local bg = color.bg and color.bg or DEFAULT
+  local style = color.style and color.style or DEFAULT
+  local cmd = string.format("highlight %s guifg=%s guibg=%s gui=%s", group, fg, bg, style)
+  vim.api.nvim_command(cmd)
 end
+
 
 local function swap_win(arg)
   -- :h winnr for more info

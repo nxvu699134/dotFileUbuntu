@@ -1,7 +1,7 @@
 local schema = require('mycolor').schema
 
 local modes = setmetatable(
-  {
+{
     n       = { text = 'NOR', color = schema.purple },
     i       = { text = 'INS', color = schema.teal },
     c       = { text = 'CMD', color = schema.orange },
@@ -17,16 +17,6 @@ local modes = setmetatable(
   }
 )
 
-local hls = {
-  StatusLineBg                = {bg=schema.gray2 },
-  StatusLineMode              = {fg=schema.gray0,  bg=modes.n.color, style='bold' },
-  StatusLineFileName          = {fg=schema.gray10,  bg=schema.gray3},
-  StatusLineLspError          = {fg=schema.diag.danger.fg, bg=schema.gray2 },
-  StatusLineLspWarn           = {fg=schema.diag.warning.fg,  bg=schema.gray2},
-  StatusLineLspInfo           = {fg=schema.diag.info.fg,  bg=schema.gray2 },
-  StatusLineInactiveFileName  = {fg=schema.gray5, bg=schema.gray2 },
-}
-
 local function get_current_mode()
   local cur_mode = vim.fn.mode()
   vim.cmd(string.format("hi StatusLineMode guibg=%s", modes[cur_mode].color))
@@ -38,7 +28,7 @@ local function get_file_info()
   if file_name == '' then file_name = '[No Name]' end
   local file_extension = vim.fn.expand('%:e')
   local read_only_icon = vim.bo.filetype == 'help' and vim.bo.readonly == true and '  ' or ''
-  local modified_icon = '  '
+  local modified_icon = ''
   if vim.bo.modifiable then
     if vim.bo.modified then
       modified_icon = ' '
@@ -47,7 +37,7 @@ local function get_file_info()
       vim.cmd(string.format("hi StatusLineFileName guifg=%s", schema.gray10))
     end
   end
-  return string.format("%s %s %s", read_only_icon, file_name, modified_icon)
+  return string.format("%s %s %s ", read_only_icon, file_name, modified_icon)
 end
 
 local function get_lsp_count()
@@ -65,9 +55,14 @@ local function get_lsp_count()
     diag = diag .. string.format("%%#StatusLineLspWarn# %s ", warning_count)
   end
 
-  local info_count = vim.lsp.diagnostic.get_count(0, 'Information') + vim.lsp.diagnostic.get_count(0, 'Hint')
+  local info_count = vim.lsp.diagnostic.get_count(0, 'Information')
   if info_count > 0 then
-    diag = diag .. string.format("%%#StatusLineLspInfo# %s", info_count)
+    diag = diag .. string.format("%%#StatusLineLspInfo# %s ", info_count)
+  end
+
+  local hint_count = vim.lsp.diagnostic.get_count(0, 'Hint')
+  if hint_count > 0 then
+    diag = diag .. string.format("%%#StatusLineLspInfo#💡%s", hint_count)
   end
   return diag
 end
@@ -84,11 +79,11 @@ _G.set_active = function()
   -- pattern is %#HightlightGroup#sometext
   statusline = statusline .. string.format("%%#StatusLineMode# %s ", get_current_mode())
   statusline = statusline .. string.format("%%#StatusLineFileName#%s%%#StatusLineBg#", get_file_info())
-  statusline = statusline .. string.format(" %s",get_lsp_count())
+  statusline = statusline .. string.format(" %s", get_lsp_count())
 
   -- Right section
   statusline = statusline .. "%="
-  statusline = statusline .. string.format("%%#StatusLineMode#%s", get_ln_col())
+  statusline = statusline .. string.format("%%#StatusLineMode# %s", get_ln_col())
   return statusline
 end
 

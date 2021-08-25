@@ -18,16 +18,21 @@ require('packer').startup(function()
 
   use {
     'kyazdani42/nvim-tree.lua',
-    keys = {'<leader>ls', '<leader>lf'},
     config = function() require('plugins.nvim_tree') end
   }
 
   use {'kyazdani42/nvim-web-devicons'}
 
-  use {'junegunn/fzf', run = function() vim.fn['fzf#install']() end}
-  use {'junegunn/fzf.vim', config = function() require('plugins.fzf') end}
+  use {'junegunn/fzf',
+    run = function() vim.fn['fzf#install']() end
+  }
+  use {'junegunn/fzf.vim',
+    config = function() require('plugins.fzf') end
+  }
 
-  use {'mhinz/vim-startify', config = function() require('plugins.startify') end}
+  use {'mhinz/vim-startify',
+    config = function() require('plugins.startify') end
+  }
 
   use {
     'scrooloose/nerdcommenter',
@@ -39,7 +44,6 @@ require('packer').startup(function()
 
   use {
     'lukas-reineke/indent-blankline.nvim',
-    -- event = "BufRead",
     config = function() require('plugins.indent_blankline') end
   }
 
@@ -83,10 +87,12 @@ require('packer').startup(function()
   }
 
   use {
-    'hrsh7th/nvim-compe', 
-    event = 'InsertEnter',
-    config = function() require('plugins.compe') end,
+    'hrsh7th/nvim-cmp',
+    config = function() require('plugins.cmp') end,
   }
+  use {'hrsh7th/cmp-buffer'}
+  use {'hrsh7th/cmp-nvim-lsp'}
+  use {'hrsh7th/cmp-path'}
 
   use {'ray-x/lsp_signature.nvim'}
 
@@ -95,12 +101,11 @@ require('packer').startup(function()
     config = function() require('plugins.formatter') end
   }
 
-  -- use {"neoclide/coc.nvim", branch = "release"}
 end)
 
--- require('vn-night').setup()
--- require('vn-night.galaxyline')
 require('mycolor').setup()
 require('statusline')
 require('mics')
 require('lsp')
+
+-- print(vim.fn.getenv('TEST'))

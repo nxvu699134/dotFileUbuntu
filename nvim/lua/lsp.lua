@@ -1,37 +1,22 @@
-vim.fn.sign_define(
-    "LspDiagnosticsSignError",
-    {
-      texthl = "LspDiagnosticsSignError",
-      text = "",
-      numhl = "LspDiagnosticsVirtualTextError"
-    }
-)
+local types = {
+  Error = "",
+  Warning = "",
+  Information = "",
+  Hint = "💡",
+}
 
-vim.fn.sign_define(
-    "LspDiagnosticsSignWarning",
-    {
-      texthl = "LspDiagnosticsSignWarning",
-      text = "",
-      numhl = "LspDiagnosticsVirtualTextWarning"
+for type, icon in pairs(types) do
+  local text_hl = "LspDiagnosticsSign" .. type
+  local num_hl = "LspDiagnosticsVirtualText" .. type
+  vim.fn.sign_define(
+    text_hl,
+    { 
+      texthl = text_hl,
+      text = icon,
+      numhl = num_hl,
     }
-)
-
-vim.fn.sign_define(
-    "LspDiagnosticsSignInformation",
-    {
-      texthl = "LspDiagnosticsSignInformation",
-      text = "",
-      numhl = "LspDiagnosticsVirtualTextInfomation"
-    }
-)
-
-vim.fn.sign_define(
-    "LspDiagnosticsSignHint",
-    { texthl = "LspDiagnosticsSignHint",
-    text = "💡",
-    numhl = "LspDiagnosticsVirtualTextHint"
-  }
-)
+  )
+end
 
 local map_opts = { noremap = true, silent = true }
 vim.api.nvim_set_keymap('n', '<leader>jd', '<cmd>vsp<CR> <cmd>lua vim.lsp.buf.definition()<CR>', map_opts)
@@ -39,8 +24,8 @@ vim.api.nvim_set_keymap('n', '<leader>jr', '<cmd>lua vim.lsp.buf.references()<CR
 vim.api.nvim_set_keymap('n', '<leader>h', '<cmd>lua vim.lsp.buf.hover()<CR>', map_opts)
 vim.api.nvim_set_keymap('n', '<leader>f', '<cmd>lua vim.lsp.buf.code_action()<CR>', map_opts)
 vim.api.nvim_set_keymap('n', '<leader>ei', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', map_opts)
-vim.api.nvim_set_keymap('n', '<leader>en', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', map_opts)
-vim.api.nvim_set_keymap('n', '<leader>ep', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', map_opts)
+vim.api.nvim_set_keymap('n', '<leader>en', '<cmd>lua vim.lsp.diagnostic.goto_next({enable_popup = false})<CR>', map_opts)
+vim.api.nvim_set_keymap('n', '<leader>ep', '<cmd>lua vim.lsp.diagnostic.goto_prev({enable_popup = false})<CR>', map_opts)
 vim.api.nvim_set_keymap("n", "<leader>p", "<cmd>lua vim.lsp.buf.formatting()<CR>", map_opts)
 -- vim.api.nvim_set_keymap("v", "<leader>p", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", map_opts)
 
@@ -72,6 +57,7 @@ local on_attach = function(client, bufnr)
       augroup lsp_document_highlight
         autocmd! * <buffer>
         autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+        autocmd CursorHold <buffer> lua vim.lsp.diagnostic.show_line_diagnostics({focusable = false})
         autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
       augroup END
     ]], false)
@@ -90,6 +76,14 @@ local on_attach = function(client, bufnr)
   --   ]], false)
   -- end
 end
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] =
+  vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+    virtual_text = false,
+    signs = true,
+    underline = true,
+    update_in_insert = false
+  })
 
 -- npm i -g vscode-langservers-extracted
 require'lspconfig'.html.setup{ on_attach = on_attach }
