@@ -1,7 +1,7 @@
 local schema = require('mycolor').schema
 
 local modes = setmetatable(
-{
+  {
     n       = { text = 'NOR', color = schema.purple },
     i       = { text = 'INS', color = schema.teal },
     c       = { text = 'CMD', color = schema.orange },
@@ -17,9 +17,15 @@ local modes = setmetatable(
   }
 )
 
+local sep = {
+  open = "",
+  close = "",
+}
+
 local function get_current_mode()
-  local cur_mode = vim.fn.mode()
+  local cur_mode = vim.api.nvim_get_mode().mode
   vim.cmd(string.format("hi StatusLineMode guibg=%s", modes[cur_mode].color))
+  vim.cmd(string.format("hi StatusLineSepMode_0 guifg=%s", modes[cur_mode].color))
   return modes[cur_mode].text
 end
 
@@ -28,16 +34,26 @@ local function get_file_info()
   if file_name == '' then file_name = '[No Name]' end
   local file_extension = vim.fn.expand('%:e')
   local read_only_icon = vim.bo.filetype == 'help' and vim.bo.readonly == true and '  ' or ''
-  local modified_icon = ''
+  local modified_icon = ' '
   if vim.bo.modifiable then
     if vim.bo.modified then
-      modified_icon = ' '
+      modified_icon = ''
       vim.cmd(string.format("hi StatusLineFileName guifg=%s", schema.red))
     else
       vim.cmd(string.format("hi StatusLineFileName guifg=%s", schema.gray10))
     end
   end
-  return string.format("%s %s %s ", read_only_icon, file_name, modified_icon)
+  return string.format("%s %s %s", read_only_icon, file_name, modified_icon)
+end
+
+local function get_file_type()
+  file_name = vim.fn.expand('%:t')
+  file_extension = vim.fn.expand('%:e')
+  icon = require'nvim-web-devicons'.get_icon(file_name, file_extension)
+  icon = icon == nil and '' or icon
+  file_type = vim.bo.filetype
+  if file_type == '' then file_type = 'No ft' end
+  return icon .. ' ' .. file_type
 end
 
 local function get_lsp_count()
@@ -68,27 +84,47 @@ local function get_lsp_count()
 end
 
 local function get_ln_col()
-  local line = vim.fn.line('.')
-  local column = vim.fn.col('.')
-  return string.format("%3d :%2d ", line, column)
+  local pos = vim.api.nvim_win_get_cursor(0)
+  return string.format("%3d :%2d ", pos[1], pos[2])
 end
+
+local function get_ln_percent()
+  local current_line = vim.api.nvim_win_get_cursor(0)[1]
+  local total_line = vim.api.nvim_buf_line_count(0)
+  if current_line == 1 then return 'Top' end
+  if current_line == total_line then return 'Bot' end
+  return string.format("%2d", math.floor(current_line/total_line*100))
+end
+
 
 _G.set_active = function()
   local statusline = ''
   -- double %% to get % in string
   -- pattern is %#HightlightGroup#sometext
-  statusline = statusline .. string.format("%%#StatusLineMode# %s ", get_current_mode())
-  statusline = statusline .. string.format("%%#StatusLineFileName#%s%%#StatusLineBg#", get_file_info())
+  statusline = statusline .. string.format("%%#StatusLineSepMode_0#%s", sep.open)
+  statusline = statusline .. string.format("%%#StatusLineMode#%s ", get_current_mode())
+  statusline = statusline .. string.format("%%#StatusLineFileName#%s", get_file_info())
+  statusline = statusline .. string.format("%%#StatusLineSep1_Bg#%s", sep.close)
+  statusline = statusline .. "%#StatusLineBg#"
   statusline = statusline .. string.format(" %s", get_lsp_count())
 
   -- Right section
   statusline = statusline .. "%="
-  statusline = statusline .. string.format("%%#StatusLineMode# %s", get_ln_col())
+  statusline = statusline .. string.format("%%#StatusLineMode# %s  %s ", get_ln_col(), get_ln_percent())
+  statusline = statusline .. string.format("%%#StatusLineSepMode_0#%s", sep.close)
   return statusline
 end
 
 _G.set_inactive = function()
-  vim.wo.statusline = string.format("%%#StatusLineInactiveFileName#%s", get_file_info())
+  local statusline = ''
+  statusline = statusline .. string.format("%%#StatusLineSepInactive#%s", sep.open)
+  statusline = statusline .. string.format("%%#StatusLineInactiveFileName#%s", get_file_info())
+  statusline = statusline .. "%#StatusLineBg#"
+
+  -- Right section
+  statusline = statusline .. "%="
+  statusline = statusline .. string.format("%%#StatusLineSepInactive#%s", sep.close)
+  vim.wo.statusline = statusline
 end
 
 vim.cmd [[
