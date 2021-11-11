@@ -19,7 +19,7 @@ vim.g.indent_blankline_context_patterns = {
   'block',
   'arguments',
   'element'}
-vim.g.indent_blankline_filetype_exclude = {'help', 'startify', 'fzf'}
+vim.g.indent_blankline_filetype_exclude = {'help', 'startify', 'fzf', 'packer'}
 -- vim.g.indent_blankline_char = '│'
 vim.g.indent_blankline_char = '┊'
 

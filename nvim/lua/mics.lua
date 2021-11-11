@@ -1,3 +1,6 @@
+-- Auto remove trailing spaces
+vim.cmd([[autocmd BufWritePre * %s/\s\+$//e ]])
+
 -- Avoid showing message extra message when using completion
 vim.o.shortmess = vim.o.shortmess .. 'c'
 
@@ -55,3 +58,7 @@ vim.api.nvim_set_keymap('', '<space>wh', [[:lua require('utils').swap_win('h')<C
 vim.api.nvim_set_keymap('', '<space>wj', [[:lua require('utils').swap_win('j')<CR>]], {silent = true})
 vim.api.nvim_set_keymap('', '<space>wk', [[:lua require('utils').swap_win('k')<CR>]], {silent = true})
 vim.api.nvim_set_keymap('', '<space>wl', [[:lua require('utils').swap_win('l')<CR>]], {silent = true})
+
+-- Make wrap line navigate more EZ
+vim.api.nvim_set_keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { noremap = true, expr = true, silent = true })
+vim.api.nvim_set_keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", { noremap = true, expr = true, silent = true })

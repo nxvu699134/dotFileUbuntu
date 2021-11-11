@@ -6,8 +6,6 @@ vim.g.loaded_zipPlugin    = 1
 vim.g.loaded_2html_plugin = 1
 vim.g.loaded_netrw        = 1
 vim.g.loaded_netrwPlugin  = 1
-vim.g.loaded_matchit      = 1
-vim.g.loaded_matchparen   = 1
 vim.g.loaded_spec         = 1
 
 -------------------- PLUGINS -------------------------------
@@ -18,6 +16,7 @@ require('packer').startup(function()
 
   use {
     'kyazdani42/nvim-tree.lua',
+    -- commit = "d7f73b5ae9c8fa85535c32e2861c2cb97df5d56b",
     config = function() require('plugins.nvim_tree') end
   }
 
@@ -26,6 +25,7 @@ require('packer').startup(function()
   use {'junegunn/fzf',
     run = function() vim.fn['fzf#install']() end
   }
+
   use {'junegunn/fzf.vim',
     config = function() require('plugins.fzf') end
   }
@@ -64,6 +64,10 @@ require('packer').startup(function()
     config = function() require('plugins.treesitter') end
   }
 
+  -- use {'nvim-treesitter/nvim-treesitter-textobjects',
+  --   branch = '0.5-compat',
+  -- }
+
   use {
     'windwp/nvim-ts-autotag',
     config = function() require('nvim-ts-autotag').setup() end
@@ -72,8 +76,9 @@ require('packer').startup(function()
   use {
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
-    config = function() require('nvim-autopairs').setup() end,
+    config = function() require('nvim-autopairs').setup({map_cr = true}) end,
   }
+
 
   use {
     'lewis6991/gitsigns.nvim',
@@ -89,10 +94,20 @@ require('packer').startup(function()
   use {
     'hrsh7th/nvim-cmp',
     config = function() require('plugins.cmp') end,
+    event = 'InsertEnter',
   }
-  use {'hrsh7th/cmp-buffer'}
-  use {'hrsh7th/cmp-nvim-lsp'}
-  use {'hrsh7th/cmp-path'}
+  use {
+    'hrsh7th/cmp-buffer',
+    after = 'nvim-cmp'
+  }
+  use {
+    'hrsh7th/cmp-nvim-lsp',
+    after = 'nvim-cmp'
+  }
+  use {
+    'hrsh7th/cmp-path',
+    after = 'nvim-cmp'
+  }
 
   use {'ray-x/lsp_signature.nvim'}
 
@@ -101,8 +116,23 @@ require('packer').startup(function()
     config = function() require('plugins.formatter') end
   }
 
-end)
+  use {
+    'mfussenegger/nvim-dap',
+    config = function() require('plugins.dap') end
+  }
 
+  use {
+    "rcarriga/nvim-dap-ui",
+    config = function() require('dapui').setup() end,
+    after = 'nvim-dap'
+  }
+
+  use {
+    'rhysd/clever-f.vim',
+    config = function() require('plugins.clever_f') end,
+  }
+
+end)
 require('mycolor').setup()
 require('statusline')
 require('mics')

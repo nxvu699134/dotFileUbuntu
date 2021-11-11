@@ -13,10 +13,10 @@ local lsp_kinds = {
   Value         = " Value",
   Enum          = "了Enum",
   Keyword       = " Keyword",
-  Snippet       = " Snippet",
+  Snippet       = " Snip",
   Color         = " Color",
   File          = " File",
-  Reference     = "渚Ref",
+  Reference     = " Ref",
   Folder        = " Folder",
   EnumMember    = " EnumMem",
   Constant      = " Const",
@@ -41,20 +41,24 @@ cmp.setup {
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.close(),
-    ['<CR>'] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Insert,
-      select = true,
-    })
+    -- ['<CR>'] = cmp.mapping.confirm({
+    --   behavior = cmp.ConfirmBehavior.Insert,
+    --   select = false,
+    -- })
   },
   
   formatting = {
     format = format_entry
   },
+  preselect = cmp.PreselectMode.None,
 
   -- You should specify your *installed* sources.
   sources = {
-    { name = 'nvim_lsp' },
-    { name = 'buffer' },
-    { name = 'path' }
+    { name = 'nvim_lsp', max_item_count=10 },
+    { name = 'buffer', max_item_count=10  },
+    { name = 'path', max_item_count=10  }
   },
+  -- experimental = {
+  --   native_menu = true
+  -- }
 }

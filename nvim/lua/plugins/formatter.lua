@@ -33,6 +33,7 @@ vim.cmd([[
 augroup FormatAutogroup
   autocmd!
   autocmd BufWritePost *.js,*.ts,*.html,*.scss FormatWrite
+  autocmd BufWritePre *.go lua vim.lsp.buf.formatting_sync(nil, 1000)
 augroup END
 ]])
 
