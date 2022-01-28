@@ -129,9 +129,8 @@ export BAT_THEME="OneHalfDark"
 
 alias suroot='sudo -E -s'
 alias lgit='lazygit'
-alias m='cd ~/Workspace/miniprojs/stocks/frontend-core'
-alias cb='cd ~/Workspace/courses/database'
 alias leet='cd ~/Workspace/Golang/src/leetcode'
+alias blog='cd ~/Workspace/miniprojs/blog && lnvm'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
