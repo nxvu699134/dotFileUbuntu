@@ -34,6 +34,8 @@ augroup FormatAutogroup
   autocmd!
   autocmd BufWritePost *.js,*.ts,*.html,*.scss FormatWrite
   autocmd BufWritePre *.go lua vim.lsp.buf.formatting_sync(nil, 1000)
+  autocmd BufWritePre *.c,*.cpp,*.h*.hpp lua vim.lsp.buf.formatting_sync(nil, 1000)
+  autocmd BufWritePre *.svelte lua vim.lsp.buf.formatting_sync(nil, 1000)
 augroup END
 ]])
 

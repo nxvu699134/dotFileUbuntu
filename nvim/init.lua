@@ -1,4 +1,4 @@
-vim.g.mapleader = ","
+vim.g.mapleader           = ","
 vim.g.loaded_gzip         = 1
 vim.g.loaded_tar          = 1
 vim.g.loaded_tarPlugin    = 1
@@ -16,7 +16,7 @@ require('packer').startup(function()
 
   use {
     'kyazdani42/nvim-tree.lua',
-    -- commit = "d7f73b5ae9c8fa85535c32e2861c2cb97df5d56b",
+    commit = "a6c1d45dd6c26f7871f87564baf3860e0e5ac60c",
     config = function() require('plugins.nvim_tree') end
   }
 
@@ -32,12 +32,6 @@ require('packer').startup(function()
 
   use {'mhinz/vim-startify',
     config = function() require('plugins.startify') end
-  }
-
-  use {
-    'scrooloose/nerdcommenter',
-    keys = {'<leader>cc', '<leader>cu'},
-    config = function() require('plugins.nerdcommenter') end
   }
 
   use {'tpope/vim-surround'}
@@ -108,6 +102,14 @@ require('packer').startup(function()
     'hrsh7th/cmp-path',
     after = 'nvim-cmp'
   }
+  use {
+    'hrsh7th/cmp-vsnip',
+    after = 'nvim-cmp'
+  }
+  use {
+    'hrsh7th/vim-vsnip',
+    after = 'nvim-cmp'
+  }
 
   use {'ray-x/lsp_signature.nvim'}
 
@@ -117,22 +119,16 @@ require('packer').startup(function()
   }
 
   use {
-    'mfussenegger/nvim-dap',
-    config = function() require('plugins.dap') end
-  }
-
-  use {
-    "rcarriga/nvim-dap-ui",
-    config = function() require('dapui').setup() end,
-    after = 'nvim-dap'
-  }
-
-  use {
     'rhysd/clever-f.vim',
     config = function() require('plugins.clever_f') end,
   }
 
+  use {
+    'numToStr/Comment.nvim',
+    config = function() require('plugins.comment_nvim') end,
+  }
 end)
+
 require('mycolor').setup()
 require('statusline')
 require('mics')

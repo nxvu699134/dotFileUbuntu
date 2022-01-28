@@ -61,22 +61,22 @@ local function get_lsp_count()
     return ''
   end
   local diag = ''
-  local error_count = vim.lsp.diagnostic.get_count(0, 'Error')
+  local error_count = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
   if error_count > 0 then
     diag = diag .. string.format("%%#StatusLineLspError# %s ", error_count)
   end
 
-  local warning_count = vim.lsp.diagnostic.get_count(0, 'Warning')
+  local warning_count = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
   if warning_count > 0 then
     diag = diag .. string.format("%%#StatusLineLspWarn# %s ", warning_count)
   end
 
-  local info_count = vim.lsp.diagnostic.get_count(0, 'Information')
+  local info_count = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
   if info_count > 0 then
     diag = diag .. string.format("%%#StatusLineLspInfo# %s ", info_count)
   end
 
-  local hint_count = vim.lsp.diagnostic.get_count(0, 'Hint')
+  local hint_count = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT })
   if hint_count > 0 then
     diag = diag .. string.format("%%#StatusLineLspInfo#💡%s", hint_count)
   end
@@ -87,15 +87,6 @@ local function get_ln_col()
   local pos = vim.api.nvim_win_get_cursor(0)
   return string.format("%3d :%2d ", pos[1], pos[2])
 end
-
-local function get_ln_percent()
-  local current_line = vim.api.nvim_win_get_cursor(0)[1]
-  local total_line = vim.api.nvim_buf_line_count(0)
-  if current_line == 1 then return 'Top' end
-  if current_line == total_line then return 'Bot' end
-  return string.format("%2d", math.floor(current_line/total_line*100))
-end
-
 
 _G.set_active = function()
   local statusline = ''
@@ -110,7 +101,8 @@ _G.set_active = function()
 
   -- Right section
   statusline = statusline .. "%="
-  statusline = statusline .. string.format("%%#StatusLineMode# %s  %s ", get_ln_col(), get_ln_percent())
+  statusline = statusline .. string.format("%%#StatusLineMode# %s", get_ln_col())
+  statusline = statusline .. " %P"
   statusline = statusline .. string.format("%%#StatusLineSepMode_0#%s", sep.close)
   return statusline
 end

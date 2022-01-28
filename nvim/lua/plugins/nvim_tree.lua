@@ -4,7 +4,7 @@ vim.g.nvim_tree_indent_markers = 1
 vim.g.nvim_tree_disable_window_picker = 1
 
 
-local tree_cb = require'nvim-tree.config'.nvim_tree_callback
+local tree_cb = require('nvim-tree.config').nvim_tree_callback
 local map_list = {
   { key = "<CR>",         cb = tree_cb("edit") },
   { key = "v",            cb = tree_cb("vsplit") },

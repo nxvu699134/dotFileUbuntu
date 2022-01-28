@@ -188,36 +188,46 @@ local function syntax()
     StatusLineSep1_Bg           =  {  fg=schema.gray3,                 bg=schema.gray2             },
     StatusLineSepInactive       =  {  fg=schema.gray2,                 },
 
-    -- CocErrorHighlight   = { fg=schema.diag.danger.fg,     bg=schema.diag.danger.bg,   style='undercurl,bold'};
-    -- CocWarningHighlight = { fg=schema.diag.warning.fg,    bg=schema.diag.warning.bg,  style='undercurl,bold'};
-    -- CocInfoHighlight    = { fg=schema.diag.info.fg,       bg=schema.diag.info.bg,     style='undercurl,bold'};
-    -- CocHintHighlight    = { fg=schema.diag.hint.fg,       bg=schema.diag.hint.bg,     style='undercurl,bold'};
+    CmpItemAbbr                 =  {  fg=schema.fg,                    bg=schema.none,             };
+    CmpItemAbbrMatch            =  {  fg=schema.blue,                  bg=schema.none,             style='bold'};
+    CmpItemAbbrMatchFuzzy       =  {  fg=schema.blue,                  bg=schema.none,             style='bold'};
+    CmpItemAbbrDeprecated       =  {  fg=schema.fg_disabled,           bg=schema.none,             style='strikethrough'};
+    CmpItemKindFunction         =  {  fg=schema.yellow,                bg=schema.none              };
+    CmpItemKindMethod           =  {  fg=schema.yellow,                bg=schema.none              };
+    CmpItemKindInterface        =  {  fg=schema.yellow,                bg=schema.none              };
+    CmpItemKindModule           =  {  fg=schema.yellow,                bg=schema.none              };
+    CmpItemKindDefault          =  {  fg=schema.fg,                    bg=schema.none              };
 
-    -- CocHighlightRead      = { fg=schema.none,     bg=schema.bg_highlight, style='bold' };
-    -- CocHighlightWrite     = { fg=schema.none,     bg=schema.bg_highlight, style='bold' };
-    -- CocHighlightText      = { fg=schema.none,     bg=schema.bg_highlight, style='bold' };
+  -- CocErrorHighlight   = { fg=schema.diag.danger.fg,     bg=schema.diag.danger.bg,   style='undercurl,bold'};
+  -- CocWarningHighlight = { fg=schema.diag.warning.fg,    bg=schema.diag.warning.bg,  style='undercurl,bold'};
+  -- CocInfoHighlight    = { fg=schema.diag.info.fg,       bg=schema.diag.info.bg,     style='undercurl,bold'};
+  -- CocHintHighlight    = { fg=schema.diag.hint.fg,       bg=schema.diag.hint.bg,     style='undercurl,bold'};
 
-    -- CocErrorSign      = { fg=schema.diag.danger.fg,   style='bold'};
-    -- CocWarningSign    = { fg=schema.diag.warning.fg,  style='bold'};
-    -- CocInfoSign       = { fg=schema.diag.info.fg,     style='bold'};
-    -- CocHintSign       = { fg=schema.diag.hint.fg,     style='bold'};
-  }
-  return syntax
+  -- CocHighlightRead      = { fg=schema.none,     bg=schema.bg_highlight, style='bold' };
+  -- CocHighlightWrite     = { fg=schema.none,     bg=schema.bg_highlight, style='bold' };
+  -- CocHighlightText      = { fg=schema.none,     bg=schema.bg_highlight, style='bold' };
+
+  -- CocErrorSign      = { fg=schema.diag.danger.fg,   style='bold'};
+  -- CocWarningSign    = { fg=schema.diag.warning.fg,  style='bold'};
+  -- CocInfoSign       = { fg=schema.diag.info.fg,     style='bold'};
+  -- CocHintSign       = { fg=schema.diag.hint.fg,     style='bold'};
+}
+return syntax
 end
 
 local function setup()
-  -- vim.api.nvim_command('hi clear')
-  -- if vim.fn.exists('syntax_on') then
-  --   vim.api.nvim_command('syntax reset')
-  -- end
-  vim.o.background = 'dark'
-  vim.o.termguicolors = true
+-- vim.api.nvim_command('hi clear')
+-- if vim.fn.exists('syntax_on') then
+--   vim.api.nvim_command('syntax reset')
+-- end
+vim.o.background = 'dark'
+vim.o.termguicolors = true
 
-  local syntax = syntax()
+local syntax = syntax()
 
-  for group, colors in pairs(syntax) do
-    u.highlight(group, colors)
-  end
+for group, colors in pairs(syntax) do
+  u.highlight(group, colors)
+end
 end
 
 return { schema = schema; setup = setup; }

@@ -28,7 +28,7 @@ vim.opt.swapfile = false
 vim.opt.writebackup = false
 
 --You will have bad experience for diagnostic messages when it's default 4000.
-vim.opt.updatetime = 400
+vim.opt.updatetime = 250
 
 --Solve vim ESC delay
 vim.opt.timeoutlen = 1000
@@ -41,6 +41,7 @@ vim.o.softtabstop = indent
 vim.o.expandtab = true
 vim.o.autoindent = true
 vim.o.smartindent = true
+vim.o.breakindent = true
 
 ------------------------------MAP KEYS---------------------------
 vim.api.nvim_set_keymap('n', '<esc>', ':noh<return><esc>', {noremap = true})

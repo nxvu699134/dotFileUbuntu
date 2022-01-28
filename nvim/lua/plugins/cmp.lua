@@ -33,7 +33,6 @@ end
 
 local cmp = require('cmp')
 cmp.setup {
-  -- You must set mapping.
   mapping = {
     ['<Tab>'] = cmp.mapping.select_next_item(),
     ['<S-Tab>'] = cmp.mapping.select_prev_item(),
@@ -41,17 +40,19 @@ cmp.setup {
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.close(),
-    -- ['<CR>'] = cmp.mapping.confirm({
-    --   behavior = cmp.ConfirmBehavior.Insert,
-    --   select = false,
-    -- })
+    -- ['<CR>'] = cmp.mapping.confirm({ select = true }),
   },
-  
+
+  snippet = {
+    expand = function(args)
+      vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+    end,
+  },
+
   formatting = {
     format = format_entry
   },
   preselect = cmp.PreselectMode.None,
-
   -- You should specify your *installed* sources.
   sources = {
     { name = 'nvim_lsp', max_item_count=10 },

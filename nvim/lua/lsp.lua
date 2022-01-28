@@ -10,7 +10,7 @@ for type, icon in pairs(types) do
   local num_hl = "DiagnosticVirtualText" .. type
   vim.fn.sign_define(
     text_hl,
-    { 
+    {
       texthl = text_hl,
       text = icon,
       numhl = num_hl,
@@ -23,9 +23,9 @@ vim.api.nvim_set_keymap('n', '<leader>jd', '<cmd>vsp | lua vim.lsp.buf.definitio
 vim.api.nvim_set_keymap('n', '<leader>jr', '<cmd>lua vim.lsp.buf.references()<CR>', map_opts)
 vim.api.nvim_set_keymap('n', '<leader>h', '<cmd>lua vim.lsp.buf.hover()<CR>', map_opts)
 vim.api.nvim_set_keymap('n', '<leader>f', '<cmd>lua vim.lsp.buf.code_action()<CR>', map_opts)
-vim.api.nvim_set_keymap('n', '<leader>ei', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', map_opts)
-vim.api.nvim_set_keymap('n', '<leader>en', '<cmd>lua vim.lsp.diagnostic.goto_next({enable_popup = false})<CR>', map_opts)
-vim.api.nvim_set_keymap('n', '<leader>ep', '<cmd>lua vim.lsp.diagnostic.goto_prev({enable_popup = false})<CR>', map_opts)
+vim.api.nvim_set_keymap('n', '<leader>ei', '<cmd>lua vim.diagnostic.open_float()<CR>', map_opts)
+vim.api.nvim_set_keymap('n', '<leader>en', '<cmd>lua vim.diagnostic.goto_next({enable_popup = false})<CR>', map_opts)
+vim.api.nvim_set_keymap('n', '<leader>ep', '<cmd>lua vim.diagnostic.goto_prev({enable_popup = false})<CR>', map_opts)
 vim.api.nvim_set_keymap("n", "<leader>p", "<cmd>lua vim.lsp.buf.formatting()<CR>", map_opts)
 -- vim.api.nvim_set_keymap("v", "<leader>p", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", map_opts)
 
@@ -92,3 +92,5 @@ require'lspconfig'.tsserver.setup{ on_attach = on_attach }
 require'lspconfig'.svelte.setup{ on_attach = on_attach }
 
 require'lspconfig'.gopls.setup{ on_attach = on_attach}
+
+require'lspconfig'.clangd.setup{ on_attach = on_attach}
