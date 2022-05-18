@@ -1,8 +1,4 @@
 vim.g.nvim_tree_git_hl = 1
-vim.g.nvim_tree_indent_markers = 1
--- vim.g.nvim_tree_highlight_opened_files = 1
-vim.g.nvim_tree_disable_window_picker = 1
-
 
 local tree_cb = require('nvim-tree.config').nvim_tree_callback
 local map_list = {
@@ -44,17 +40,12 @@ require'nvim-tree'.setup {
   hijack_netrw        = true,
   open_on_setup       = false,
   ignore_ft_on_setup  = {},
-  auto_close          = true,
   open_on_tab         = false,
   hijack_cursor       = false,
   update_cwd          = false,
-  update_to_buf_dir   = {
-    enable = true,
-    auto_open = true,
-  },
   update_focused_file = {
     enable      = true,
-    update_cwd  = true,
+    update_cwd  = false,
     ignore_list = {}
   },
   filters = {
@@ -66,10 +57,21 @@ require'nvim-tree'.setup {
     height = 30,
     hide_root_folder = false,
     side = 'left',
-    auto_resize = true,
     mappings = {
       custom_only = true,
       list = map_list
+    }
+  },
+  actions = {
+    open_file = {
+      window_picker = {
+        enable = false,
+      }
+    }
+  },
+  renderer = {
+    indent_markers = {
+      enable = true,
     }
   }
 }
@@ -77,18 +79,4 @@ require'nvim-tree'.setup {
 
 vim.api.nvim_set_keymap('', '<leader>ls', ':NvimTreeToggle<CR>', {silent = true})
 vim.api.nvim_set_keymap('', '<leader>lf', ':NvimTreeFindFile<CR>', {silent = true})
-vim.cmd('autocmd BufWinEnter NvimTree setlocal cursorline')
-
--- vim.api.nvim_set_keymap('', '<leader>ls', ':NERDTreeToggle<CR>', {silent = true})
--- vim.api.nvim_set_keymap('', '<leader>lf', ':NERDTreeFind<CR>', {silent = true})
---
--- vim.g.NERDTreeMapMenu='m'
--- vim.g.NERDTreeIgnore={'node_modules', '.git', 'node_modules', '.cache'}
---
--- -- Automaticaly close nvim if NERDTree is only thing left open
--- vim.cmd([[
--- autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
--- let NERDTreeMapOpenSplit = 's'
--- let NERDTreeMapOpenVSplit = 'v'
--- let NERDTreeMinimalUI=1
--- ]])
+vim.cmd('autocmd BufWinEnter NvimTree_1 setlocal cursorline')

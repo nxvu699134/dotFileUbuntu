@@ -14,7 +14,12 @@
 local function prettier()
   return {
     exe = "prettier",
-    args = {"--stdin-filepath", vim.api.nvim_buf_get_name(0), '--single-quote'},
+    args = {
+      '--config-precedence',
+      'prefer-file',
+      "--stdin-filepath",
+      vim.api.nvim_buf_get_name(0)
+    },
     stdin = true
   }
 end
@@ -24,22 +29,20 @@ require('formatter').setup({
   filetype = {
     javascript = { prettier },
     typescript = { prettier },
+    typescriptreact = { prettier },
+    javascriptreact = { prettier },
     html = { prettier },
     scss = { prettier },
+    css = { prettier },
   }
 })
 
 vim.cmd([[
 augroup FormatAutogroup
   autocmd!
-  autocmd BufWritePost *.js,*.ts,*.html,*.scss FormatWrite
+  autocmd BufWritePost *.js,*.ts,*.jsx,*.tsx,*.html,*.scss,*css FormatWrite
   autocmd BufWritePre *.go lua vim.lsp.buf.formatting_sync(nil, 1000)
   autocmd BufWritePre *.c,*.cpp,*.h*.hpp lua vim.lsp.buf.formatting_sync(nil, 1000)
   autocmd BufWritePre *.svelte lua vim.lsp.buf.formatting_sync(nil, 1000)
 augroup END
 ]])
-
--- vim.cmd([[
--- let g:prettier#autoformat = 0
--- let g:prettier#autoformat_require_pragma = 0
--- ]])

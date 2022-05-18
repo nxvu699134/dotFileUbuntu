@@ -1,57 +1,67 @@
 local u = require('utils')
 
-local function make_schema()
+function reverse(t)
+  local ret = {}
+  local n = #t
+  local i = 1
+  for i = 0, n-1 do
+    ret[i+1] = t[n-i]
+  end
+  return ret
+end
+
+local function make_schema(light)
+  local base_gray = {
+    u.hsl_to_hex(236, 41, 8),
+    u.hsl_to_hex(238, 44, 14), --base
+    u.hsl_to_hex(236, 39, 23),
+    u.hsl_to_hex(237, 34, 30),
+    u.hsl_to_hex(235, 28, 39),
+    u.hsl_to_hex(236, 22, 49),
+    u.hsl_to_hex(235, 23, 60),
+    u.hsl_to_hex(235, 27, 70),
+    u.hsl_to_hex(237, 31, 80),
+    u.hsl_to_hex(235, 33, 89),
+    u.hsl_to_hex(235, 36, 96),
+  }
+
   local colors = {
     none    = 'NONE',
     -- core colors
-     orange = '#f79617',
-     yellow = '#ffc24b',
-     green  = '#84CE5C',
-     cyan   = '#50EAFA',
-     blue   = '#32b4ff',
-     red    = '#ff3c41',
-     teal   = '#23D4AC',
-     purple = '#a884f3',
+    orange = light and u.hsl_to_hex(32 , 98, 42) or u.hsl_to_hex(34 , 93, 53),
+    yellow = light and u.hsl_to_hex(42 , 80, 28) or u.hsl_to_hex(40 , 99, 65),
+    green  = light and u.hsl_to_hex(102, 74, 32) or u.hsl_to_hex(99 , 54, 58),
+    cyan   = light and u.hsl_to_hex(184, 81, 36) or u.hsl_to_hex(186, 94, 65),
+    blue   = light and u.hsl_to_hex(205, 76, 46) or u.hsl_to_hex(202, 99, 60),
+    red    = light and u.hsl_to_hex(350, 84, 42) or u.hsl_to_hex(358, 92, 62),
+    teal   = light and u.hsl_to_hex(168, 80, 30) or u.hsl_to_hex(166, 72, 48),
+    purple = light and u.hsl_to_hex(259, 70, 54) or u.hsl_to_hex(259, 82, 74),
 
-     gray0   = '#000111',
-     gray1   = '#171831', --base
-     gray2   = '#31324B',
-     gray3   = '#4A4B64',
-     gray4   = '#64657E',
-     gray5   = '#7D7E97',
-     gray6   = '#9697B0',
-     gray7   = '#B0B1CA',
-     gray8   = '#CACBE4',
-     gray9   = '#E3E4FD',
-     gray10  = '#FCFDFF',
-
-    --extended colors
-    red1    = '#ff3b30',
-    yellow1 = '#ffcc00',
-    blue1   = '#5ac8fa',
+    gray = light and reverse(base_gray) or base_gray
   }
 
+  colors.bg            =  colors.gray[2]
+  colors.bg_popup      =  colors.gray[3]
+  colors.bg_popup_sel  =  colors.gray[5]
+  colors.bg_highlight  =  u.rgba_to_rgb(colors.blue,    colors.bg,     0.3)
+  colors.bg_visual     =  u.rgba_to_rgb(colors.blue,    colors.bg,     0.4)
+  colors.fg            =  colors.gray[10]
+  colors.fg_disabled   =  colors.gray[5]
+  colors.fg_invert     =  colors.gray[1]
+  colors.fg_popup      =  colors.gray[10]
+
   colors.diag = {
-    danger   =  {  fg  =  colors.red1,     bg  =  u.rgba_to_rgb(colors.red1,     colors.gray1,  0.16)  },
-    warning  =  {  fg  =  colors.yellow1,  bg  =  u.rgba_to_rgb(colors.yellow1,  colors.gray1,  0.16)  },
-    info     =  {  fg  =  colors.blue1,    bg  =  u.rgba_to_rgb(colors.blue1,    colors.gray1,  0.16)  },
-    hint     =  {  fg  =  colors.gray9,    bg  =  u.rgba_to_rgb(colors.gray9,    colors.gray1,  0.16)  },
+    danger   =  {  fg  =  colors.red,     bg  =  u.rgba_to_rgb(colors.red,     colors.bg,  0.16)  },
+    warning  =  {  fg  =  colors.yellow,  bg  =  u.rgba_to_rgb(colors.yellow,  colors.bg,  0.16)  },
+    info     =  {  fg  =  colors.blue,    bg  =  u.rgba_to_rgb(colors.blue,    colors.bg,  0.16)  },
+    hint     =  {  fg  =  colors.gray[10],    bg  =  u.rgba_to_rgb(colors.gray[10], colors.bg,  0.16)  },
   };
 
-  colors.bg            =  colors.gray1
-  colors.bg_popup      =  u.rgba_to_rgb(colors.purple,  colors.bg,        0.2)
-  colors.bg_popup_sel  =  u.rgba_to_rgb(colors.purple,  colors.bg_popup,  0.8)
-  colors.bg_highlight  =  u.rgba_to_rgb(colors.blue,    colors.gray1,     0.3)
-  colors.bg_visual     =  u.rgba_to_rgb(colors.blue,    colors.gray1,     0.4)
-  colors.fg            =  colors.gray9
-  colors.fg_disabled   =  colors.gray4
-  colors.fg_invert     =  colors.gray0
-  colors.fg_popup      =  colors.gray9
 
   return colors;
 end
 
-local schema = make_schema();
+local schema = make_schema(false);
 
 
 local function syntax()
@@ -60,21 +70,21 @@ local function syntax()
     Terminal                    =  {  fg=schema.fg,                    bg=schema.none              },
     SignColumn                  =  {  fg=schema.fg,                    bg=schema.none              },
     FoldColumn                  =  {  fg=schema.fg_disabled,           bg=schema.none              },
-    VertSplit                   =  {  fg=schema.gray4,                 bg=schema.none              },
-    Folded                      =  {  fg=schema.gray3,                 bg=schema.bg_highlight      },
+    VertSplit                   =  {  fg=schema.gray[5],               bg=schema.none              },
+    Folded                      =  {  fg=schema.gray[4],               bg=schema.bg_highlight      },
     EndOfBuffer                 =  {  fg=schema.bg,                    bg=schema.none              },
     IncSearch                   =  {  fg=schema.fg_invert,             bg=schema.orange            },
     Search                      =  {  bg=schema.bg_visual              },
     Visual                      =  {  bg=schema.bg_visual              },
     VisualNOS                   =  {  bg=schema.bg_visual              },
     ColorColumn                 =  {  fg=schema.none,                  bg=schema.bg_highlight      },
-    Conceal                     =  {  fg=schema.gray3,                 bg=schema.none              },
-    Cursor                      =  {  fg=schema.fg_invert,             bg=schema.gray7,            },
-    lCursor                     =  {  fg=schema.fg_invert,             bg=schema.gray7,            },
-    CursorIM                    =  {  fg=schema.fg_invert,             bg=schema.gray7,            },
+    Conceal                     =  {  fg=schema.gray[4],               bg=schema.none              },
+    Cursor                      =  {  fg=schema.fg_invert,             bg=schema.gray[8],            },
+    lCursor                     =  {  fg=schema.fg_invert,             bg=schema.gray[8],            },
+    CursorIM                    =  {  fg=schema.fg_invert,             bg=schema.gray[8],            },
     CursorColumn                =  {  fg=schema.none,                  bg=schema.bg_highlight,     style='underline'       },
     CursorLine                  =  {  fg=schema.none,                  bg=schema.bg_highlight      },
-    LineNr                      =  {  fg=schema.gray2,                 bg=schema.none              },
+    LineNr                      =  {  fg=schema.gray[3],               bg=schema.none              },
     CursorLineNr                =  {  fg=schema.orange,                bg=schema.none,             style="bold"            },
     DiffAdd                     =  {  fg=schema.fg_invert,             bg=schema.green             },
     DiffChange                  =  {  fg=schema.fg_invert,             bg=schema.yellow            },
@@ -86,7 +96,7 @@ local function syntax()
     ModeMsg                     =  {  fg=schema.fg,                    bg=schema.none,             style='bold'            };
     MatchParen                  =  {  fg=schema.orange,                bg=schema.none,             style='bold'            };
     NonText                     =  {  fg=schema.fg_disabled,           bg=schema.none              };
-    Whitespace                  =  {  fg=schema.gray2,                 bg=schema.none              };
+    Whitespace                  =  {  fg=schema.gray[3],               bg=schema.none              };
     SpecialKey                  =  {  fg=schema.fg_disabled,           bg=schema.none              };
     Pmenu                       =  {  fg=schema.fg_popup,              bg=schema.bg_popup          };
     PmenuSel                    =  {  fg=schema.fg_popup,              bg=schema.bg_popup_sel      },
@@ -134,10 +144,10 @@ local function syntax()
     Macro                       =  {  fg=schema.cyan,                  bg=schema.none              };
     Identifier                  =  {  fg=schema.blue,                  bg=schema.none              };
     Comment                     =  {  fg=schema.fg_disabled,           bg=schema.none,             style='italic'          };
-    SpecialComment              =  {  fg=schema.gray3,                 bg=schema.none              };
+    SpecialComment              =  {  fg=schema.gray[4],               bg=schema.none              };
     Todo                        =  {  fg=schema.cyan,                  bg=schema.none              };
     Delimiter                   =  {  fg=schema.fg,                    bg=schema.none              };
-    Ignore                      =  {  fg=schema.gray3,                 bg=schema.none              };
+    Ignore                      =  {  fg=schema.gray[4],                 bg=schema.none              };
     Underlined                  =  {  fg=schema.none,                  bg=schema.none,             style='underline'       };
 
     TSParameter                 =  {  fg=schema.fg,                    bg=schema.none              };
@@ -176,17 +186,17 @@ local function syntax()
     GitSignsChange              =  {  fg=schema.blue,                  bg=schema.none              };
     GitSignsDelete              =  {  fg=schema.red,                   bg=schema.none              };
 
-    StatusLineBg                =  {  bg=schema.gray2                  },
-    StatusLineMode              =  {  fg=schema.gray0,                 bg=schema.purple            },
-    StatusLineFileName          =  {  fg=schema.gray10,                bg=schema.gray3             },
-    StatusLineLspError          =  {  fg=schema.diag.danger.fg,        bg=schema.gray2             },
-    StatusLineLspWarn           =  {  fg=schema.diag.warning.fg,       bg=schema.gray2             },
-    StatusLineLspInfo           =  {  fg=schema.diag.info.fg,          bg=schema.gray2             },
-    StatusLineInactiveFileName  =  {  fg=schema.gray5,                 bg=schema.gray2             },
-    StatusLineRightSub          =  {  fg=schema.gray10,                bg=schema.gray3             },
+    StatusLineBg                =  {  bg=schema.gray[3]                  },
+    StatusLineMode              =  {  fg=schema.gray[1],               bg=schema.purple            },
+    StatusLineFileName          =  {  fg=schema.gray[11],              bg=schema.gray[4]             },
+    StatusLineLspError          =  {  fg=schema.diag.danger.fg,        bg=schema.gray[3]             },
+    StatusLineLspWarn           =  {  fg=schema.diag.warning.fg,       bg=schema.gray[3]             },
+    StatusLineLspInfo           =  {  fg=schema.diag.info.fg,          bg=schema.gray[3]             },
+    StatusLineInactiveFileName  =  {  fg=schema.gray[6],               bg=schema.gray[3]             },
+    StatusLineRightSub          =  {  fg=schema.gray[11],              bg=schema.gray[2]             },
     StatusLineSepMode_0         =  {  fg=schema.purple,                },
-    StatusLineSep1_Bg           =  {  fg=schema.gray3,                 bg=schema.gray2             },
-    StatusLineSepInactive       =  {  fg=schema.gray2,                 },
+    StatusLineSep1_Bg           =  {  fg=schema.gray[4],               bg=schema.gray[3]             },
+    StatusLineSepInactive       =  {  fg=schema.gray[3],                 },
 
     CmpItemAbbr                 =  {  fg=schema.fg,                    bg=schema.none,             };
     CmpItemAbbrMatch            =  {  fg=schema.blue,                  bg=schema.none,             style='bold'};
@@ -216,18 +226,18 @@ return syntax
 end
 
 local function setup()
--- vim.api.nvim_command('hi clear')
--- if vim.fn.exists('syntax_on') then
---   vim.api.nvim_command('syntax reset')
--- end
-vim.o.background = 'dark'
-vim.o.termguicolors = true
+  -- vim.api.nvim_command('hi clear')
+  -- if vim.fn.exists('syntax_on') then
+  --   vim.api.nvim_command('syntax reset')
+  -- end
+  vim.o.background = 'dark'
+  vim.o.termguicolors = true
 
-local syntax = syntax()
+  local syntax = syntax()
 
-for group, colors in pairs(syntax) do
-  u.highlight(group, colors)
-end
+  for group, colors in pairs(syntax) do
+    u.highlight(group, colors)
+  end
 end
 
 return { schema = schema; setup = setup; }

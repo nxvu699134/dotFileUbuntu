@@ -1,10 +1,12 @@
 local ts = require 'nvim-treesitter.configs'
 ts.setup {
-  ensure_installed = {'html', 'css', 'json',
-  'javascript', 'typescript', 'python', 'lua', 'tsx',
-  'svelte', 'go'},
+  ensure_installed = {'html', 'css', 'json', 'javascript', 'typescript', 'python', 'lua', 'tsx', 'svelte', 'go'},
+  sync_install = false,
   indent = { enable = true },
-  highlight = { enable = true },
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = false,
+  },
   -- textobjects = {
   --   select = {
   --     enable = true,

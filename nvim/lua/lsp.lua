@@ -51,6 +51,7 @@ local on_attach = function(client, bufnr)
       border = "none",
     },
   }, bufnr)
+
   -- Set autocommands conditional on server_capabilities
   if client.resolved_capabilities.document_highlight then
     vim.api.nvim_exec([[
@@ -84,6 +85,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] =
 -- npm i -g vscode-langservers-extracted
 require'lspconfig'.html.setup{ on_attach = on_attach }
 require'lspconfig'.cssls.setup{ on_attach = on_attach }
+require'lspconfig'.eslint.setup{ on_attach = on_attach }
 
 -- npm install -g typescript typescript-language-server
 require'lspconfig'.tsserver.setup{ on_attach = on_attach }
@@ -91,6 +93,8 @@ require'lspconfig'.tsserver.setup{ on_attach = on_attach }
 -- npm install -g svelte-language-server
 require'lspconfig'.svelte.setup{ on_attach = on_attach }
 
+-- npm install -g @angular/language-server
+-- require'lspconfig'.angularls.setup{ on_attach = on_attach }
+
 require'lspconfig'.gopls.setup{ on_attach = on_attach}
 
-require'lspconfig'.clangd.setup{ on_attach = on_attach}

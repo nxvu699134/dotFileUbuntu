@@ -16,7 +16,7 @@ require('packer').startup(function()
 
   use {
     'kyazdani42/nvim-tree.lua',
-    commit = "a6c1d45dd6c26f7871f87564baf3860e0e5ac60c",
+    -- commit = "a6c1d45dd6c26f7871f87564baf3860e0e5ac60c",
     config = function() require('plugins.nvim_tree') end
   }
 
@@ -55,7 +55,8 @@ require('packer').startup(function()
 
   use {
     'nvim-treesitter/nvim-treesitter',
-    config = function() require('plugins.treesitter') end
+    -- commit = "808473cfbb41ef07b57397100f3593d7a6aa788f",
+    config = function() require('plugins.treesitter') end,
   }
 
   -- use {'nvim-treesitter/nvim-treesitter-textobjects',

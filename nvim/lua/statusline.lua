@@ -40,7 +40,7 @@ local function get_file_info()
       modified_icon = ''
       vim.cmd(string.format("hi StatusLineFileName guifg=%s", schema.red))
     else
-      vim.cmd(string.format("hi StatusLineFileName guifg=%s", schema.gray10))
+      vim.cmd(string.format("hi StatusLineFileName guifg=%s", schema.gray[11]))
     end
   end
   return string.format("%s %s %s", read_only_icon, file_name, modified_icon)
@@ -88,42 +88,34 @@ local function get_ln_col()
   return string.format("%3d :%2d ", pos[1], pos[2])
 end
 
-_G.set_active = function()
-  local statusline = ''
+function _G.active_line()
   -- double %% to get % in string
   -- pattern is %#HightlightGroup#sometext
-  statusline = statusline .. string.format("%%#StatusLineSepMode_0#%s", sep.open)
-  statusline = statusline .. string.format("%%#StatusLineMode#%s ", get_current_mode())
-  statusline = statusline .. string.format("%%#StatusLineFileName#%s", get_file_info())
-  statusline = statusline .. string.format("%%#StatusLineSep1_Bg#%s", sep.close)
-  statusline = statusline .. "%#StatusLineBg#"
-  statusline = statusline .. string.format(" %s", get_lsp_count())
-
-  -- Right section
-  statusline = statusline .. "%="
-  statusline = statusline .. string.format("%%#StatusLineMode# %s", get_ln_col())
-  statusline = statusline .. " %P"
-  statusline = statusline .. string.format("%%#StatusLineSepMode_0#%s", sep.close)
-  return statusline
+  return string.format("%%#StatusLineSepMode_0#%s", sep.open)
+      .. string.format("%%#StatusLineMode#%s ", get_current_mode())
+      .. string.format("%%#StatusLineFileName#%s", get_file_info())
+      .. string.format("%%#StatusLineSep1_Bg#%s", sep.close)
+      .. "%#StatusLineBg#"
+      .. string.format(" %s", get_lsp_count())
+      .. "%=" -- Right section
+      .. string.format("%%#StatusLineMode# %s", get_ln_col())
+      .. " %P"
+      .. string.format("%%#StatusLineSepMode_0#%s", sep.close)
 end
 
-_G.set_inactive = function()
-  local statusline = ''
-  statusline = statusline .. string.format("%%#StatusLineSepInactive#%s", sep.open)
-  statusline = statusline .. string.format("%%#StatusLineInactiveFileName#%s", get_file_info())
-  statusline = statusline .. "%#StatusLineBg#"
-
-  -- Right section
-  statusline = statusline .. "%="
-  statusline = statusline .. string.format("%%#StatusLineSepInactive#%s", sep.close)
-  vim.wo.statusline = statusline
+function _G.inactive_line()
+  return string.format("%%#StatusLineSepInactive#%s", sep.open)
+      .. string.format("%%#StatusLineInactiveFileName#%s", get_file_info())
+      .. "%#StatusLineBg#"
+      .. "%=" -- Right section
+      .. string.format("%%#StatusLineSepInactive#%s", sep.close)
 end
 
 vim.cmd [[
   augroup Statusline
 	au!
-	au WinEnter,BufEnter * setlocal statusline=%!v:lua.set_active()
-	au WinLeave,BufLeave * lua set_inactive()
-	au WinEnter,BufEnter,FileType NvimTree,startify lua set_inactive()
+	au WinEnter,BufEnter * setlocal statusline=%!v:lua.active_line()
+  au WinLeave,BufLeave * setlocal statusline=%{%v:lua.inactive_line()%}
+	au WinEnter,BufEnter,FileType NvimTree,startify setlocal statusline=%{%v:lua.inactive_line()%}
   augroup END
 ]]
