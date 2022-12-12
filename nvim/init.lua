@@ -20,6 +20,7 @@ require('packer').startup(function()
     config = function() require('plugins.nvim_tree') end
   }
 
+
   use {'kyazdani42/nvim-web-devicons'}
 
   use {'junegunn/fzf',

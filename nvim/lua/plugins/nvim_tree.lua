@@ -1,5 +1,3 @@
-vim.g.nvim_tree_git_hl = 1
-
 local tree_cb = require('nvim-tree.config').nvim_tree_callback
 local map_list = {
   { key = "<CR>",         cb = tree_cb("edit") },
@@ -54,7 +52,6 @@ require'nvim-tree'.setup {
   },
   view = {
     width = 36,
-    height = 30,
     hide_root_folder = false,
     side = 'left',
     mappings = {
@@ -72,7 +69,8 @@ require'nvim-tree'.setup {
   renderer = {
     indent_markers = {
       enable = true,
-    }
+    },
+    highlight_git = true,
   }
 }
 

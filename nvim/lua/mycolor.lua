@@ -106,7 +106,7 @@ local function syntax()
     WildMenu                    =  {  fg=schema.fg,                    bg=schema.green             };
     Question                    =  {  fg=schema.yellow,                bg=schema.none              };
     StatusLine                  =  {  fg=schema.fg,                    bg=schema.none,             style='bold'            };--  status  line   of  current      window
-    StatusLineNC                =  {  fg=schema.fg,                    bg=schema.none,             style='bold'            };--  status  lines  of  not-current  windows
+    StatusLineNC                =  {  fg=schema.fg,                    bg=schema.bg,             style='bold'            };--  status  lines  of  not-current  windows
     SpellBad                    =  {  fg=schema.red,                   bg=schema.none,             style='undercurl'       };
     SpellCap                    =  {  fg=schema.blue,                  bg=schema.none,             style='undercurl'       };
     SpellLocal                  =  {  fg=schema.cyan,                  bg=schema.none,             style='undercurl'       };
@@ -149,8 +149,6 @@ local function syntax()
     Delimiter                   =  {  fg=schema.fg,                    bg=schema.none              };
     Ignore                      =  {  fg=schema.gray[4],                 bg=schema.none              };
     Underlined                  =  {  fg=schema.none,                  bg=schema.none,             style='underline'       };
-
-    TSParameter                 =  {  fg=schema.fg,                    bg=schema.none              };
 
     NvimTreeFolderName          =  {  fg=schema.blue,                  bg=schema.none};
     NvimTreeRootFolder          =  {  fg=schema.red,                   bg=schema.none,             style='bold'            };
@@ -236,7 +234,7 @@ local function setup()
   local syntax = syntax()
 
   for group, colors in pairs(syntax) do
-    u.highlight(group, colors)
+    u.nvim_hl(group, colors)
   end
 end
 
