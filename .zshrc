@@ -131,12 +131,11 @@ alias suroot='sudo -E -s'
 alias lgit='lazygit'
 alias leet='cd ~/Workspace/Golang/src/leetcode'
 alias blog='cd ~/Workspace/miniprojs/blog && lnvm'
-alias tree='cd ~/Workspace/treehouse && lnvm && nvm use 14'
 alias ulang='cd ~/Workspace/Golang/src/ulang'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # fnm
-export PATH=/home/joey/.fnm:$PATH
+export PATH="/home/joey/.local/share/fnm:$PATH"
 eval "`fnm env`"
