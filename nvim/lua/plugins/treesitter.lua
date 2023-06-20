@@ -1,6 +1,21 @@
 local ts = require 'nvim-treesitter.configs'
 ts.setup {
-  ensure_installed = {'html', 'css', 'json', 'javascript', 'typescript', 'python', 'lua', 'tsx', 'svelte', 'go'},
+  ensure_installed = {
+    'html',
+    'css',
+    'scss',
+    -- 'json',
+    'javascript',
+    'typescript',
+    'python',
+    'lua',
+    'tsx',
+    'svelte',
+    'go',
+    'rust',
+    'markdown',
+    'markdown_inline',
+  },
   sync_install = false,
   indent = { enable = true },
   highlight = {

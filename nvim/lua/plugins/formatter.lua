@@ -34,15 +34,16 @@ require('formatter').setup({
     html = { prettier },
     scss = { prettier },
     css = { prettier },
+    svelte = { prettier },
   }
 })
 
 vim.cmd([[
 augroup FormatAutogroup
   autocmd!
-  autocmd BufWritePost *.js,*.ts,*.jsx,*.tsx,*.html,*.scss,*css FormatWrite
+  autocmd BufWritePost *.js,*.ts,*.jsx,*.tsx,*.html,*.scss,*css,*.svelte FormatWrite
   autocmd BufWritePre *.go lua vim.lsp.buf.formatting_sync(nil, 1000)
   autocmd BufWritePre *.c,*.cpp,*.h*.hpp lua vim.lsp.buf.formatting_sync(nil, 1000)
-  autocmd BufWritePre *.svelte lua vim.lsp.buf.formatting_sync(nil, 1000)
+  " autocmd BufWritePre *.svelte lua vim.lsp.buf.formatting_sync(nil, 1000)
 augroup END
 ]])

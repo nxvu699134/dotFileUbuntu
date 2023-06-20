@@ -23,13 +23,13 @@ require('packer').startup(function()
 
   use {'kyazdani42/nvim-web-devicons'}
 
-  use {'junegunn/fzf',
-    run = function() vim.fn['fzf#install']() end
-  }
-
-  use {'junegunn/fzf.vim',
-    config = function() require('plugins.fzf') end
-  }
+  -- use {'junegunn/fzf',
+  --   run = function() vim.fn['fzf#install']() end
+  -- }
+  --
+  -- use {'junegunn/fzf.vim',
+  --   config = function() require('plugins.fzf') end
+  -- }
 
   use {'mhinz/vim-startify',
     config = function() require('plugins.startify') end
@@ -129,6 +129,25 @@ require('packer').startup(function()
     'numToStr/Comment.nvim',
     config = function() require('plugins.comment_nvim') end,
   }
+
+  use {
+    'nvim-telescope/telescope.nvim',
+    tag = '0.1.1',
+    requires = { 'nvim-lua/plenary.nvim' },
+    config = function() require('plugins.telescope') end,
+  }
+
+  use({
+    "glepnir/lspsaga.nvim",
+    branch = "main",
+    event = "BufRead",
+    config = function() require("plugins.lspsaga") end,
+    requires = { {"nvim-tree/nvim-web-devicons"} }
+  })
+
+  -- use ({
+  --   'simrat39/rust-tools.nvim'
+  -- })
 end)
 
 require('mycolor').setup()

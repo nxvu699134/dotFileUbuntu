@@ -18,15 +18,15 @@ for type, icon in pairs(types) do
   )
 end
 
-local map_opts = { noremap = true, silent = true }
-vim.api.nvim_set_keymap('n', '<leader>jd', '<cmd>vsp | lua vim.lsp.buf.definition()<CR>', map_opts)
-vim.api.nvim_set_keymap('n', '<leader>jr', '<cmd>lua vim.lsp.buf.references()<CR>', map_opts)
-vim.api.nvim_set_keymap('n', '<leader>h', '<cmd>lua vim.lsp.buf.hover()<CR>', map_opts)
-vim.api.nvim_set_keymap('n', '<leader>f', '<cmd>lua vim.lsp.buf.code_action()<CR>', map_opts)
-vim.api.nvim_set_keymap('n', '<leader>ei', '<cmd>lua vim.diagnostic.open_float()<CR>', map_opts)
-vim.api.nvim_set_keymap('n', '<leader>en', '<cmd>lua vim.diagnostic.goto_next({enable_popup = false})<CR>', map_opts)
-vim.api.nvim_set_keymap('n', '<leader>ep', '<cmd>lua vim.diagnostic.goto_prev({enable_popup = false})<CR>', map_opts)
-vim.api.nvim_set_keymap("n", "<leader>p", "<cmd>lua vim.lsp.buf.formatting()<CR>", map_opts)
+-- local map_opts = { noremap = true, silent = true }
+-- vim.api.nvim_set_keymap('n', '<leader>jd', '<cmd>vsp | lua vim.lsp.buf.definition()<CR>', map_opts)
+-- vim.api.nvim_set_keymap('n', '<leader>jr', '<cmd>lua vim.lsp.buf.references()<CR>', map_opts)
+-- vim.api.nvim_set_keymap('n', '<leader>h', '<cmd>lua vim.lsp.buf.hover()<CR>', map_opts)
+-- vim.api.nvim_set_keymap('n', '<leader>f', '<cmd>lua vim.lsp.buf.code_action()<CR>', map_opts)
+-- vim.api.nvim_set_keymap('n', '<leader>ei', '<cmd>lua vim.diagnostic.open_float()<CR>', map_opts)
+-- vim.api.nvim_set_keymap('n', '<leader>en', '<cmd>lua vim.diagnostic.goto_next({enable_popup = false})<CR>', map_opts)
+-- vim.api.nvim_set_keymap('n', '<leader>ep', '<cmd>lua vim.diagnostic.goto_prev({enable_popup = false})<CR>', map_opts)
+-- vim.api.nvim_set_keymap("n", "<leader>p", "<cmd>lua vim.lsp.buf.formatting()<CR>", map_opts)
 -- vim.api.nvim_set_keymap("v", "<leader>p", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", map_opts)
 
 local lsp_signature_attach = function()
@@ -70,6 +70,9 @@ local on_attach = function(client, bufnr)
     })
   end
 
+  -- Turn off semantic highlight, it seems buggy to me
+  client.server_capabilities.semanticTokensProvider = nil
+
   -- if client.resolved_capabilities.document_formatting then
   --   vim.cmd("")
   --   vim.api.nvim_exec([[
@@ -90,18 +93,22 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] =
   })
 
 -- npm i -g vscode-langservers-extracted
-require'lspconfig'.html.setup{ on_attach = on_attach }
-require'lspconfig'.cssls.setup{ on_attach = on_attach }
-require'lspconfig'.eslint.setup{ on_attach = on_attach }
+require'lspconfig'.html.setup{ on_attach = on_attach, }
+require'lspconfig'.cssls.setup{ on_attach = on_attach, }
+require'lspconfig'.eslint.setup{ on_attach = on_attach, }
+
+-- npm i -g cssmodules-language-server
+-- require'lspconfig'.cssmodules_ls.setup{ on_attach = on_attach, init_options = {camelCase = false} }
 
 -- npm install -g typescript typescript-language-server
-require'lspconfig'.tsserver.setup{ on_attach = on_attach }
+require'lspconfig'.tsserver.setup{ on_attach = on_attach, }
 
 -- npm install -g svelte-language-server
-require'lspconfig'.svelte.setup{ on_attach = on_attach }
+require'lspconfig'.svelte.setup{ on_attach = on_attach, }
 
 -- npm install -g @angular/language-server
 -- require'lspconfig'.angularls.setup{ on_attach = on_attach }
 
-require'lspconfig'.gopls.setup{ on_attach = on_attach}
-
+-- require'lspconfig'.gopls.setup{ on_attach = on_attach}
+--
+-- require'lspconfig'.clangd.setup{}
