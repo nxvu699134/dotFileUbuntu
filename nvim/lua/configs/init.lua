@@ -1,0 +1,6 @@
+require('configs.colorscheme').setup()
+require("configs.lsp")
+require('configs.statusline')
+require('configs.options')
+require('configs.mappings')
+require('configs.cmds')

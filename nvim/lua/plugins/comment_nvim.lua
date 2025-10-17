@@ -1,7 +1,7 @@
 require('Comment').setup({
   toggler = {
     line = '<leader>cc',
-    block = '<Nop>',
+    block = 'gcb',
     },
   opleader = {
     line = '<leader>c',
@@ -12,4 +12,5 @@ require('Comment').setup({
     extra = false,
     extended = false,
   },
+  pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
 })

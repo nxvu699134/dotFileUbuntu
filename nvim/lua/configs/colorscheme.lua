@@ -1,4 +1,4 @@
-local u = require('utils')
+local u = require('configs.utils')
 
 function reverse(t)
   local ret = {}
@@ -12,49 +12,50 @@ end
 
 local function make_schema(light)
   local base_gray = {
-    u.hsl_to_hex(236, 41, 8),
-    u.hsl_to_hex(238, 44, 14), --base
-    u.hsl_to_hex(236, 39, 23),
-    u.hsl_to_hex(237, 34, 30),
-    u.hsl_to_hex(235, 28, 39),
-    u.hsl_to_hex(236, 22, 49),
-    u.hsl_to_hex(235, 23, 60),
-    u.hsl_to_hex(235, 27, 70),
-    u.hsl_to_hex(237, 31, 80),
-    u.hsl_to_hex(235, 33, 89),
-    u.hsl_to_hex(235, 36, 96),
+    u.hsl_to_hex(222, 16, 18),
+    u.hsl_to_hex(220, 16, 22),
+    u.hsl_to_hex(222, 16, 28),
+    u.hsl_to_hex(220, 17, 32),
+    u.hsl_to_hex(220, 16, 36),
+    u.hsl_to_hex(220, 17, 42),
+    u.hsl_to_hex(219, 26, 58),
+    u.hsl_to_hex(219, 27, 62),
+    u.hsl_to_hex(219, 28, 70),
+    u.hsl_to_hex(219, 27, 78),
+    u.hsl_to_hex(219, 28, 88),
+    u.hsl_to_hex(218, 27, 92),
   }
 
   local colors = {
     none    = 'NONE',
     -- core colors
-    orange = light and u.hsl_to_hex(32 , 98, 42) or u.hsl_to_hex(34 , 93, 53),
-    yellow = light and u.hsl_to_hex(42 , 80, 28) or u.hsl_to_hex(40 , 99, 65),
-    green  = light and u.hsl_to_hex(102, 74, 32) or u.hsl_to_hex(99 , 54, 58),
-    cyan   = light and u.hsl_to_hex(184, 81, 36) or u.hsl_to_hex(186, 94, 65),
-    blue   = light and u.hsl_to_hex(205, 76, 46) or u.hsl_to_hex(202, 99, 60),
-    red    = light and u.hsl_to_hex(350, 84, 42) or u.hsl_to_hex(358, 92, 62),
-    teal   = light and u.hsl_to_hex(168, 80, 30) or u.hsl_to_hex(166, 72, 48),
-    purple = light and u.hsl_to_hex(259, 70, 54) or u.hsl_to_hex(259, 82, 74),
+    red    = light and u.hsl_to_hex(354, 42, 56) or u.hsl_to_hex(356, 48, 56),
+    green  = light and u.hsl_to_hex(102, 74, 32) or u.hsl_to_hex(96, 38, 56),
+    yellow = light and u.hsl_to_hex(42 , 80, 28) or u.hsl_to_hex(42 , 70, 68),
+    blue   = light and u.hsl_to_hex(205, 76, 46) or u.hsl_to_hex(212, 50, 55),
+    purple = light and u.hsl_to_hex(259, 70, 54) or u.hsl_to_hex(311, 34, 62),
+    cyan   = light and u.hsl_to_hex(168, 80, 30) or u.hsl_to_hex(194, 64, 58),
+    teal   = light and u.hsl_to_hex(184, 81, 36) or u.hsl_to_hex(164, 50, 45),
+    orange = light and u.hsl_to_hex(32 , 98, 42) or u.hsl_to_hex(20 , 61, 60),
 
     gray = light and reverse(base_gray) or base_gray
   }
 
-  colors.bg            =  colors.gray[2]
-  colors.bg_popup      =  colors.gray[3]
+  colors.bg            =  colors.gray[1]
+  colors.bg_popup      =  colors.gray[2]
   colors.bg_popup_sel  =  colors.gray[5]
-  colors.bg_highlight  =  u.rgba_to_rgb(colors.blue,    colors.bg,     0.3)
-  colors.bg_visual     =  u.rgba_to_rgb(colors.blue,    colors.bg,     0.4)
-  colors.fg            =  colors.gray[10]
+  colors.bg_highlight  =  u.rgba_to_rgb(colors.cyan,    colors.bg,     0.2)
+  colors.bg_visual     =  u.rgba_to_rgb(colors.cyan,    colors.bg,     0.3)
+  colors.fg            =  colors.gray[11]
   colors.fg_disabled   =  colors.gray[5]
   colors.fg_invert     =  colors.gray[1]
-  colors.fg_popup      =  colors.gray[10]
+  colors.fg_popup      =  colors.gray[11]
 
   colors.diag = {
-    danger   =  {  fg  =  colors.red,     bg  =  u.rgba_to_rgb(colors.red,     colors.bg,  0.16)  },
-    warning  =  {  fg  =  colors.yellow,  bg  =  u.rgba_to_rgb(colors.yellow,  colors.bg,  0.16)  },
-    info     =  {  fg  =  colors.blue,    bg  =  u.rgba_to_rgb(colors.blue,    colors.bg,  0.16)  },
-    hint     =  {  fg  =  colors.gray[10],    bg  =  u.rgba_to_rgb(colors.gray[10], colors.bg,  0.16)  },
+    danger   =  {  fg  =  colors.red,     bg  =  u.rgba_to_rgb(colors.red,     colors.bg,  0.1)  },
+    warning  =  {  fg  =  colors.yellow,  bg  =  u.rgba_to_rgb(colors.yellow,  colors.bg,  0.1)  },
+    info     =  {  fg  =  colors.blue,    bg  =  u.rgba_to_rgb(colors.blue,    colors.bg,  0.1)  },
+    hint     =  {  fg  =  colors.gray[10],    bg  =  u.rgba_to_rgb(colors.gray[10], colors.bg,  0.1)  },
   };
 
 
@@ -102,11 +103,11 @@ local function syntax()
     PmenuSel                    =  {  fg=schema.fg_popup,              bg=schema.bg_popup_sel      },
     PmenuSbar                   =  {  bg=schema.bg_popup               },
     PmenuThumb                  =  {  bg=schema.bg_popup_sel           },
-    NormalFloat                 =  {  fg=schema.fg,bg=schema.bg_popup  };
+    NormalFloat                 =  {  fg=schema.fg,                    bg=schema.bg_popup  };
     WildMenu                    =  {  fg=schema.fg,                    bg=schema.green             };
     Question                    =  {  fg=schema.yellow,                bg=schema.none              };
-    StatusLine                  =  {  fg=schema.fg,                    bg=schema.none,             style='bold'            };--  status  line   of  current      window
-    StatusLineNC                =  {  fg=schema.fg,                    bg=schema.bg,             style='bold'            };--  status  lines  of  not-current  windows
+    StatusLine                  =  {  fg=schema.fg,                    bg=schema.none,                         };--  status  line   of  current      window
+    StatusLineNC                =  {  fg=schema.fg,                    bg=schema.bg,                        };--  status  lines  of  not-current  windows
     SpellBad                    =  {  fg=schema.red,                   bg=schema.none,             style='undercurl'       };
     SpellCap                    =  {  fg=schema.blue,                  bg=schema.none,             style='undercurl'       };
     SpellLocal                  =  {  fg=schema.cyan,                  bg=schema.none,             style='undercurl'       };
@@ -177,6 +178,7 @@ local function syntax()
     DiagnosticWarn              =  {  fg=schema.diag.warning.fg,       };
     DiagnosticInfo              =  {  fg=schema.diag.info.fg,          };
     DiagnosticHint              =  {  fg=schema.diag.hint.fg,          };
+    DiagnosticUnnecessary       =  {  fg=schema.diag.hint.fg_disabled, };
 
     StartifyPath                =  {  fg=schema.fg_disabled            },
 
@@ -184,16 +186,16 @@ local function syntax()
     GitSignsChange              =  {  fg=schema.blue,                  bg=schema.none              };
     GitSignsDelete              =  {  fg=schema.red,                   bg=schema.none              };
 
-    StatusLineBg                =  {  bg=schema.gray[3]                  },
-    StatusLineMode              =  {  fg=schema.gray[1],               bg=schema.purple            },
+    StatusLineBg                =  {  bg=schema.gray[2]                  },
+    StatusLineMode              =  {  fg=schema.gray[1],               bg=schema.cyan            },
     StatusLineFileName          =  {  fg=schema.gray[11],              bg=schema.gray[4]             },
-    StatusLineLspError          =  {  fg=schema.diag.danger.fg,        bg=schema.gray[3]             },
-    StatusLineLspWarn           =  {  fg=schema.diag.warning.fg,       bg=schema.gray[3]             },
-    StatusLineLspInfo           =  {  fg=schema.diag.info.fg,          bg=schema.gray[3]             },
+    StatusLineLspError          =  {  fg=schema.diag.danger.fg,        bg=schema.gray[2]             },
+    StatusLineLspWarn           =  {  fg=schema.diag.warning.fg,       bg=schema.gray[2]             },
+    StatusLineLspInfo           =  {  fg=schema.diag.info.fg,          bg=schema.gray[2]             },
     StatusLineInactiveFileName  =  {  fg=schema.gray[6],               bg=schema.gray[3]             },
-    StatusLineRightSub          =  {  fg=schema.gray[11],              bg=schema.gray[2]             },
-    StatusLineSepMode_0         =  {  fg=schema.purple,                },
-    StatusLineSep1_Bg           =  {  fg=schema.gray[4],               bg=schema.gray[3]             },
+    StatusLineRightSub          =  {  fg=schema.gray[11],              bg=schema.gray[1]             },
+    StatusLineSepMode_0         =  {  fg=schema.cyan,                },
+    StatusLineSep1_Bg           =  {  fg=schema.gray[4],               bg=schema.gray[2]             },
     StatusLineSepInactive       =  {  fg=schema.gray[3],                 },
 
     CmpItemAbbr                 =  {  fg=schema.fg,                    bg=schema.none,             };
@@ -205,6 +207,7 @@ local function syntax()
     CmpItemKindInterface        =  {  fg=schema.yellow,                bg=schema.none              };
     CmpItemKindModule           =  {  fg=schema.yellow,                bg=schema.none              };
     CmpItemKindDefault          =  {  fg=schema.fg,                    bg=schema.none              };
+    CmpItemKindCopilot          =  {  fg=schema.cyan,                    bg=schema.none              };
 
     TelescopeSelection          = {  fg=schema.fg,                      bg=schema.bg_highlight,   style='bold'              },
     TelescopeBorder             = {  fg=schema.teal,                    bg=schema.none              },
@@ -212,6 +215,8 @@ local function syntax()
     TelescopePromptPrefix     = {  fg=schema.red,                     bg=schema.none              },
     TelescopeResultsNormal      = {  fg=schema.gray[6],                 bg=schema.none              },
     TelescopeMatching           = {  fg=schema.red,                     bg=schema.none,       style='bold,underline'        },
+
+    FlashLabel           = {  fg=schema.diag.warning.fg,                     bg=schema.diag.warning.bg,       style='bold,underline'        },
 
   -- CocErrorHighlight   = { fg=schema.diag.danger.fg,     bg=schema.diag.danger.bg,   style='undercurl,bold'};
   -- CocWarningHighlight = { fg=schema.diag.warning.fg,    bg=schema.diag.warning.bg,  style='undercurl,bold'};

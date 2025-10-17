@@ -1,10 +1,9 @@
 require('gitsigns').setup({
   signs = {
-    add          = {hl = 'GitSignsAdd'   , text = '+'},
-    change       = {hl = 'GitSignsChange', text = '~'},
-    delete       = {hl = 'GitSignsDelete', text = '-'},
-    changedelete = {hl = 'GitSignsChange', text = '~'},
+    add          = {text = '+'},
+    change       = {text = '~'},
+    delete       = {text = '-'},
+    changedelete = {text = '~'},
   },
-  keymaps = {},
   sign_priority = 4,
 })

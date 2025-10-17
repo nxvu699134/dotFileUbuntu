@@ -18,7 +18,7 @@ local function prettier()
       '--config-precedence',
       'prefer-file',
       "--stdin-filepath",
-      vim.api.nvim_buf_get_name(0)
+      vim.fn.shellescape(vim.api.nvim_buf_get_name(0))
     },
     stdin = true
   }
@@ -35,6 +35,9 @@ require('formatter').setup({
     scss = { prettier },
     css = { prettier },
     svelte = { prettier },
+    markdown = { prettier },
+    json = { prettier },
+    svg = { prettier },
   }
 })
 

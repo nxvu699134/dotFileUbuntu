@@ -44,19 +44,17 @@ require'nvim-tree'.setup {
   hijack_netrw        = true,
   open_on_tab         = false,
   hijack_cursor       = false,
-  update_cwd          = false,
   update_focused_file = {
     enable      = true,
-    update_cwd  = false,
     ignore_list = {}
   },
   filters = {
-    dotfiles = true,
-    custom = { '.git', 'node_modules', '.cache' }
+    enable = true,
+    dotfiles = false,
+    custom = { '.git', 'node_modules', '\\.cache' }
   },
   view = {
     width = 36,
-    hide_root_folder = false,
     side = 'left',
   },
   actions = {

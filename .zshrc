@@ -1,3 +1,5 @@
+export PATH="/opt/homebrew/bin:$PATH"
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -5,8 +7,8 @@ if [[ -r "${xdg_cache_home:-$home/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${xdg_cache_home:-$home/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-export TERM="xterm-256color"
-# export TERM="screen-256color"
+# export TERM="xterm-256color"
+export TERM="screen-256color"
 # export TERM="tmux-256color"
 #
 # Path to your oh-my-zsh installation.
@@ -82,60 +84,33 @@ alias v="nvim"
 export EDITOR='nvim'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# export DENO_INSTALL="/home/joey/.deno"
+# export PATH="$DENO_INSTALL/bin:$PATH"
 
-lnvm() {
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-}
+# export GOROOT=$HOME/.go
+# export GOPATH=$HOME/Workspace/Golang
+# export GOBIN=$GOPATH/bin
+# export PATH=$PATH:$GOROOT/bin:$GOBIN
 
-# lazy load nvm
-# ref: https://www.reddit.com/r/node/comments/4tg5jg/lazy_load_nvm_for_faster_shell_start/
-# temporary comment since have some issues with lsp nvim
-# nvm() {
-#     unset -f nvm
-#     export NVM_DIR=~/.nvm
-#     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-#     nvm "$@"
-# }
-#
-# node() {
-#     unset -f node
-#     export NVM_DIR=~/.nvm
-#     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-#     node "$@"
-# }
-#
-# npm() {
-#     unset -f npm
-#     export NVM_DIR=~/.nvm
-#     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-#     npm "$@"
-# }
-
-export DENO_INSTALL="/home/joey/.deno"
-export PATH="$DENO_INSTALL/bin:$PATH"
-
-export GOROOT=$HOME/.go
-export GOPATH=$HOME/Workspace/Golang
-export GOBIN=$GOPATH/bin
-export PATH=$PATH:$GOROOT/bin:$GOBIN
-
+export PATH="$HOME/.cargo/bin:$PATH"
 
 export BAT_THEME="OneHalfDark"
 
+export PGDATA=/usr/local/pgsql/data
+
 alias suroot='sudo -E -s'
 alias lgit='lazygit'
-alias leet='cd ~/Workspace/Golang/src/leetcode'
-alias blog='cd ~/Workspace/miniprojs/blog && lnvm'
-alias ulang='cd ~/Workspace/Golang/src/ulang'
+alias pn='pnpm'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# fnm
-export PATH="/home/joey/.local/share/fnm:$PATH"
-eval "`fnm env`"
+eval "$(fnm env --use-on-cd)"
+
+# pnpm
+# export PNPM_HOME="/Users/joey/.pnpm"
+# case ":$PATH:" in
+#   *":$PNPM_HOME:"*) ;;
+#   *) export PATH="$PNPM_HOME:$PATH" ;;
+# esac
+# pnpm end

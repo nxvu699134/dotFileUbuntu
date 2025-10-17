@@ -1,33 +1,48 @@
 local lsp_kinds = {
-  Text          = " Text",
-  Method        = " Method",
-  Function      = "⨕ Func",
-  Constructor   = " Cons",
-  Field         = " Field",
-  Variable      = " Var",
-  Class         = " Class",
-  Interface     = " Interface",
-  Module        = " Module",
-  Property      = " Prop",
-  Unit          = " Unit",
-  Value         = " Value",
-  Enum          = "了Enum",
-  Keyword       = " Keyword",
-  Snippet       = " Snip",
-  Color         = " Color",
-  File          = " File",
-  Reference     = " Ref",
+  Array         = " ",
+  Boolean       = "󰨙 ",
+  Class         = " Class",
+  Color         = " Color",
+  Constant      = "󰏿 Const",
+  Constructor   = " Cons",
+  Copilot       = " Copilot",
+  Enum          = " Enum",
+  EnumMember    = " EnumMem",
+  Event         = " Event",
+  Field         = "󰜢 Field",
+  File          = " File",
   Folder        = " Folder",
-  EnumMember    = " EnumMem",
-  Constant      = " Const",
-  Struct        = "ﳤ Struct",
-  Event         = " Event",
-  Operator      = " Operator",
-  TypeParameter = " TypeParam"
+  Function      = "󰊕 Func",
+  Interface     = " Interface",
+  Keyword       = "󰌋 Keyword",
+  Method        = "󰊕 Method",
+  Module        = " Module",
+  Operator      = " Operator",
+  Property      = " Prop",
+  Package       = " Package",
+  Number        = "󰎠 Number",
+  Object        = "󰘦 Obj",
+  Reference     = " Ref",
+  Snippet       = " Snip",
+  Struct        = "󰆼 Struct",
+  String        = " Str",
+  Text          = " Text",
+  TypeParameter = " TParam",
+  Unit          = "󰑭 Unit",
+  Value         = "󰎠 Value",
+  Variable      = "󰀫 Var",
 }
 
 local format_entry  = function(entry, vim_item)
   vim_item.kind = lsp_kinds[vim_item.kind]
+  --cool setup to dedup items
+  -- https://github.com/yifan0414/dotfiles/blob/master/.config/nvim/lua/plugins/nvim-cmp.lua
+  -- vim_item.dup = ({
+  --   luasnip = 1,
+  --   nvim_lsp = 0,
+  --   buffer = 0,
+  --   path = 0,
+  -- })[entry.source.name] or 0
   return vim_item
 end
 
@@ -40,7 +55,7 @@ cmp.setup {
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.close(),
-    -- ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
   },
 
   snippet = {
@@ -53,11 +68,10 @@ cmp.setup {
     format = format_entry
   },
   preselect = cmp.PreselectMode.None,
-  -- You should specify your *installed* sources.
   sources = {
-    { name = 'nvim_lsp', max_item_count=10 },
-    { name = 'path', max_item_count=10  },
-    { name = 'buffer', max_item_count=5  },
+    { name = 'nvim_lsp' },
+    { name = 'path'  },
+    { name = 'buffer' },
   },
 }
 

@@ -1,13 +1,13 @@
-local schema = require('mycolor').schema
+local schema = require('configs.colorscheme').schema
 
 local modes = setmetatable(
   {
-    n       = { text = 'NOR', color = schema.purple },
-    i       = { text = 'INS', color = schema.teal },
+    n       = { text = 'NOR', color = schema.cyan },
+    i       = { text = 'INS', color = schema.blue },
     c       = { text = 'CMD', color = schema.orange },
-    v       = { text = 'VIS', color = schema.blue },
-    V       = { text = 'L·V', color = schema.blue },
-    ['']  = { text = 'B·V', color = schema.blue },
+    v       = { text = 'VIS', color = schema.purple },
+    V       = { text = 'L·V', color = schema.purple },
+    ['']  = { text = 'B·V', color = schema.purple },
     R       = { text = 'REP', color = schema.red },
   },
   { -- this is fallback if key not exist
@@ -34,10 +34,10 @@ local function get_file_info()
   if file_name == '' then file_name = '[No Name]' end
   local file_extension = vim.fn.expand('%:e')
   local read_only_icon = vim.bo.filetype == 'help' and vim.bo.readonly == true and '  ' or ''
-  local modified_icon = ' '
+  local modified_icon = '  '
   if vim.bo.modifiable then
     if vim.bo.modified then
-      modified_icon = ''
+      modified_icon = '󰳼 '
       vim.cmd(string.format("hi StatusLineFileName guifg=%s", schema.red))
     else
       vim.cmd(string.format("hi StatusLineFileName guifg=%s", schema.gray[11]))
@@ -57,7 +57,7 @@ local function get_file_type()
 end
 
 local function get_lsp_count()
-  if vim.tbl_isempty(vim.lsp.buf_get_clients(0)) then
+  if vim.tbl_isempty(vim.lsp.get_clients({buffer=0})) then
     return ''
   end
   local diag = ''
