@@ -29,7 +29,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
     if client.supports_method("textDocument/documentHighlight") then
       local hl_group = vim.api.nvim_create_augroup("LspDocumentHighlight", { clear = true })
-      vim.api.nvim_clear_autocmds { buffer = buffer, group = hl_group }
       vim.api.nvim_create_autocmd({ "CursorHold" }, {
         group = hl_group,
         callback = vim.lsp.buf.document_highlight,
@@ -72,4 +71,7 @@ vim.lsp.enable('eslint')
 vim.lsp.enable('tailwindcss')
 
 -- npm install -g typescript typescript-language-server
-vim.lsp.enable('ts_ls')
+-- vim.lsp.enable('ts_ls')
+
+-- npm install -g @vtsls/language-server
+vim.lsp.enable('vtsls')

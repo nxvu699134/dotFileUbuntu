@@ -207,7 +207,17 @@ local function syntax()
     CmpItemKindInterface        =  {  fg=schema.yellow,                bg=schema.none              };
     CmpItemKindModule           =  {  fg=schema.yellow,                bg=schema.none              };
     CmpItemKindDefault          =  {  fg=schema.fg,                    bg=schema.none              };
-    CmpItemKindCopilot          =  {  fg=schema.cyan,                    bg=schema.none              };
+    CmpItemKindCopilot          =  {  fg=schema.cyan,                  bg=schema.none              };
+
+    BlinkCmpLabel                 =  {  fg=schema.fg,                    bg=schema.none,             };
+    BlinkCmpLabelDeprecated     =  {  fg=schema.fg_disabled,           bg=schema.none,             style='strikethrough'};
+    BlinkCmpLabelMatch            =  {  fg=schema.blue,                  bg=schema.none,             style='bold'};
+    BlinkCmpKind          =  {  fg=schema.fg,                    bg=schema.none              };
+    BlinkCmpKindFunction         =  {  fg=schema.yellow,                bg=schema.none              };
+    BlinkCmpKindMethod           =  {  fg=schema.yellow,                bg=schema.none              };
+    BlinkCmpKindInterface        =  {  fg=schema.yellow,                bg=schema.none              };
+    BlinkCmpKindModule           =  {  fg=schema.yellow,                bg=schema.none              };
+    BlinkCmpLabelDescription     =  {  fg=schema.fg_disabled,           bg=schema.none              };
 
     TelescopeSelection          = {  fg=schema.fg,                      bg=schema.bg_highlight,   style='bold'              },
     TelescopeBorder             = {  fg=schema.teal,                    bg=schema.none              },
@@ -218,19 +228,6 @@ local function syntax()
 
     FlashLabel           = {  fg=schema.diag.warning.fg,                     bg=schema.diag.warning.bg,       style='bold,underline'        },
 
-  -- CocErrorHighlight   = { fg=schema.diag.danger.fg,     bg=schema.diag.danger.bg,   style='undercurl,bold'};
-  -- CocWarningHighlight = { fg=schema.diag.warning.fg,    bg=schema.diag.warning.bg,  style='undercurl,bold'};
-  -- CocInfoHighlight    = { fg=schema.diag.info.fg,       bg=schema.diag.info.bg,     style='undercurl,bold'};
-  -- CocHintHighlight    = { fg=schema.diag.hint.fg,       bg=schema.diag.hint.bg,     style='undercurl,bold'};
-
-  -- CocHighlightRead      = { fg=schema.none,     bg=schema.bg_highlight, style='bold' };
-  -- CocHighlightWrite     = { fg=schema.none,     bg=schema.bg_highlight, style='bold' };
-  -- CocHighlightText      = { fg=schema.none,     bg=schema.bg_highlight, style='bold' };
-
-  -- CocErrorSign      = { fg=schema.diag.danger.fg,   style='bold'};
-  -- CocWarningSign    = { fg=schema.diag.warning.fg,  style='bold'};
-  -- CocInfoSign       = { fg=schema.diag.info.fg,     style='bold'};
-  -- CocHintSign       = { fg=schema.diag.hint.fg,     style='bold'};
 }
 return syntax
 end

@@ -1,48 +1,51 @@
-local ts = require 'nvim-treesitter.configs'
-ts.setup {
-  ensure_installed = {
-    'html',
-    'css',
-    'scss',
-    -- 'json',
-    'javascript',
-    'typescript',
-    'python',
-    'lua',
-    'tsx',
-    'sql',
-    -- 'svelte',
-    -- 'go',
-    -- 'rust',
-    'markdown',
-    'markdown_inline',
-    -- 'cpp',
-    -- 'astro'
+return {
+  {
+    'nvim-treesitter/nvim-treesitter',
+    opts = {
+      ensure_installed = {
+        'html',
+        'css',
+        'scss',
+        'json',
+        'javascript',
+        'typescript',
+        'python',
+        'lua',
+        'tsx',
+        'sql',
+        -- 'svelte',
+        -- 'go',
+        -- 'rust',
+        -- 'markdown',
+        -- 'markdown_inline',
+        -- 'cpp',
+      },
+      sync_install = false,
+      indent = { enable = true },
+      highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = false,
+      },
+    },
+    config = function(_, opts)
+      require("nvim-treesitter.configs").setup(opts)
+    end,
   },
-  sync_install = false,
-  indent = { enable = true },
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = false,
+
+  {
+    'windwp/nvim-ts-autotag',
+    config = function() require('nvim-ts-autotag').setup() end
   },
-  -- textobjects = {
-  --   select = {
-  --     enable = true,
-  --
-  --     -- Automatically jump forward to textobj, similar to targets.vim
-  --     lookahead = true,
-  --
-  --     keymaps = {
-  --       -- You can use the capture groups defined in textobjects.scm
-  --       ["af"] = "@function.outer",
-  --       ["if"] = "@function.inner",
-  --       ["ac"] = "@conditional.outer",
-  --       ["ic"] = "@conditional.inner",
-  --       ["ap"] = "@parameter.outer",
-  --       ["ip"] = "@parameter.inner",
-  --       ["al"] = "@loop.outer",
-  --       ["il"] = "@loop.inner",
-  --     },
-  --   },
-  -- },
+
+  {
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    config = function() require('nvim-autopairs').setup({map_cr = true}) end,
+  },
+
+  {
+    "folke/ts-comments.nvim",
+    opts = {},
+    event = "VeryLazy",
+  },
 }
