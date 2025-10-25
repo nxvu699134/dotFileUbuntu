@@ -1,0 +1,53 @@
+[env]
+TERM = "$TERM"
+
+[general]
+import = ["~/.config/alacritty/themes/nord-dark.toml"]
+live_config_reload = true
+
+[window]
+decorations = "Buttonless"
+startup_mode = "Maximized"
+opacity = 1.0
+dynamic_padding = true
+option_as_alt = "OnlyLeft"
+
+[window.dimensions]
+columns = 0
+lines = 0
+
+[window.padding]
+x = 0
+y = 0
+
+[scrolling]
+history = 10000
+multiplier = 4
+
+[font]
+size = 18
+
+[font.normal]
+family = "IosevkaTerm Nerd Font"
+style = "Regular"
+
+[font.bold]
+family = "IosevkaTerm Nerd Font"
+style = "Bold"
+
+[font.italic]
+family = "IosevkaTerm Nerd Font"
+style = "Italic"
+
+[font.bold_italic]
+family = "IosevkaTerm Nerd Font"
+style = "Bold Italic"
+
+[colors]
+draw_bold_text_with_bright_colors = false
+
+
+[keyboard]
+bindings = [
+  { key = "Space", mods = "Shift", chars = "_" }
+]
